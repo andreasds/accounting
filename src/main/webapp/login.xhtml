@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Accounting Login</title>
+    </h:head>
+    <h:body>
+        <div>
+            <h2>Aplikasi Accounting</h2>
+            <h:form>
+                <div>
+                    <p:outputLabel for="username"
+                                   value="Username" />
+                    <p:inputText id="username"
+                                 immediate="true"
+                                 value="#{authBean.session.username}" />
+                </div>
+                <div>
+                    <p:outputLabel for="password"
+                                   value="Password" />
+                    <p:inputText id="password"
+                                 immediate="true"
+                                 value="#{authBean.session.password}" />
+                </div>
+                <div>
+                    <p:commandButton value="Login" actionListener="#{authBean.login}" />
+                </div>
+            </h:form>
+        </div>
+    </h:body>
+</html>
