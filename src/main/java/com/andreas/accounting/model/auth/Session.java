@@ -14,7 +14,7 @@ public class Session implements Serializable {
     private String username;
     private String password;
     private ArrayList<String> roles;
-    private String access_token;
+    private String token;
 
     public String getUsername() {
         return username;
@@ -39,12 +39,12 @@ public class Session implements Serializable {
     public void setRoles(ArrayList<String> roles) {
         this.roles = roles;
     }
-    
-    public String getAccess_token() {
-        return access_token;
+
+    public String getToken() {
+        return token;
     }
-    
-    public void setAccess_token(String access_token) {
-        this.access_token = access_token;
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

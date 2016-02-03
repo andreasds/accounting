@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:outputStylesheet name="css/templates/default/leftMenu.css"/>
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+            </div>
+
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+                <li class="header">
+                    MENU
+                </li>
+                <ui:repeat var="menu"
+                           value="#{menuBean.menus}"
+                           varStatus="status">
+                    <li class="treeview">
+                        <p:link href="#{menu.path}"
+                                rendered="#{not empty menu.subMenu}">
+                            <i class="#{menu.icon}" />
+                            <span>
+                                #{menu.nama}
+                            </span>
+                            <i class="#{not empty menu.subMenu ? 'fa fa-angle-left pull-right' : ''}" />
+                        </p:link>
+
+                        <ui:fragment rendered="#{not empty menu.subMenu}">
+                            <ul class="treeview-menu">
+                                <ui:repeat var="subMenu"
+                                           value="#{menu.subMenu}">
+                                    <li class="treeview">
+                                        <p:link href="#{subMenu.path}">
+                                            <i class="#{subMenu.icon}" />
+                                            <span>
+                                                #{subMenu.nama}
+                                            </span>
+                                            <ui:fragment rendered="#{not empty subMenu.subMenu}">
+                                                <i class="fa fa-angle-left pull-right" />
+                                            </ui:fragment>
+                                        </p:link>
+
+                                        <ui:fragment rendered="#{not empty subMenu.subMenu}">
+                                            <ul class="treeview-menu">
+                                                <ui:repeat var="subSubMenu"
+                                                           value="#{subMenu.subMenu}">
+                                                    <li class="treeview">
+                                                        <p:link href="#{subSubMenu.path}">
+                                                            <i class="#{subSubMenu.icon}" />
+                                                            <span>
+                                                                #{subSubMenu.nama}
+                                                            </span>
+                                                            <ui:fragment rendered="#{not empty subSubMenu.subMenu}">
+                                                                <i class="fa fa-angle-left pull-right" />
+                                                            </ui:fragment>
+                                                        </p:link>
+
+                                                        <ui:fragment rendered="#{not empty subSubMenu.subMenu}">
+                                                            <ul class="treeview-menu">
+                                                                <ui:repeat var="subSubSubMenu"
+                                                                           value="#{subSubMenu.subMenu}">
+                                                                    <li class="treeview">
+                                                                        <p:link href="#{subSubSubMenu.path}">
+                                                                            <i class="#{subSubSubMenu.icon}" />
+                                                                            <span>
+                                                                                #{subSubSubMenu.nama}
+                                                                            </span>
+                                                                            <ui:fragment rendered="#{not empty subSubSubMenu.subMenu}" />
+                                                                        </p:link>
+                                                                    </li>
+                                                                </ui:repeat>
+                                                            </ul>
+                                                        </ui:fragment>
+                                                    </li>
+                                                </ui:repeat>
+                                            </ul>
+                                        </ui:fragment>
+                                    </li>
+                                </ui:repeat>
+                            </ul>
+                        </ui:fragment>
+                    </li>
+                </ui:repeat>
+            </ul>
+        </section>
+    </aside>
+</ui:composition>

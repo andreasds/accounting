@@ -1,0 +1,21 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jan 1, 2016, 10:17:39 PM
+    Author     : Andreas
+*/
+
+.main-sidebar, .left-side {
+    z-index: 0 !important;
+}
+
+.sidebar-menu > li:hover > a, .sidebar-menu > li.active > a {
+    border-left: 3px solid rgba(45, 136, 13, 0.54);
+}
+
+.sidebar-menu li.header {
+    background: #EDEDED !important;
+}

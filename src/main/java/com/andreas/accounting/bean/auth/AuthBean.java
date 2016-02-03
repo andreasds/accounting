@@ -1,11 +1,21 @@
 package com.andreas.accounting.bean.auth;
 
+import com.andreas.accounting.model.auth.Menu;
 import com.andreas.accounting.model.auth.Session;
+import com.andreas.accounting.service.auth.MenuService;
 import com.andreas.accounting.util.GrailsRestClient;
 import com.google.gson.Gson;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -17,9 +27,13 @@ public class AuthBean implements Serializable {
 
     private static final long serialVersionUID = 207352772602184333L;
 
-    private GrailsRestClient grc = new GrailsRestClient();
+    private final GrailsRestClient grc = new GrailsRestClient();
     private Session session = new Session();
     private boolean loggedIn = false;
+
+    @ManagedProperty(value = "#{menuBean}")
+    private MenuBean menu;
+    private final MenuService menuService = new MenuService();
 
     public Session getSession() {
         return session;
@@ -37,35 +51,40 @@ public class AuthBean implements Serializable {
         this.loggedIn = loggedIn;
     }
 
-    public AuthBean() {
-        System.out.println("Hello AuthBean!");
+    public MenuBean getMenu() {
+        return menu;
+    }
+
+    public void setMenu(MenuBean menu) {
+        this.menu = menu;
     }
 
     public void login() {
-        System.out.println("Username = " + session.getUsername());
-        System.out.println("Password = " + session.getPassword());
-        System.out.println("Hello Login!");
-
         if (session.getUsername().equals("") || session.getPassword().equals("")) {
             loggedIn = false;
             System.out.println("Silakan isi username dan password!");
             return;
         }
-        Gson gson = new Gson();
+
         String response = grc.login(session);
-        System.out.println("Login Response");
-        System.out.println(response);
         if (response.equals("failed")) {
             loggedIn = false;
             return;
         }
         loggedIn = true;
+        Gson gson = new Gson();
         session = gson.fromJson(response, Session.class);
-        System.out.println("Roles = " + session.getRoles().toString());
-        System.out.println("Token = " + session.getAccess_token());
-    }
 
-    public String getMessage() {
-        return "Login Page";
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        Map<String, Object> sessionMap = externalContext.getSessionMap();
+        sessionMap.put("token", session.getToken());
+
+        menu.setMenus((ArrayList<Menu>) menuService.listAuthorizedMenu());
+
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("templates/default/main.xhtml");
+        } catch (IOException ex) {
+            Logger.getLogger(AuthBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
