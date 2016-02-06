@@ -1,6 +1,7 @@
 package com.andreas.accounting.bean.auth;
 
 import com.andreas.accounting.model.auth.Menu;
+import com.andreas.accounting.util.Util;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
@@ -10,7 +11,7 @@ import javax.faces.bean.SessionScoped;
  *
  * @author Andreas Dharmawan <andreas.ds90@gmail.com>
  */
-@ManagedBean(name = "menuBean", eager = true)
+@ManagedBean(name = "menuBean")
 @SessionScoped
 public class MenuBean implements Serializable {
 
@@ -24,5 +25,9 @@ public class MenuBean implements Serializable {
 
     public void setMenus(ArrayList<Menu> menus) {
         this.menus = menus;
+    }
+    
+    public ArrayList<String> getBreadcrumbs() {
+        return Util.generateBreadcrumbs();
     }
 }

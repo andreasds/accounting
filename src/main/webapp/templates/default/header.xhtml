@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
     <header class="main-header">
@@ -49,8 +50,14 @@
                             </li>
                             <li class="user-footer">
                                 <div class="pull-right">
-                                    <a href="#{request.requestURL.substring(0, request.requestURL.length() - request.requestURI.length())}#{request.contextPath}/j_spring_security_logout"
-                                       class="btn btn-default btn-flat">Keluar</a>
+                                    <h:form>
+                                        <div>
+                                            <p:commandButton value="Keluar"
+                                                             class="btn btn-default btn-flat"
+                                                             ajax="false"
+                                                             actionListener="#{authBean.logout}" />
+                                        </div>
+                                    </h:form>
                                 </div>
                             </li>
                         </ul>

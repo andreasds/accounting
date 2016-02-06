@@ -22,13 +22,14 @@
                            value="#{menuBean.menus}"
                            varStatus="status">
                     <li class="treeview">
-                        <p:link href="#{menu.path}"
-                                rendered="#{not empty menu.subMenu}">
+                        <p:link href="#{menu.path}">
                             <i class="#{menu.icon}" />
                             <span>
                                 #{menu.nama}
                             </span>
-                            <i class="#{not empty menu.subMenu ? 'fa fa-angle-left pull-right' : ''}" />
+                            <ui:fragment rendered="#{not empty menu.subMenu}">
+                                <i class="fa fa-angle-left pull-right" />
+                            </ui:fragment>
                         </p:link>
 
                         <ui:fragment rendered="#{not empty menu.subMenu}">

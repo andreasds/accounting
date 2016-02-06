@@ -47,6 +47,17 @@ public class GrailsRestClient implements Serializable {
         return output;
     }
 
+    public String logout() {
+        Client client = Client.create();
+        WebResource webResource = client.resource(url + "api/logout");
+        ClientResponse response = webResource.accept("application/json").header("X-Auth-Token", getToken()).post(ClientResponse.class);
+        if (response.getStatus() != 200) {
+            System.out.println("Logout error");
+            throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
+        }
+        return response.getEntity(String.class);
+    }
+
     public String get(String path) {
         String output;
         Client client = Client.create();
@@ -64,7 +75,6 @@ public class GrailsRestClient implements Serializable {
     public String getToken() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> sessionMap = externalContext.getSessionMap();
-        System.out.println("sessionMap = " + sessionMap.toString());
         return sessionMap.get("token").toString();
     }
 }

@@ -64,6 +64,13 @@
         </dependency>
         <!-- webjars -->
         
+        <!-- java servlet api -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+        </dependency>
+        
         <!-- jstl -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -94,6 +101,14 @@
             <version>2.5</version>
         </dependency>
         <!-- gson -->
+        
+        <!-- apache commons -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
+        </dependency>
+        <!-- apache commons -->
     </dependencies>
     
     <build>
