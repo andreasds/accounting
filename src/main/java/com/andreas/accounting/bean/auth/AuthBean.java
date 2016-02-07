@@ -27,6 +27,7 @@ public class AuthBean implements Serializable {
 
     private final GrailsRestClient grc = new GrailsRestClient();
     private Session session = new Session();
+    private boolean loggedIn = false;
 
     @ManagedProperty(value = "#{menuBean}")
     private MenuBean menu;
@@ -38,6 +39,14 @@ public class AuthBean implements Serializable {
 
     public void setSession(Session session) {
         this.session = session;
+    }
+    
+    public boolean getLoggedIn() {
+        return loggedIn;
+    }
+    
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
     }
 
     public MenuBean getMenu() {
@@ -58,6 +67,7 @@ public class AuthBean implements Serializable {
         if (response.equals("failed")) {
             return;
         }
+        loggedIn = true;
         Gson gson = new Gson();
         session = gson.fromJson(response, Session.class);
 
@@ -71,10 +81,17 @@ public class AuthBean implements Serializable {
     
     public void logout() {
         grc.logout();
+        loggedIn = false;
         
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> sessionMap = externalContext.getSessionMap();
         sessionMap.clear();
         Util.redirectToPage("/login.xhtml");
+    }
+    
+    public void validate() {
+        if(!loggedIn) {
+            Util.redirectToPage("/login.xhtml");
+        }
     }
 }
