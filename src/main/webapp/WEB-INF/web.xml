@@ -46,7 +46,7 @@
     
     <context-param>
         <param-name>grailsEndPoint</param-name>
-        <param-value>http://localhost:8081/accounting-server/</param-value>
+        <param-value>http://localhost:8080/accounting-server/</param-value>
     </context-param>
     
     <mime-mapping>
