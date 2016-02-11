@@ -57,6 +57,18 @@ public class GrailsRestClient implements Serializable {
         }
         return response.getEntity(String.class);
     }
+    
+    public String add(String path, Object post) {
+        Client client = Client.create();
+        WebResource webResource = client.resource(url + path);
+        Gson gson = new Gson();
+        String input = gson.toJson(post);
+        ClientResponse response = webResource.type("application/json").header("X-Auth-Token", getToken()).post(ClientResponse.class, input);
+        if(response.getStatus() != 200) {
+            System.out.println("Save error");
+        }
+        return response.getEntity(String.class);
+    }
 
     public String get(String path) {
         String output;
@@ -70,6 +82,30 @@ public class GrailsRestClient implements Serializable {
             output = response.getEntity(String.class);
         }
         return output;
+    }
+    
+    public String put(String path, Object post) {
+        String output;
+        Client client = Client.create();
+        WebResource webResource = client.resource(url + path);
+        Gson gson = new Gson();
+        String input = gson.toJson(post);
+        ClientResponse response = webResource.type("application/json").header("X-Auth-Token", getToken()).put(ClientResponse.class, input);
+        if(response.getStatus() != 200) {
+            System.out.println("Update error");
+        }
+        return response.getEntity(String.class);
+    }
+    
+    public String delete(String path) {
+        String output;
+        Client client = Client.create();
+        WebResource webResource = client.resource(url + path);
+        ClientResponse response = webResource.accept("application/json").header("X-Auth-Token", getToken()).delete(ClientResponse.class);
+        if(response.getStatus() != 200) {
+            System.out.println("Delete error");
+        }
+        return response.getEntity(String.class);
     }
 
     public String getToken() {

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui">
+    <div class="box-body">
+        <div class="col-md-10">
+            <div class="form-group">
+                <p:outputLabel for="perusahaan_nama"
+                               styleClass="control-label col-md-3"
+                               value="Nama" />
+                <div class="col-md-9">
+                    <p:inputText id="perusahaan_nama"
+                                 styleClass="form-control"
+                                 immediate="true"
+                                 value="#{perusahaanBean.perusahaanModel.nama}" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p:outputLabel for="perusahaan_alamat"
+                               styleClass="control-label col-md-3"
+                               value="Alamat" />
+                <div class="col-md-9">
+                    <p:inputTextarea id="perusahaan_alamat"
+                                     styleClass="form-control"
+                                     immediate="true"
+                                     value="#{perusahaanBean.perusahaanModel.alamat}" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p:outputLabel for="perusahaan_kota"
+                               styleClass="control-label col-md-3"
+                               value="Kota" />
+                <div class="col-md-9">
+                    <p:inputText id="perusahaan_kota"
+                                 styleClass="form-control"
+                                 immediate="true"
+                                 value="#{perusahaanBean.perusahaanModel.kota}" />
+                </div>
+            </div>
+        </div>
+    </div>
+</html>
