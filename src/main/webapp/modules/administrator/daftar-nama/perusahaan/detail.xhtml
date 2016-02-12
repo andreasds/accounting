@@ -74,8 +74,12 @@
 
                     <div class="box-footer">
                         <p:commandButton styleClass="btn btn-sm btn-flat"
+                                         icon="fa fa-pencil"
+                                         actionListener="#{perusahaanBean.edit(perusahaanBean.perusahaanModel.id)}"
+                                         value="Edit" />
+                        <p:commandButton styleClass="btn btn-sm btn-flat"
                                          icon="fa fa-mail-reply"
-                                         actionListener="#{perusahaanBean.viewAll()}"
+                                         actionListener="#{perusahaanBean.list()}"
                                          value="Kembali" />
                     </div>
                 </div>

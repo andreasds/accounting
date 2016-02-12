@@ -21,13 +21,80 @@ public class PerusahaanBean implements BaseBeanInterface, Serializable {
     private static final long serialVersionUID = 7573637609459406109L;
 
     private String pageName;
-    private boolean editMode;
     private final String baseModule = "/modules/administrator/daftar-nama/perusahaan/";
 
     private LazyDataModel<Perusahaan> perusahaanModels;
     private Perusahaan perusahaanModel;
     private final PerusahaanService perusahaanService = new PerusahaanService();
     private long perusahaanId;
+
+    @Override
+    public void init() {
+        pageName = "Perusahaan";
+    }
+
+    @Override
+    public void viewInput() {
+        init();
+        perusahaanModel = new Perusahaan();
+    }
+
+    @Override
+    public void viewDetail(long id) {
+        init();
+        perusahaanModel = (Perusahaan) perusahaanService.get(id);
+    }
+
+    @Override
+    public void viewEdit(long id) {
+        init();
+        perusahaanModel = (Perusahaan) perusahaanService.get(id);
+    }
+
+    @Override
+    public void viewAll() {
+        init();
+        perusahaanModels = new PerusahaanLazy();
+    }
+
+    public void save() {
+        String response;
+        response = perusahaanService.save(perusahaanModel).toString();
+
+        if (response != null) {
+            Util.redirectToPage(baseModule + "detail.xhtml?id=" + response);
+        } else {
+            Util.redirectToPage(baseModule + "list.xhtml");
+        }
+    }
+
+    public void update() {
+        String response;
+        response = perusahaanService.update(perusahaanModel).toString();
+
+        if (response != null) {
+            Util.redirectToPage(baseModule + "detail.xhtml?id=" + response);
+        } else {
+            Util.redirectToPage(baseModule + "list.xhtml");
+        }
+    }
+    
+    public void detail(long id) {
+        Util.redirectToPage(baseModule + "detail.xhtml?id=" + id);
+    }
+
+    public void edit(long id) {
+        Util.redirectToPage(baseModule + "edit.xhtml?id=" + id);
+    }
+
+    public void delete(long id) {
+        perusahaanService.delete(id);
+        list();
+    }
+
+    public void list() {
+        Util.redirectToPage(baseModule + "list.xhtml");
+    }
 
     public String getPageName() {
         return pageName;
@@ -36,15 +103,15 @@ public class PerusahaanBean implements BaseBeanInterface, Serializable {
     public void setPageName(String pageName) {
         this.pageName = pageName;
     }
-    
+
     public LazyDataModel<Perusahaan> getPerusahaanModels() {
         return perusahaanModels;
     }
-    
+
     public void setPerusahaanModels(LazyDataModel<Perusahaan> perusahaanModels) {
         this.perusahaanModels = perusahaanModels;
     }
-    
+
     public Perusahaan getPerusahaanModel() {
         return perusahaanModel;
     }
@@ -59,65 +126,5 @@ public class PerusahaanBean implements BaseBeanInterface, Serializable {
 
     public void setPerusahaanId(long perusahaanId) {
         this.perusahaanId = perusahaanId;
-    }
-
-    @Override
-    public void init() {
-        pageName = "Perusahaan";
-        perusahaanModels = new PerusahaanLazy();
-    }
-
-    @Override
-    public void viewInput() {
-        pageName = "Perusahaan";
-        editMode = false;
-
-        perusahaanModel = new Perusahaan();
-    }
-
-    @Override
-    public void viewDetail(long id) {
-        pageName = "Perusahaan";
-
-        perusahaanModel = (Perusahaan) perusahaanService.get(id);
-    }
-
-    @Override
-    public void viewEdit(long id) {
-        pageName = "Perusahaan";
-        editMode = true;
-
-        perusahaanModel = (Perusahaan) perusahaanService.get(id);
-    }
-
-    @Override
-    public void viewDelete(long id) {
-        perusahaanService.delete(id);
-    }
-
-    @Override
-    public void viewAll() {
-        Util.redirectToPage(baseModule + "list.xhtml");
-    }
-
-    @Override
-    public void save() {
-        String response;
-        if (!editMode) {
-            response = perusahaanService.save(perusahaanModel).toString();
-        } else {
-            response = perusahaanService.update(perusahaanModel).toString();
-        }
-
-        if (response != null) {
-            Util.redirectToPage(baseModule + "detail.xhtml?id=" + response);
-        } else {
-            Util.redirectToPage(baseModule + "list.xhtml");
-        }
-    }
-
-    @Override
-    public void search() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

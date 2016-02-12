@@ -10,8 +10,5 @@ public interface BaseBeanInterface {
     public void viewInput();
     public void viewDetail(long id);
     public void viewEdit(long id);
-    public void viewDelete(long id);
     public void viewAll();
-    public void save();
-    public void search();
 }

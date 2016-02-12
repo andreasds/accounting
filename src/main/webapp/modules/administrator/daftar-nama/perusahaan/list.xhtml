@@ -6,7 +6,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <f:metadata>
-        <f:event listener="#{perusahaanBean.init()}" type="preRenderView" />
+        <f:event listener="#{perusahaanBean.viewAll()}" type="preRenderView" />
     </f:metadata>
     <ui:composition template="/templates/default/main.xhtml">
         <ui:define name="headerContent">
@@ -62,18 +62,15 @@
                             <p:column headerText="Pilihan"
                                       style="text-align: center;">
                                 <div class="btn-group">
-                                    <p:link styleClass="btn btn-default btn-sm"
-                                            href="detail.xhtml?id=#{perusahaan.id}">
-                                        <i class="fa fa-info" />
-                                    </p:link>
-                                    <p:link styleClass="btn btn-default btn-sm"
-                                            href="edit.xhtml?id=#{perusahaan.id}">
-                                        <i class="fa fa-pencil" />
-                                    </p:link>
+                                    <p:commandButton styleClass="btn btn-sm"
+                                                     icon="fa fa-info"
+                                                     actionListener="#{perusahaanBean.detail(perusahaan.id)}" />
+                                    <p:commandButton styleClass="btn btn-sm"
+                                                     icon="fa fa-pencil"
+                                                     actionListener="#{perusahaanBean.edit(perusahaan.id)}" />
                                     <p:commandButton styleClass="btn btn-sm"
                                                      icon="fa fa-trash"
-                                                     actionListener="#{perusahaanBean.viewDelete(perusahaan.id)}"
-                                                     update=":list_perusahaan" />
+                                                     actionListener="#{perusahaanBean.delete(perusahaan.id)}" />
                                 </div>
                             </p:column>
                         </p:dataTable>

@@ -39,7 +39,7 @@ public class GrailsRestClient implements Serializable {
         String input = gson.toJson(post);
         ClientResponse response = webResource.type("application/json").post(ClientResponse.class, input);
         if (response.getStatus() != 200) {
-            System.out.println("Login error");
+            System.out.println("Status = " + response.getStatus() + ", Login error");
             output = "failed";
         } else {
             output = response.getEntity(String.class);
@@ -52,7 +52,7 @@ public class GrailsRestClient implements Serializable {
         WebResource webResource = client.resource(url + "api/logout");
         ClientResponse response = webResource.accept("application/json").header("X-Auth-Token", getToken()).post(ClientResponse.class);
         if (response.getStatus() != 200) {
-            System.out.println("Logout error");
+            System.out.println("Status = " + response.getStatus() + ", Logout error");
             throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
         }
         return response.getEntity(String.class);
@@ -65,7 +65,7 @@ public class GrailsRestClient implements Serializable {
         String input = gson.toJson(post);
         ClientResponse response = webResource.type("application/json").header("X-Auth-Token", getToken()).post(ClientResponse.class, input);
         if(response.getStatus() != 200) {
-            System.out.println("Save error");
+            System.out.println("Status = " + response.getStatus() + ", Save error");
         }
         return response.getEntity(String.class);
     }
@@ -76,7 +76,7 @@ public class GrailsRestClient implements Serializable {
         WebResource webResource = client.resource(url + path);
         ClientResponse response = webResource.accept("application/json").header("X-Auth-Token", getToken()).get(ClientResponse.class);
         if (response.getStatus() != 200) {
-            System.out.println("Get error");
+            System.out.println("Status = " + response.getStatus() + ", Get error");
             output = "[]";
         } else {
             output = response.getEntity(String.class);
@@ -92,7 +92,7 @@ public class GrailsRestClient implements Serializable {
         String input = gson.toJson(post);
         ClientResponse response = webResource.type("application/json").header("X-Auth-Token", getToken()).put(ClientResponse.class, input);
         if(response.getStatus() != 200) {
-            System.out.println("Update error");
+            System.out.println("Status = " + response.getStatus() + ", Update error");
         }
         return response.getEntity(String.class);
     }
@@ -103,7 +103,7 @@ public class GrailsRestClient implements Serializable {
         WebResource webResource = client.resource(url + path);
         ClientResponse response = webResource.accept("application/json").header("X-Auth-Token", getToken()).delete(ClientResponse.class);
         if(response.getStatus() != 200) {
-            System.out.println("Delete error");
+            System.out.println("Status = " + response.getStatus() + ", Delete error");
         }
         return response.getEntity(String.class);
     }

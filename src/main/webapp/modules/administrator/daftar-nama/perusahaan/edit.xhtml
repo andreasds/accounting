@@ -40,12 +40,12 @@
                     <div class="box-footer">
                         <p:commandButton styleClass="btn btn-primary btn-sm btn-flat"
                                          icon="fa fa-save"
-                                         actionListener="#{perusahaanBean.save()}"
+                                         actionListener="#{perusahaanBean.update()}"
                                          rendered="#{perusahaanBean.perusahaanModel.nama ne ''}"
-                                         value="Simpan" />
+                                         value="Update" />
                         <p:commandButton styleClass="btn btn-sm btn-flat"
                                          icon="fa fa-mail-reply"
-                                         actionListener="#{perusahaanBean.viewAll()}"
+                                         actionListener="#{perusahaanBean.list()}"
                                          value="Kembali" />
                     </div>
                 </div>
