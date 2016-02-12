@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <div class="box-body">
+        <div class="col-md-10">
+            <div class="form-group">
+                <p:outputLabel for="penjual_perusahaan"
+                               styleClass="control-label col-md-3"
+                               value="Perusahaan *" />
+                <div class="col-md-9">
+                    <p:selectOneMenu id="penjual_perusahaan"
+                                     immediate="true"
+                                     style="width: 300px;"
+                                     value="#{penjualBean.perusahaanId}">
+                        <f:selectItem itemLabel="-- Pilih Perusahaan --"
+                                      itemValue="" />
+                        <f:selectItems value="#{penjualBean.perusahaanModels}"
+                                       var="perusahaan"
+                                       itemLabel="#{perusahaan.nama}"
+                                       itemValue="#{perusahaan.id}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p:outputLabel for="penjual_nama"
+                               styleClass="control-label col-md-3"
+                               value="Nama *" />
+                <div class="col-md-9">
+                    <p:inputText id="penjual_nama"
+                                 styleClass="form-control"
+                                 immediate="true"
+                                 value="#{penjualBean.penjualModel.nama}" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p:outputLabel for="penjual_telepon"
+                               styleClass="control-label col-md-3"
+                               value="Telepon" />
+                <div class="col-md-9">
+                    <p:inputText id="penjual_telepon"
+                                 styleClass="form-control"
+                                 immediate="true"
+                                 value="#{penjualBean.penjualModel.telepon}" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p:outputLabel for="penjual_hp"
+                               styleClass="control-label col-md-3"
+                               value="HP" />
+                <div class="col-md-9">
+                    <p:inputText id="penjual_hp"
+                                 styleClass="form-control"
+                                 immediate="true"
+                                 value="#{penjualBean.penjualModel.hp}" />
+                </div>
+            </div>
+        </div>
+    </div>
+</html>

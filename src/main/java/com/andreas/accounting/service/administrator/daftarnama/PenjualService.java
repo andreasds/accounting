@@ -1,6 +1,6 @@
 package com.andreas.accounting.service.administrator.daftarnama;
 
-import com.andreas.accounting.model.administrator.daftarnama.Perusahaan;
+import com.andreas.accounting.model.administrator.daftarnama.Orang;
 import com.andreas.accounting.util.BaseServiceInterface;
 import com.andreas.accounting.util.GrailsRestClient;
 import com.google.gson.Gson;
@@ -16,19 +16,19 @@ import org.primefaces.model.SortOrder;
  *
  * @author Andreas Dharmawan <andreas.ds90@gmail.com>
  */
-public class PerusahaanService implements BaseServiceInterface, Serializable {
+public class PenjualService implements BaseServiceInterface, Serializable {
 
-    private static final long serialVersionUID = -4607621916234362865L;
+    private static final long serialVersionUID = 969259352658854470L;
     
     private final GrailsRestClient grc = new GrailsRestClient();
     private final Gson gson = new Gson();
-    private final String endpoint = "perusahaan";
+    private final String endpoint = "penjual";
 
     @Override
     public Object listAll() {
         String response = grc.get(endpoint);
         System.out.println("List All Response = " + response);
-        Type type = new TypeToken<ArrayList<Perusahaan>>() {}.getType();
+        Type type = new TypeToken<ArrayList<Orang>>() {}.getType();
         return gson.fromJson(response, type);
     }
     
@@ -36,14 +36,14 @@ public class PerusahaanService implements BaseServiceInterface, Serializable {
         String params = "?offset=" + first + "&max=" + pageSize + "&sort=" + sortField + "&order=" + (sortOrder == SortOrder.DESCENDING ? "desc" : "asc");
         String response = grc.get(endpoint + "/list" + params);
         System.out.println("List Response = " + response);
-        Type type = new TypeToken<ArrayList<Perusahaan>>() {}.getType();
+        Type type = new TypeToken<ArrayList<Orang>>() {}.getType();
         return gson.fromJson(response, type);
     }
     
     public Object listNama() {
         String response = grc.get(endpoint + "/listNama");
         System.out.println("List Nama Response = " + response);
-        Type type = new TypeToken<ArrayList<Perusahaan>>() {}.getType();
+        Type type = new TypeToken<ArrayList<Orang>>() {}.getType();
         return gson.fromJson(response, type);
     }
 
@@ -58,13 +58,13 @@ public class PerusahaanService implements BaseServiceInterface, Serializable {
     public Object get(long id) {
         String response = grc.get(endpoint + "/get?id=" + id);
         System.out.println("Get Response = " + response);
-        return gson.fromJson(response, Perusahaan.class);
+        return gson.fromJson(response, Orang.class);
     }
 
     @Override
     public Object update(Object obj) {
-        Perusahaan perusahaan = (Perusahaan) obj;
-        String response = grc.put(endpoint + "/update?id=" + perusahaan.getId(), obj);
+        Orang penjual = (Orang) obj;
+        String response = grc.put(endpoint + "/update?id=" + penjual.getId(), obj);
         System.out.println("Update Response = " + response);
         return gson.fromJson(response, JsonObject.class).get("id");
     }

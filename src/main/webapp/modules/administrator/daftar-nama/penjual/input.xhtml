@@ -6,12 +6,12 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <f:metadata>
-        <f:event listener="#{perusahaanBean.viewInput()}" type="preRenderView" />
+        <f:event listener="#{penjualBean.viewInput()}" type="preRenderView" />
     </f:metadata>
     <ui:composition template="/templates/default/main.xhtml">
         <ui:define name="headerContent">
             <h1>
-                Buat #{perusahaanBean.pageName}
+                Buat #{penjualBean.pageName}
             </h1>
             <ol class="breadcrumb">
                 <li>
@@ -30,7 +30,7 @@
                     styleClass="form-horizontal">
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h2 class="box-title">#{perusahaanBean.pageName} Form</h2>
+                        <h2 class="box-title">#{penjualBean.pageName} Form</h2>
                     </div>
 
                     <!-- form start -->
@@ -39,11 +39,11 @@
                     <div class="box-footer">
                         <p:commandButton styleClass="btn btn-primary btn-sm btn-flat"
                                          icon="fa fa-save"
-                                         actionListener="#{perusahaanBean.save()}"
+                                         actionListener="#{penjualBean.save()}"
                                          value="Simpan" />
                         <p:commandButton styleClass="btn btn-sm btn-flat"
                                          icon="fa fa-mail-reply"
-                                         actionListener="#{perusahaanBean.list()}"
+                                         actionListener="#{penjualBean.list()}"
                                          value="Kembali" />
                     </div>
                 </div>
