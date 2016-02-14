@@ -1,7 +1,7 @@
-package com.andreas.accounting.lazy.administator;
+package com.andreas.accounting.lazy.administator.daftarproduk;
 
-import com.andreas.accounting.model.administrator.Satuan;
-import com.andreas.accounting.service.administrator.SatuanService;
+import com.andreas.accounting.model.administrator.daftarproduk.Satuan;
+import com.andreas.accounting.service.administrator.daftarproduk.SatuanService;
 import java.util.List;
 import java.util.Map;
 import org.primefaces.model.LazyDataModel;

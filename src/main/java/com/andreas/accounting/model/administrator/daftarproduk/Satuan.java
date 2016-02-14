@@ -1,4 +1,4 @@
-package com.andreas.accounting.model.administrator;
+package com.andreas.accounting.model.administrator.daftarproduk;
 
 import java.io.Serializable;
 

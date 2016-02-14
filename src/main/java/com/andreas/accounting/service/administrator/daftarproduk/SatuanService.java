@@ -1,6 +1,6 @@
-package com.andreas.accounting.service.administrator;
+package com.andreas.accounting.service.administrator.daftarproduk;
 
-import com.andreas.accounting.model.administrator.Satuan;
+import com.andreas.accounting.model.administrator.daftarproduk.Satuan;
 import com.andreas.accounting.util.BaseServiceInterface;
 import com.andreas.accounting.util.GrailsRestClient;
 import com.google.gson.Gson;

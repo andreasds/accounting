@@ -1,8 +1,8 @@
-package com.andreas.accounting.bean.administrator;
+package com.andreas.accounting.bean.administrator.daftarproduk;
 
-import com.andreas.accounting.lazy.administator.SatuanLazy;
-import com.andreas.accounting.model.administrator.Satuan;
-import com.andreas.accounting.service.administrator.SatuanService;
+import com.andreas.accounting.lazy.administator.daftarproduk.SatuanLazy;
+import com.andreas.accounting.model.administrator.daftarproduk.Satuan;
+import com.andreas.accounting.service.administrator.daftarproduk.SatuanService;
 import com.andreas.accounting.util.BaseBeanInterface;
 import com.andreas.accounting.util.Util;
 import java.io.Serializable;
@@ -21,7 +21,7 @@ public class SatuanBean implements BaseBeanInterface, Serializable {
     private static final long serialVersionUID = 5532664622488889325L;
 
     private String pageName;
-    private final String baseModule = "/modules/administrator/satuan-pengukuran/";
+    private final String baseModule = "/modules/administrator/daftar-produk/satuan-pengukuran/";
 
     private LazyDataModel<Satuan> satuanModels;
     private Satuan satuanModel;
