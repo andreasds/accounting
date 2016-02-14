@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:event listener="#{satuanBean.viewAll()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/default/main.xhtml">
+        <ui:define name="headerContent">
+            <h1>
+                List #{satuanBean.pageName}
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#">
+                        <i class="fa fa-dashboard" /> Home
+                    </a>
+                </li>
+                <ui:repeat var="breadcrumb" value="#{menuBean.breadcrumbs}">
+                    <li>#{breadcrumb}</li>
+                </ui:repeat>
+            </ol>
+        </ui:define>
+
+        <ui:define name="content">
+            <div class="box">
+                <ui:include src="create-button.xhtml" />
+            </div>
+
+            <div class="box">
+                <div class="box-body">
+                    <h:form id="list_satuan">
+                        <p:dataTable var="satuan"
+                                     styleClass="table table-hover table-bordered"
+                                     value="#{satuanBean.satuanModels}"
+                                     reflow="true"
+                                     rows="10"
+                                     rowIndexVar="index"
+                                     lazy="true"
+                                     paginator="true"
+                                     paginatorPosition="bottom"
+                                     paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+                            <p:column headerText="No">
+                                <h:outputText value="#{index + 1}" />
+                            </p:column>
+
+                            <p:column headerText="Kode">
+                                #{satuan.kode}
+                            </p:column>
+
+                            <p:column headerText="Nama">
+                                #{satuan.nama}
+                            </p:column>
+
+                            <p:column headerText="Deskripsi">
+                                #{satuan.deskripsi}
+                            </p:column>
+
+                            <p:column headerText="Pilihan"
+                                      style="text-align: center;">
+                                <div class="btn-group">
+                                    <p:commandButton styleClass="btn btn-sm"
+                                                     icon="fa fa-info"
+                                                     actionListener="#{satuanBean.detail(satuan.id)}" />
+                                    <p:commandButton styleClass="btn btn-sm"
+                                                     icon="fa fa-pencil"
+                                                     actionListener="#{satuanBean.edit(satuan.id)}" />
+                                    <p:commandButton styleClass="btn btn-sm"
+                                                     icon="fa fa-trash"
+                                                     actionListener="#{satuanBean.delete(satuan.id)}" />
+                                </div>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

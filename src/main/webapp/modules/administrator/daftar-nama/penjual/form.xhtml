@@ -12,7 +12,9 @@
                 <div class="col-md-9">
                     <p:selectOneMenu id="penjual_perusahaan"
                                      immediate="true"
-                                     style="width: 300px !important;"
+                                     style="width: 100% !important;"
+                                     filter="true"
+                                     filterMatchMode="contains"
                                      value="#{penjualBean.perusahaanId}">
                         <f:selectItem itemLabel="-- Pilih Perusahaan --"
                                       itemValue="" />
