@@ -27,7 +27,6 @@ public class PerusahaanService implements BaseServiceInterface, Serializable {
     @Override
     public Object listAll() {
         String response = grc.get(endpoint);
-        System.out.println("List All Response = " + response);
         Type type = new TypeToken<ArrayList<Perusahaan>>() {
         }.getType();
         return gson.fromJson(response, type);
@@ -36,7 +35,6 @@ public class PerusahaanService implements BaseServiceInterface, Serializable {
     public Object list(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
         String params = "?offset=" + first + "&max=" + pageSize + "&sort=" + sortField + "&order=" + (sortOrder == SortOrder.DESCENDING ? "desc" : "asc");
         String response = grc.get(endpoint + "/list" + params);
-        System.out.println("List Response = " + response);
         Type type = new TypeToken<ArrayList<Perusahaan>>() {
         }.getType();
         return gson.fromJson(response, type);
@@ -44,7 +42,6 @@ public class PerusahaanService implements BaseServiceInterface, Serializable {
 
     public Object listNama() {
         String response = grc.get(endpoint + "/listNama");
-        System.out.println("List Nama Response = " + response);
         Type type = new TypeToken<ArrayList<Perusahaan>>() {
         }.getType();
         return gson.fromJson(response, type);
@@ -53,14 +50,12 @@ public class PerusahaanService implements BaseServiceInterface, Serializable {
     @Override
     public Object save(Object obj) {
         String response = grc.add(endpoint + "/save", obj);
-        System.out.println("Save Response = " + response);
         return gson.fromJson(response, JsonObject.class).get("id");
     }
 
     @Override
     public Object get(long id) {
         String response = grc.get(endpoint + "/get?id=" + id);
-        System.out.println("Get Response = " + response);
         return gson.fromJson(response, Perusahaan.class);
     }
 
@@ -68,14 +63,12 @@ public class PerusahaanService implements BaseServiceInterface, Serializable {
     public Object update(Object obj) {
         Perusahaan perusahaan = (Perusahaan) obj;
         String response = grc.put(endpoint + "/update?id=" + perusahaan.getId(), obj);
-        System.out.println("Update Response = " + response);
         return gson.fromJson(response, JsonObject.class).get("id");
     }
 
     @Override
     public Object delete(long id) {
         String response = grc.delete(endpoint + "/delete?id=" + id);
-        System.out.println("Delete Response = " + response);
         return gson.fromJson(response, JsonObject.class);
     }
 
@@ -86,7 +79,6 @@ public class PerusahaanService implements BaseServiceInterface, Serializable {
 
     public int count(Map<String, Object> filters) {
         String response = grc.get(endpoint + "/count");
-        System.out.println("Count Response = " + response);
         return Integer.parseInt(response);
     }
 }

@@ -16,13 +16,13 @@ import org.primefaces.model.SortOrder;
  *
  * @author Andreas Dharmawan <andreas.ds90@gmail.com>
  */
-public class PenjualService implements BaseServiceInterface, Serializable {
+public class PembeliService implements BaseServiceInterface, Serializable {
 
-    private static final long serialVersionUID = 969259352658854470L;
+    private static final long serialVersionUID = -7841001819720780634L;
 
     private final GrailsRestClient grc = new GrailsRestClient();
     private final Gson gson = new Gson();
-    private final String endpoint = "penjual";
+    private final String endpoint = "pembeli";
 
     @Override
     public Object listAll() {
@@ -61,8 +61,8 @@ public class PenjualService implements BaseServiceInterface, Serializable {
 
     @Override
     public Object update(Object obj) {
-        Orang penjual = (Orang) obj;
-        String response = grc.put(endpoint + "/update?id=" + penjual.getId(), obj);
+        Orang pembeli = (Orang) obj;
+        String response = grc.put(endpoint + "/update?id=" + pembeli.getId(), obj);
         return gson.fromJson(response, JsonObject.class).get("id");
     }
 

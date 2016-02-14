@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <f:metadata>
+        <f:viewParam name="id" value="#{pembeliBean.pembeliId}" />
+        <f:event listener="#{pembeliBean.viewDetail(pembeliBean.pembeliId)}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/default/main.xhtml">
+        <ui:define name="headerContent">
+            <h1>
+                Rincian #{pembeliBean.pageName}
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#">
+                        <i class="fa fa-dashboard" /> Home
+                    </a>
+                </li>
+                <ui:repeat var="breadcrumb" value="#{menuBean.breadcrumbs}">
+                    <li>#{breadcrumb}</li>
+                </ui:repeat>
+            </ol>
+        </ui:define>
+
+        <ui:define name="content">
+            <h:form role="form" id="main-form"
+                    styleClass="form-horizontal">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">#{pembeliBean.pageName} Detail</h3>
+                    </div>
+
+                    <!-- detail form -->
+                    <div class="box-body">
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <p:outputLabel for="pembeli_perusahaan"
+                                               styleClass="control-label col-md-3"
+                                               value="Perusahaan" />
+                                <div class="col-md-9">
+                                    <p:outputLabel id="pembeli_perusahaan"
+                                                   styleClass="control-label"
+                                                   value="#{pembeliBean.pembeliModel.perusahaan.nama}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <p:outputLabel for="pembeli_nama"
+                                               styleClass="control-label col-md-3"
+                                               value="Nama" />
+                                <div class="col-md-9">
+                                    <p:outputLabel id="pembeli_nama"
+                                                   styleClass="control-label"
+                                                   value="#{pembeliBean.pembeliModel.nama}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <p:outputLabel for="pembeli_telepon"
+                                               styleClass="control-label col-md-3"
+                                               value="Telepon" />
+                                <div class="col-md-9">
+                                    <p:outputLabel id="pembeli_telepon"
+                                                   styleClass="control-label"
+                                                   value="#{pembeliBean.pembeliModel.telepon}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <p:outputLabel for="pembeli_hp"
+                                               styleClass="control-label col-md-3"
+                                               value="HP" />
+                                <div class="col-md-9">
+                                    <p:outputLabel id="pembeli_hp"
+                                                   styleClass="control-label"
+                                                   value="#{pembeliBean.pembeliModel.hp}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-footer">
+                        <p:commandButton styleClass="btn btn-sm btn-flat"
+                                         icon="fa fa-pencil"
+                                         actionListener="#{pembeliBean.edit(pembeliBean.pembeliModel.id)}"
+                                         value="Edit" />
+                        <p:commandButton styleClass="btn btn-sm btn-flat"
+                                         icon="fa fa-mail-reply"
+                                         actionListener="#{pembeliBean.list()}"
+                                         value="Kembali" />
+                    </div>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

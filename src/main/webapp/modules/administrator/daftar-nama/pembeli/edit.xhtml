@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <f:metadata>
+        <f:viewParam name="id" value="#{pembeliBean.pembeliId}" />
+        <f:event listener="#{pembeliBean.viewEdit(pembeliBean.pembeliId)}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/default/main.xhtml">
+        <ui:define name="headerContent">
+            <h1>
+                Edit #{pembeliBean.pageName}
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#">
+                        <i class="fa fa-dashboard" /> Home
+                    </a>
+                </li>
+                <ui:repeat var="breadcrumb" value="#{menuBean.breadcrumbs}">
+                    <li>#{breadcrumb}</li>
+                </ui:repeat>
+            </ol>
+        </ui:define>
+
+        <ui:define name="content">
+            <h:form role="form" id="main-form"
+                    styleClass="form-horizontal">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">#{pembeliBean.pageName} Form</h3>
+                    </div>
+
+                    <!-- form start -->
+                    <ui:include src="form.xhtml" />
+
+                    <div class="box-footer">
+                        <p:commandButton styleClass="btn btn-primary btn-sm btn-flat"
+                                         icon="fa fa-save"
+                                         actionListener="#{pembeliBean.update()}"
+                                         value="Update" />
+                        <p:commandButton styleClass="btn btn-sm btn-flat"
+                                         icon="fa fa-mail-reply"
+                                         actionListener="#{pembeliBean.list()}"
+                                         value="Kembali" />
+                    </div>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
