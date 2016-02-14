@@ -1,0 +1,9 @@
+/* 
+    Created on : Feb 12, 2016, 20:23:54 PM
+    Author     : Andreas Dharmawan <andreas.ds90@gmail.com>
+*/
+
+.ui-selectonemenu-trigger {
+    padding-top: 4px !important;
+    width: 30px !important;
+}

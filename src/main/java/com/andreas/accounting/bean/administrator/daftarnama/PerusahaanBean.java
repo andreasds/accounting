@@ -78,7 +78,7 @@ public class PerusahaanBean implements BaseBeanInterface, Serializable {
             Util.redirectToPage(baseModule + "list.xhtml");
         }
     }
-    
+
     public void detail(long id) {
         Util.redirectToPage(baseModule + "detail.xhtml?id=" + id);
     }

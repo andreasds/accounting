@@ -1,7 +1,9 @@
-.ui-icon.fa {
-    background-image:none;
-}
+/* 
+    Created on : Jan 1, 2016, 10:17:39 PM
+    Author     : Andreas Dharmawan <andreas.ds90@gmail.com>
+*/
 
-.ui-icon {
+.ui-icon.fa {
     text-indent: 0;
+    background-image:none;
 }

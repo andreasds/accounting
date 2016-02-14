@@ -33,30 +33,6 @@ public class AuthBean implements Serializable {
     private MenuBean menu;
     private final MenuService menuService = new MenuService();
 
-    public Session getSession() {
-        return session;
-    }
-
-    public void setSession(Session session) {
-        this.session = session;
-    }
-    
-    public boolean getLoggedIn() {
-        return loggedIn;
-    }
-    
-    public void setLoggedIn(boolean loggedIn) {
-        this.loggedIn = loggedIn;
-    }
-
-    public MenuBean getMenu() {
-        return menu;
-    }
-
-    public void setMenu(MenuBean menu) {
-        this.menu = menu;
-    }
-
     public void login() {
         if (session.getUsername().equals("") || session.getPassword().equals("")) {
             System.out.println("Silakan isi username dan password!");
@@ -78,20 +54,44 @@ public class AuthBean implements Serializable {
         menu.setMenus((ArrayList<Menu>) menuService.listAuthorizedMenu());
         Util.redirectToPage("/home.xhtml");
     }
-    
+
     public void logout() {
         grc.logout();
         loggedIn = false;
-        
+
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> sessionMap = externalContext.getSessionMap();
         sessionMap.clear();
         Util.redirectToPage("/login.xhtml");
     }
-    
+
     public void validate() {
-        if(!loggedIn) {
+        if (!loggedIn) {
             Util.redirectToPage("/login.xhtml");
         }
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
+    }
+
+    public boolean getLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+
+    public MenuBean getMenu() {
+        return menu;
+    }
+
+    public void setMenu(MenuBean menu) {
+        this.menu = menu;
     }
 }

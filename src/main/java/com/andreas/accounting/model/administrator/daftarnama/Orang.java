@@ -47,11 +47,11 @@ public class Orang implements Serializable {
     public void setHp(String hp) {
         this.hp = hp;
     }
-    
+
     public Perusahaan getPerusahaan() {
         return perusahaan;
     }
-    
+
     public void setPerusahaan(Perusahaan perusahaan) {
         this.perusahaan = perusahaan;
     }

@@ -19,7 +19,7 @@ import org.primefaces.model.SortOrder;
 public class PenjualService implements BaseServiceInterface, Serializable {
 
     private static final long serialVersionUID = 969259352658854470L;
-    
+
     private final GrailsRestClient grc = new GrailsRestClient();
     private final Gson gson = new Gson();
     private final String endpoint = "penjual";
@@ -28,22 +28,25 @@ public class PenjualService implements BaseServiceInterface, Serializable {
     public Object listAll() {
         String response = grc.get(endpoint);
         System.out.println("List All Response = " + response);
-        Type type = new TypeToken<ArrayList<Orang>>() {}.getType();
+        Type type = new TypeToken<ArrayList<Orang>>() {
+        }.getType();
         return gson.fromJson(response, type);
     }
-    
+
     public Object list(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
         String params = "?offset=" + first + "&max=" + pageSize + "&sort=" + sortField + "&order=" + (sortOrder == SortOrder.DESCENDING ? "desc" : "asc");
         String response = grc.get(endpoint + "/list" + params);
         System.out.println("List Response = " + response);
-        Type type = new TypeToken<ArrayList<Orang>>() {}.getType();
+        Type type = new TypeToken<ArrayList<Orang>>() {
+        }.getType();
         return gson.fromJson(response, type);
     }
-    
+
     public Object listNama() {
         String response = grc.get(endpoint + "/listNama");
         System.out.println("List Nama Response = " + response);
-        Type type = new TypeToken<ArrayList<Orang>>() {}.getType();
+        Type type = new TypeToken<ArrayList<Orang>>() {
+        }.getType();
         return gson.fromJson(response, type);
     }
 

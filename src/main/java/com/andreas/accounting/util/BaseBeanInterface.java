@@ -7,8 +7,12 @@ package com.andreas.accounting.util;
 public interface BaseBeanInterface {
 
     public void init();
+
     public void viewInput();
+
     public void viewDetail(long id);
+
     public void viewEdit(long id);
+
     public void viewAll();
 }

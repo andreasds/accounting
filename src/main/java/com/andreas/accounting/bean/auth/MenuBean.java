@@ -26,7 +26,7 @@ public class MenuBean implements Serializable {
     public void setMenus(ArrayList<Menu> menus) {
         this.menus = menus;
     }
-    
+
     public ArrayList<String> getBreadcrumbs() {
         return Util.generateBreadcrumbs();
     }

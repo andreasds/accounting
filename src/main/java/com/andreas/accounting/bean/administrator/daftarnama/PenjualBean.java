@@ -89,7 +89,7 @@ public class PenjualBean implements BaseBeanInterface, Serializable {
             Util.redirectToPage(baseModule + "list.xhtml");
         }
     }
-    
+
     public void detail(long id) {
         Util.redirectToPage(baseModule + "detail.xhtml?id=" + id);
     }
@@ -122,7 +122,7 @@ public class PenjualBean implements BaseBeanInterface, Serializable {
     public void setPenjualModels(LazyDataModel<Orang> penjualModels) {
         this.penjualModels = penjualModels;
     }
-    
+
     public ArrayList<Perusahaan> getPerusahaanModels() {
         return perusahaanModels;
     }
