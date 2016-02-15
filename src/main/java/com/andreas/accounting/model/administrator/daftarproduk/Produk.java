@@ -11,10 +11,11 @@ public class Produk implements Serializable {
     private static final long serialVersionUID = -1845866666858035113L;
 
     private Long id;
-    private String kode;
+    private int indeks;
     private String deskripsi;
     private int jumlahAwal;
     private int hargaBeliAwal;
+    private KategoriProduk kategoriProduk;
     private Satuan satuan;
 
     public Long getId() {
@@ -25,12 +26,12 @@ public class Produk implements Serializable {
         this.id = id;
     }
 
-    public String getKode() {
-        return kode;
+    public String getIndeks() {
+        return String.format("%05d", indeks);
     }
 
-    public void setKode(String kode) {
-        this.kode = kode;
+    public void setIndeks(int indeks) {
+        this.indeks = indeks;
     }
 
     public String getDeskripsi() {
@@ -54,6 +55,14 @@ public class Produk implements Serializable {
 
     public void setHargaBeliAwal(int hargaBeliAwal) {
         this.hargaBeliAwal = hargaBeliAwal;
+    }
+
+    public KategoriProduk getKategoriProduk() {
+        return kategoriProduk;
+    }
+
+    public void setKategoriProduk(KategoriProduk kategoriProduk) {
+        this.kategoriProduk = kategoriProduk;
     }
 
     public Satuan getSatuan() {

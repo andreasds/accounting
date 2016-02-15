@@ -6,12 +6,12 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <f:metadata>
-        <f:event listener="#{satuanBean.viewAll()}" type="preRenderView" />
+        <f:event listener="#{kategoriProdukBean.viewAll()}" type="preRenderView" />
     </f:metadata>
     <ui:composition template="/templates/default/main.xhtml">
         <ui:define name="headerContent">
             <h1>
-                List #{satuanBean.pageName}
+                List #{kategoriProdukBean.pageName}
             </h1>
             <ol class="breadcrumb">
                 <li>
@@ -32,10 +32,10 @@
 
             <div class="box">
                 <div class="box-body">
-                    <h:form id="list_satuan">
-                        <p:dataTable var="satuan"
+                    <h:form id="list_kategoriProduk">
+                        <p:dataTable var="kategoriProduk"
                                      styleClass="table table-hover table-bordered"
-                                     value="#{satuanBean.satuanModels}"
+                                     value="#{kategoriProdukBean.kategoriProdukModels}"
                                      reflow="true"
                                      rows="10"
                                      rowIndexVar="index"
@@ -47,12 +47,12 @@
                                 <h:outputText value="#{index + 1}" />
                             </p:column>
 
-                            <p:column headerText="Kode">
-                                #{satuan.kode}
+                            <p:column headerText="Nama">
+                                #{kategoriProduk.nama}
                             </p:column>
 
-                            <p:column headerText="Deskripsi">
-                                #{satuan.deskripsi}
+                            <p:column headerText="Kode">
+                                #{kategoriProduk.kode}
                             </p:column>
 
                             <p:column headerText="Pilihan"
@@ -60,13 +60,13 @@
                                 <div class="btn-group">
                                     <p:commandButton styleClass="btn btn-sm"
                                                      icon="fa fa-info"
-                                                     actionListener="#{satuanBean.detail(satuan.id)}" />
+                                                     actionListener="#{kategoriProdukBean.detail(kategoriProduk.id)}" />
                                     <p:commandButton styleClass="btn btn-sm"
                                                      icon="fa fa-pencil"
-                                                     actionListener="#{satuanBean.edit(satuan.id)}" />
+                                                     actionListener="#{kategoriProdukBean.edit(kategoriProduk.id)}" />
                                     <p:commandButton styleClass="btn btn-sm"
                                                      icon="fa fa-trash"
-                                                     actionListener="#{satuanBean.delete(satuan.id)}" />
+                                                     actionListener="#{kategoriProdukBean.delete(kategoriProduk.id)}" />
                                 </div>
                             </p:column>
                         </p:dataTable>

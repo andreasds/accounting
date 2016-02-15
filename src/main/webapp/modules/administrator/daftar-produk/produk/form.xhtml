@@ -6,14 +6,23 @@
     <div class="box-body">
         <div class="col-md-10">
             <div class="form-group">
-                <p:outputLabel for="produk_kode"
+                <p:outputLabel for="produk_kategori"
                                styleClass="control-label col-md-3"
-                               value="Kode *" />
+                               value="Kategori *" />
                 <div class="col-md-9">
-                    <p:inputText id="produk_kode"
-                                 styleClass="form-control"
-                                 immediate="true"
-                                 value="#{produkBean.produkModel.kode}" />
+                    <p:selectOneMenu id="produk_kategori"
+                                     immediate="true"
+                                     style="width: 100% !important;"
+                                     filter="true"
+                                     filterMatchMode="contains"
+                                     value="#{produkBean.kategoriProdukId}">
+                        <f:selectItem itemLabel="-- Pilih Kategori --"
+                                      itemValue="" />
+                        <f:selectItems value="#{produkBean.kategoriProdukModels}"
+                                       var="kategori"
+                                       itemLabel="#{kategori.nama}"
+                                       itemValue="#{kategori.id}" />
+                    </p:selectOneMenu>
                 </div>
             </div>
 

@@ -47,8 +47,12 @@
                                 <h:outputText value="#{index + 1}" />
                             </p:column>
 
+                            <p:column headerText="Kategori">
+                                #{produk.kategoriProduk.nama}
+                            </p:column>
+
                             <p:column headerText="Kode">
-                                #{produk.kode}
+                                #{produk.kategoriProduk.kode}-#{produk.indeks}
                             </p:column>
 
                             <p:column headerText="Deskripsi">

@@ -6,13 +6,13 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <f:metadata>
-        <f:viewParam name="id" value="#{produkBean.produkId}" />
-        <f:event listener="#{produkBean.viewDetail(produkBean.produkId)}" type="preRenderView" />
+        <f:viewParam name="id" value="#{kategoriProdukBean.kategoriProdukId}" />
+        <f:event listener="#{kategoriProdukBean.viewDetail(kategoriProdukBean.kategoriProdukId)}" type="preRenderView" />
     </f:metadata>
     <ui:composition template="/templates/default/main.xhtml">
         <ui:define name="headerContent">
             <h1>
-                Rincian #{produkBean.pageName}
+                Rincian #{kategoriProdukBean.pageName}
             </h1>
             <ol class="breadcrumb">
                 <li>
@@ -31,53 +31,31 @@
                     styleClass="form-horizontal">
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">#{produkBean.pageName} Detail</h3>
+                        <h3 class="box-title">#{kategoriProdukBean.pageName} Detail</h3>
                     </div>
 
                     <!-- detail form -->
                     <div class="box-body">
                         <div class="col-md-10">
                             <div class="form-group">
-                                <p:outputLabel for="produk_kategori"
+                                <p:outputLabel for="kategoriProduk_nama"
                                                styleClass="control-label col-md-3"
-                                               value="Kategori" />
+                                               value="Nama" />
                                 <div class="col-md-9">
-                                    <p:outputLabel id="produk_kategori"
+                                    <p:outputLabel id="kategoriProduk_nama"
                                                    styleClass="control-label"
-                                                   value="#{produkBean.produkModel.kategoriProduk.nama}" />
+                                                   value="#{kategoriProdukBean.kategoriProdukModel.nama}" />
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <p:outputLabel for="produk_kode"
+                                <p:outputLabel for="kategoriProduk_kode"
                                                styleClass="control-label col-md-3"
                                                value="Kode" />
                                 <div class="col-md-9">
-                                    <p:outputLabel id="produk_kode"
+                                    <p:outputLabel id="kategoriProduk_kode"
                                                    styleClass="control-label"
-                                                   value="#{produkBean.produkModel.kategoriProduk.kode}-#{produkBean.produkModel.indeks}" />
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <p:outputLabel for="produk_deskripsi"
-                                               styleClass="control-label col-md-3"
-                                               value="Deskripsi" />
-                                <div class="col-md-9">
-                                    <p:outputLabel id="produk_deskripsi"
-                                                   styleClass="control-label"
-                                                   value="#{produkBean.produkModel.deskripsi}" />
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <p:outputLabel for="produk_satuan"
-                                               styleClass="control-label col-md-3"
-                                               value="Satuan" />
-                                <div class="col-md-9">
-                                    <p:outputLabel id="produk_satuan"
-                                                   styleClass="control-label"
-                                                   value="#{produkBean.produkModel.satuan.kode}" />
+                                                   value="#{kategoriProdukBean.kategoriProdukModel.kode}" />
                                 </div>
                             </div>
                         </div>
@@ -86,11 +64,11 @@
                     <div class="box-footer">
                         <p:commandButton styleClass="btn btn-sm btn-flat"
                                          icon="fa fa-pencil"
-                                         actionListener="#{produkBean.edit(produkBean.produkModel.id)}"
+                                         actionListener="#{kategoriProdukBean.edit(kategoriProdukBean.kategoriProdukModel.id)}"
                                          value="Edit" />
                         <p:commandButton styleClass="btn btn-sm btn-flat"
                                          icon="fa fa-mail-reply"
-                                         actionListener="#{produkBean.list()}"
+                                         actionListener="#{kategoriProdukBean.list()}"
                                          value="Kembali" />
                     </div>
                 </div>

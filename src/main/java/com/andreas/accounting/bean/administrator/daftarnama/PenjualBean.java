@@ -43,7 +43,7 @@ public class PenjualBean implements BaseBeanInterface, Serializable {
     public void viewInput() {
         init();
         penjualModel = new Orang();
-        perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listAll();
+        perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNama();
     }
 
     @Override
@@ -57,7 +57,7 @@ public class PenjualBean implements BaseBeanInterface, Serializable {
         init();
         penjualModel = (Orang) penjualService.get(id);
         perusahaanId = penjualModel.getPerusahaan().getId();
-        perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listAll();
+        perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNama();
     }
 
     @Override

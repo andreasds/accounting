@@ -5,26 +5,27 @@
     <div class="box-body">
         <div class="col-md-10">
             <div class="form-group">
-                <p:outputLabel for="satuan_kode"
+                <p:outputLabel for="kategoriProduk_nama"
+                               styleClass="control-label col-md-3"
+                               value="Nama *" />
+                <div class="col-md-9">
+                    <p:inputText id="kategoriProduk_nama"
+                                 styleClass="form-control"
+                                 immediate="true"
+                                 value="#{kategoriProdukBean.kategoriProdukModel.nama}" />
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <p:outputLabel for="kategoriProduk_kode"
                                styleClass="control-label col-md-3"
                                value="Kode *" />
                 <div class="col-md-9">
-                    <p:inputText id="satuan_kode"
+                    <p:inputText id="kategoriProduk_kode"
                                  styleClass="form-control"
                                  immediate="true"
-                                 value="#{satuanBean.satuanModel.kode}" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <p:outputLabel for="satuan_deskripsi"
-                               styleClass="control-label col-md-3"
-                               value="Deskripsi" />
-                <div class="col-md-9">
-                    <p:inputTextarea id="satuan_deskripsi"
-                                     styleClass="form-control"
-                                     immediate="true"
-                                     value="#{satuanBean.satuanModel.deskripsi}" />
+                                 maxlength="5"
+                                 value="#{kategoriProdukBean.kategoriProdukModel.kode}" />
                 </div>
             </div>
         </div>

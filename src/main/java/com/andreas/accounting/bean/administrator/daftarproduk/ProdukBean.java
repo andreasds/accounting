@@ -1,8 +1,10 @@
 package com.andreas.accounting.bean.administrator.daftarproduk;
 
 import com.andreas.accounting.lazy.administator.daftarproduk.ProdukLazy;
+import com.andreas.accounting.model.administrator.daftarproduk.KategoriProduk;
 import com.andreas.accounting.model.administrator.daftarproduk.Produk;
 import com.andreas.accounting.model.administrator.daftarproduk.Satuan;
+import com.andreas.accounting.service.administrator.daftarproduk.KategoriProdukService;
 import com.andreas.accounting.service.administrator.daftarproduk.ProdukService;
 import com.andreas.accounting.service.administrator.daftarproduk.SatuanService;
 import com.andreas.accounting.util.BaseBeanInterface;
@@ -27,11 +29,14 @@ public class ProdukBean implements BaseBeanInterface, Serializable {
     private final String baseModule = "/modules/administrator/daftar-produk/produk/";
 
     private LazyDataModel<Produk> produkModels;
+    private ArrayList<KategoriProduk> kategoriProdukModels;
     private ArrayList<Satuan> satuanModels;
     private Produk produkModel;
     private final ProdukService produkService = new ProdukService();
+    private final KategoriProdukService kategoriProdukService = new KategoriProdukService();
     private final SatuanService satuanService = new SatuanService();
     private long produkId;
+    private long kategoriProdukId;
     private long satuanId;
 
     @Override
@@ -43,7 +48,8 @@ public class ProdukBean implements BaseBeanInterface, Serializable {
     public void viewInput() {
         init();
         produkModel = new Produk();
-        satuanModels = (ArrayList<Satuan>) satuanService.listAll();
+        kategoriProdukModels = (ArrayList<KategoriProduk>) kategoriProdukService.listNama();
+        satuanModels = (ArrayList<Satuan>) satuanService.listKode();
     }
 
     @Override
@@ -57,6 +63,8 @@ public class ProdukBean implements BaseBeanInterface, Serializable {
         init();
         produkModel = (Produk) produkService.get(id);
         satuanId = produkModel.getSatuan().getId();
+        kategoriProdukId = produkModel.getKategoriProduk().getId();
+        kategoriProdukModels = (ArrayList<KategoriProduk>) kategoriProdukService.listNama();
         satuanModels = (ArrayList<Satuan>) satuanService.listAll();
     }
 
@@ -68,6 +76,7 @@ public class ProdukBean implements BaseBeanInterface, Serializable {
 
     public void save() {
         String response;
+        produkModel.setKategoriProduk((KategoriProduk) kategoriProdukService.get(kategoriProdukId));
         produkModel.setSatuan((Satuan) satuanService.get(satuanId));
         response = produkService.save(produkModel).toString();
 
@@ -80,6 +89,7 @@ public class ProdukBean implements BaseBeanInterface, Serializable {
 
     public void update() {
         String response;
+        produkModel.setKategoriProduk((KategoriProduk) kategoriProdukService.get(kategoriProdukId));
         produkModel.setSatuan((Satuan) satuanService.get(satuanId));
         response = produkService.update(produkModel).toString();
 
@@ -123,6 +133,14 @@ public class ProdukBean implements BaseBeanInterface, Serializable {
         this.produkModels = produkModels;
     }
 
+    public ArrayList<KategoriProduk> getKategoriProdukModels() {
+        return kategoriProdukModels;
+    }
+
+    public void setKategoriProdukModels(ArrayList<KategoriProduk> kategoriProdukModels) {
+        this.kategoriProdukModels = kategoriProdukModels;
+    }
+
     public ArrayList<Satuan> getSatuanModels() {
         return satuanModels;
     }
@@ -145,6 +163,14 @@ public class ProdukBean implements BaseBeanInterface, Serializable {
 
     public void setProdukId(long produkId) {
         this.produkId = produkId;
+    }
+
+    public long getKategoriProdukId() {
+        return kategoriProdukId;
+    }
+
+    public void setKategoriProdukId(long kategoriProdukId) {
+        this.kategoriProdukId = kategoriProdukId;
     }
 
     public long getSatuanId() {
