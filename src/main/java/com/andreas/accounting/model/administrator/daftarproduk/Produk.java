@@ -49,6 +49,7 @@ public class Produk implements Serializable {
     public void setJumlahAwal(int jumlahAwal) {
         this.jumlahAwal = jumlahAwal;
     }
+    
     public int getHargaBeliAwal() {
         return hargaBeliAwal;
     }
