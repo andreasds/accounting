@@ -10,10 +10,10 @@ public class Rekening implements Serializable {
 
     private static final long serialVersionUID = -191083231951307883L;
 
-    private Long id;
-    private String nama;
-    private String deskripsi;
-    private int saldoAwal;
+    private Long id = 0L;
+    private String nama = "";
+    private String deskripsi = "";
+    private int saldoAwal = 0;
 
     public Long getId() {
         return id;

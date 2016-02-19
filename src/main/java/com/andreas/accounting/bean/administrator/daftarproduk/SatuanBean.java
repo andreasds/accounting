@@ -8,6 +8,7 @@ import com.andreas.accounting.util.Util;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.model.LazyDataModel;
 
 /**
@@ -27,6 +28,8 @@ public class SatuanBean implements BaseBeanInterface, Serializable {
     private Satuan satuanModel;
     private final SatuanService satuanService = new SatuanService();
     private long satuanId;
+    private String kodeBefore;
+    private boolean kodeValid;
 
     @Override
     public void init() {
@@ -36,7 +39,10 @@ public class SatuanBean implements BaseBeanInterface, Serializable {
     @Override
     public void viewInput() {
         init();
-        satuanModel = new Satuan();
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            satuanModel = new Satuan();
+            kodeBefore = "";
+        }
     }
 
     @Override
@@ -48,7 +54,11 @@ public class SatuanBean implements BaseBeanInterface, Serializable {
     @Override
     public void viewEdit(long id) {
         init();
-        satuanModel = (Satuan) satuanService.get(id);
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            satuanModel = (Satuan) satuanService.get(id);
+            kodeBefore = satuanModel.getKode();
+            kodeValid = true;
+        }
     }
 
     @Override
@@ -96,6 +106,14 @@ public class SatuanBean implements BaseBeanInterface, Serializable {
         Util.redirectToPage(baseModule + "list.xhtml");
     }
 
+    public void checkKode() {
+        if (satuanModel.getKode().equalsIgnoreCase(kodeBefore)) {
+            kodeValid = true;
+        } else {
+            kodeValid = satuanService.checkKode(satuanModel.getKode());
+        }
+    }
+
     public String getPageName() {
         return pageName;
     }
@@ -126,5 +144,21 @@ public class SatuanBean implements BaseBeanInterface, Serializable {
 
     public void setSatuanId(long satuanId) {
         this.satuanId = satuanId;
+    }
+
+    public String getKodeBefore() {
+        return kodeBefore;
+    }
+
+    public void setKodeBefore(String kodeBefore) {
+        this.kodeBefore = kodeBefore;
+    }
+
+    public boolean getKodeValid() {
+        return kodeValid;
+    }
+
+    public void setKodeValid(boolean kodeValid) {
+        this.kodeValid = kodeValid;
     }
 }

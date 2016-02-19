@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.model.LazyDataModel;
 
 /**
@@ -33,6 +34,9 @@ public class PenjualBean implements BaseBeanInterface, Serializable {
     private final PerusahaanService perusahaanService = new PerusahaanService();
     private long penjualId;
     private long perusahaanId;
+    private long perusahaanIdBefore;
+    private String namaBefore;
+    private boolean namaValid;
 
     @Override
     public void init() {
@@ -42,8 +46,12 @@ public class PenjualBean implements BaseBeanInterface, Serializable {
     @Override
     public void viewInput() {
         init();
-        penjualModel = new Orang();
-        perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNama();
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            penjualModel = new Orang();
+            perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNama();
+            perusahaanIdBefore = 0;
+            namaBefore = "";
+        }
     }
 
     @Override
@@ -55,9 +63,14 @@ public class PenjualBean implements BaseBeanInterface, Serializable {
     @Override
     public void viewEdit(long id) {
         init();
-        penjualModel = (Orang) penjualService.get(id);
-        perusahaanId = penjualModel.getPerusahaan().getId();
-        perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNama();
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            penjualModel = (Orang) penjualService.get(id);
+            perusahaanId = penjualModel.getPerusahaan().getId();
+            perusahaanIdBefore = penjualModel.getPerusahaan().getId();
+            perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNama();
+            namaBefore = penjualModel.getNama();
+            namaValid = true;
+        }
     }
 
     @Override
@@ -107,6 +120,15 @@ public class PenjualBean implements BaseBeanInterface, Serializable {
         Util.redirectToPage(baseModule + "list.xhtml");
     }
 
+    public void checkNama() {
+        if (penjualModel.getNama().equalsIgnoreCase(namaBefore) &&
+                perusahaanId == perusahaanIdBefore) {
+            namaValid = true;
+        } else {
+            namaValid = penjualService.checkNama(penjualModel.getNama(), perusahaanId);
+        }
+    }
+
     public String getPageName() {
         return pageName;
     }
@@ -153,5 +175,29 @@ public class PenjualBean implements BaseBeanInterface, Serializable {
 
     public void setPerusahaanId(long perusahaanId) {
         this.perusahaanId = perusahaanId;
+    }
+
+    public long getPerusahaanIdBefore() {
+        return perusahaanIdBefore;
+    }
+
+    public void setPerusahaanIdBefore(long perusahaanIdBefore) {
+        this.perusahaanIdBefore = perusahaanIdBefore;
+    }
+
+    public String getNamaBefore() {
+        return namaBefore;
+    }
+
+    public void setNamaBefore(String namaBefore) {
+        this.namaBefore = namaBefore;
+    }
+
+    public boolean getNamaValid() {
+        return namaValid;
+    }
+
+    public void setNamaValid(boolean namaValid) {
+        this.namaValid = namaValid;
     }
 }

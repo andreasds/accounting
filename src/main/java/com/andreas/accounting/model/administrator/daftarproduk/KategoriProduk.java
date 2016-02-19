@@ -10,9 +10,9 @@ public class KategoriProduk implements Serializable {
 
     private static final long serialVersionUID = -6475899306226842271L;
 
-    private Long id;
-    private String nama;
-    private String kode;
+    private Long id = 0L;
+    private String nama = "";
+    private String kode = "";
 
     public Long getId() {
         return id;

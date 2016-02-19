@@ -10,11 +10,11 @@ public class Orang implements Serializable {
 
     private static final long serialVersionUID = 2206342614088682267L;
 
-    private Long id;
-    private String nama;
-    private String telepon;
-    private String hp;
-    private Perusahaan perusahaan;
+    private Long id = 0L;
+    private String nama = "";
+    private String telepon = "";
+    private String hp = "";
+    private Perusahaan perusahaan = new Perusahaan();
 
     public Long getId() {
         return id;

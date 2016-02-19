@@ -37,14 +37,19 @@
                     <ui:include src="form.xhtml" />
 
                     <div class="box-footer">
-                        <p:commandButton styleClass="btn btn-primary btn-sm btn-flat"
-                                         icon="fa fa-save"
-                                         actionListener="#{pembeliBean.save()}"
-                                         value="Simpan" />
-                        <p:commandButton styleClass="btn btn-sm btn-flat"
-                                         icon="fa fa-mail-reply"
-                                         actionListener="#{pembeliBean.list()}"
-                                         value="Kembali" />
+                        <h:panelGroup id="footer_button">
+                            <p:commandButton styleClass="btn btn-primary btn-sm btn-flat"
+                                             icon="fa fa-save"
+                                             rendered="#{pembeliBean.perusahaanId ne 0 and
+                                                         pembeliBean.pembeliModel.nama ne '' and
+                                                         pembeliBean.namaValid}"
+                                             actionListener="#{pembeliBean.save()}"
+                                             value="Simpan" />
+                            <p:commandButton styleClass="btn btn-sm btn-flat"
+                                             icon="fa fa-mail-reply"
+                                             actionListener="#{pembeliBean.list()}"
+                                             value="Kembali" />
+                        </h:panelGroup>
                     </div>
                 </div>
             </h:form>

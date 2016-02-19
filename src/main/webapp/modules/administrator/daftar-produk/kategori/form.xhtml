@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <div class="box-body">
         <div class="col-md-10">
@@ -11,11 +13,20 @@
                 <div class="col-md-9">
                     <p:inputText id="kategoriProduk_nama"
                                  styleClass="form-control"
-                                 immediate="true"
-                                 value="#{kategoriProdukBean.kategoriProdukModel.nama}" />
+                                 maxlength="50"
+                                 value="#{kategoriProdukBean.kategoriProdukModel.nama}">
+                        <f:ajax render="kategoriProduk_nama_valid kategoriProduk_kode_valid footer_button"
+                                listener="#{kategoriProdukBean.checkNama()}" />
+                    </p:inputText>
+                    <h:panelGroup id="kategoriProduk_nama_valid">
+                        <p:outputLabel styleClass="label #{kategoriProdukBean.namaValid ? 'label-success' : 'label-danger'}"
+                                       rendered="#{kategoriProdukBean.kategoriProdukModel.nama ne '' and
+                                                   kategoriProdukBean.namaBefore ne kategoriProdukBean.kategoriProdukModel.nama}"
+                                       value="Nama#{kategoriProdukBean.namaValid ? '' : ' tidak'} dapat digunakan" />
+                    </h:panelGroup>
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <p:outputLabel for="kategoriProduk_kode"
                                styleClass="control-label col-md-3"
@@ -23,9 +34,17 @@
                 <div class="col-md-9">
                     <p:inputText id="kategoriProduk_kode"
                                  styleClass="form-control"
-                                 immediate="true"
                                  maxlength="5"
-                                 value="#{kategoriProdukBean.kategoriProdukModel.kode}" />
+                                 value="#{kategoriProdukBean.kategoriProdukModel.kode}">
+                        <f:ajax render="kategoriProduk_nama_valid kategoriProduk_kode_valid footer_button"
+                                listener="#{kategoriProdukBean.checkKode()}" />
+                    </p:inputText>
+                    <h:panelGroup id="kategoriProduk_kode_valid">
+                        <p:outputLabel styleClass="label #{kategoriProdukBean.kodeValid ? 'label-success' : 'label-danger'}"
+                                       rendered="#{kategoriProdukBean.kategoriProdukModel.kode ne '' and
+                                                   kategoriProdukBean.kodeBefore ne kategoriProdukBean.kategoriProdukModel.kode}"
+                                       value="Kode#{kategoriProdukBean.kodeValid ? '' : ' tidak'} dapat digunakan" />
+                    </h:panelGroup>
                 </div>
             </div>
         </div>

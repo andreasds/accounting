@@ -8,6 +8,7 @@ import com.andreas.accounting.util.Util;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.model.LazyDataModel;
 
 /**
@@ -27,6 +28,10 @@ public class KategoriProdukBean implements BaseBeanInterface, Serializable {
     private KategoriProduk kategoriProdukModel;
     private final KategoriProdukService kategoriProdukService = new KategoriProdukService();
     private long kategoriProdukId;
+    private String namaBefore;
+    private boolean namaValid;
+    private String kodeBefore;
+    private boolean kodeValid;
 
     @Override
     public void init() {
@@ -36,7 +41,11 @@ public class KategoriProdukBean implements BaseBeanInterface, Serializable {
     @Override
     public void viewInput() {
         init();
-        kategoriProdukModel = new KategoriProduk();
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            kategoriProdukModel = new KategoriProduk();
+            namaBefore = "";
+            kodeBefore = "";
+        }
     }
 
     @Override
@@ -48,7 +57,13 @@ public class KategoriProdukBean implements BaseBeanInterface, Serializable {
     @Override
     public void viewEdit(long id) {
         init();
-        kategoriProdukModel = (KategoriProduk) kategoriProdukService.get(id);
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            kategoriProdukModel = (KategoriProduk) kategoriProdukService.get(id);
+            namaBefore = kategoriProdukModel.getNama();
+            namaValid = true;
+            kodeBefore = kategoriProdukModel.getKode();
+            kodeValid = true;
+        }
     }
 
     @Override
@@ -96,6 +111,22 @@ public class KategoriProdukBean implements BaseBeanInterface, Serializable {
         Util.redirectToPage(baseModule + "list.xhtml");
     }
 
+    public void checkNama() {
+        if (kategoriProdukModel.getNama().equalsIgnoreCase(namaBefore)) {
+            namaValid = true;
+        } else {
+            namaValid = kategoriProdukService.checkNama(kategoriProdukModel.getNama());
+        }
+    }
+
+    public void checkKode() {
+        if (kategoriProdukModel.getKode().equalsIgnoreCase(kodeBefore)) {
+            kodeValid = true;
+        } else {
+            kodeValid = kategoriProdukService.checkKode(kategoriProdukModel.getKode());
+        }
+    }
+
     public String getPageName() {
         return pageName;
     }
@@ -126,5 +157,37 @@ public class KategoriProdukBean implements BaseBeanInterface, Serializable {
 
     public void setKategoriProdukId(long kategoriProdukId) {
         this.kategoriProdukId = kategoriProdukId;
+    }
+
+    public String getNamaBefore() {
+        return namaBefore;
+    }
+
+    public void setNamaBefore(String namaBefore) {
+        this.namaBefore = namaBefore;
+    }
+
+    public boolean getNamaValid() {
+        return namaValid;
+    }
+
+    public void setNamaValid(boolean namaValid) {
+        this.namaValid = namaValid;
+    }
+
+    public String getKodeBefore() {
+        return kodeBefore;
+    }
+
+    public void setKodeBefore(String kodeBefore) {
+        this.kodeBefore = kodeBefore;
+    }
+
+    public boolean getKodeValid() {
+        return kodeValid;
+    }
+
+    public void setKodeValid(boolean kodeValid) {
+        this.kodeValid = kodeValid;
     }
 }

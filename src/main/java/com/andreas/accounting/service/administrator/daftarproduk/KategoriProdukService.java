@@ -7,7 +7,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Map;
 import org.primefaces.model.SortOrder;
@@ -50,7 +52,12 @@ public class KategoriProdukService implements BaseServiceInterface, Serializable
     @Override
     public Object save(Object obj) {
         String response = grc.add(endpoint + "/save", obj);
-        return gson.fromJson(response, JsonObject.class).get("id");
+        JsonObject jsonObject = gson.fromJson(response, JsonObject.class);
+        if (jsonObject.get("message").toString().equalsIgnoreCase("failed")) {
+            return jsonObject.get("error");
+        } else {
+            return jsonObject.get("id");
+        }
     }
 
     @Override
@@ -63,7 +70,12 @@ public class KategoriProdukService implements BaseServiceInterface, Serializable
     public Object update(Object obj) {
         KategoriProduk kategoriProduk = (KategoriProduk) obj;
         String response = grc.put(endpoint + "/update?id=" + kategoriProduk.getId(), obj);
-        return gson.fromJson(response, JsonObject.class).get("id");
+        JsonObject jsonObject = gson.fromJson(response, JsonObject.class);
+        if (jsonObject.get("message").toString().equalsIgnoreCase("failed")) {
+            return jsonObject.get("error");
+        } else {
+            return jsonObject.get("id");
+        }
     }
 
     @Override
@@ -75,6 +87,24 @@ public class KategoriProdukService implements BaseServiceInterface, Serializable
     @Override
     public Object search(Object obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public boolean checkNama(String nama) {
+        try {
+            String response = grc.get(endpoint + "/checkNama?nama=" + URLEncoder.encode(nama, "UTF-8"));
+            return Integer.parseInt(response) == 0;
+        } catch (UnsupportedEncodingException | NumberFormatException ex) {
+            return false;
+        }
+    }
+
+    public boolean checkKode(String kode) {
+        try {
+            String response = grc.get(endpoint + "/checkKode?kode=" + URLEncoder.encode(kode, "UTF-8"));
+            return Integer.parseInt(response) == 0;
+        } catch (UnsupportedEncodingException | NumberFormatException ex) {
+            return false;
+        }
     }
 
     public int count(Map<String, Object> filters) {

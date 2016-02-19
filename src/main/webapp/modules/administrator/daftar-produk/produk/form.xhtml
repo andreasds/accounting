@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <div class="box-body">
         <div class="col-md-10">
             <div class="form-group">
@@ -11,13 +11,13 @@
                                value="Kategori *" />
                 <div class="col-md-9">
                     <p:selectOneMenu id="produk_kategori"
-                                     immediate="true"
                                      style="width: 100% !important;"
                                      filter="true"
                                      filterMatchMode="contains"
                                      value="#{produkBean.kategoriProdukId}">
+                        <f:ajax render="footer_button" />
                         <f:selectItem itemLabel="-- Pilih Kategori --"
-                                      itemValue="" />
+                                      itemValue="0" />
                         <f:selectItems value="#{produkBean.kategoriProdukModels}"
                                        var="kategori"
                                        itemLabel="#{kategori.nama}"
@@ -33,8 +33,10 @@
                 <div class="col-md-9">
                     <p:inputText id="produk_deskripsi"
                                  styleClass="form-control"
-                                 immediate="true"
-                                 value="#{produkBean.produkModel.deskripsi}" />
+                                 maxlength="150"
+                                 value="#{produkBean.produkModel.deskripsi}">
+                        <f:ajax render="footer_button" />
+                    </p:inputText>
                 </div>
             </div>
 
@@ -44,13 +46,13 @@
                                value="Satuan *" />
                 <div class="col-md-9">
                     <p:selectOneMenu id="produk_satuan"
-                                     immediate="true"
                                      style="width: 100% !important;"
                                      filter="true"
                                      filterMatchMode="contains"
                                      value="#{produkBean.satuanId}">
+                        <f:ajax render="footer_button" />
                         <f:selectItem itemLabel="-- Pilih Satuan --"
-                                      itemValue="" />
+                                      itemValue="0" />
                         <f:selectItems value="#{produkBean.satuanModels}"
                                        var="satuan"
                                        itemLabel="#{satuan.kode}"

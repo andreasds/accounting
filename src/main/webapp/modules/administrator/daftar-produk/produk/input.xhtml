@@ -37,14 +37,19 @@
                     <ui:include src="form.xhtml" />
 
                     <div class="box-footer">
-                        <p:commandButton styleClass="btn btn-primary btn-sm btn-flat"
-                                         icon="fa fa-save"
-                                         actionListener="#{produkBean.save()}"
-                                         value="Simpan" />
-                        <p:commandButton styleClass="btn btn-sm btn-flat"
-                                         icon="fa fa-mail-reply"
-                                         actionListener="#{produkBean.list()}"
-                                         value="Kembali" />
+                        <h:panelGroup id="footer_button">
+                            <p:commandButton styleClass="btn btn-primary btn-sm btn-flat"
+                                             icon="fa fa-save"
+                                             rendered="#{produkBean.kategoriProdukId ne 0 and
+                                                         produkBean.produkModel.deskripsi ne '' and
+                                                         produkBean.satuanId ne 0}"
+                                             actionListener="#{produkBean.save()}"
+                                             value="Simpan" />
+                            <p:commandButton styleClass="btn btn-sm btn-flat"
+                                             icon="fa fa-mail-reply"
+                                             actionListener="#{produkBean.list()}"
+                                             value="Kembali" />
+                        </h:panelGroup>
                     </div>
                 </div>
             </h:form>

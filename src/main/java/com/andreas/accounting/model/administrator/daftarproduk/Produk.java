@@ -10,13 +10,13 @@ public class Produk implements Serializable {
 
     private static final long serialVersionUID = -1845866666858035113L;
 
-    private Long id;
-    private int indeks;
-    private String deskripsi;
-    private int jumlahAwal;
-    private int hargaBeliAwal;
-    private KategoriProduk kategoriProduk;
-    private Satuan satuan;
+    private Long id = 0L;
+    private int indeks = 0;
+    private String deskripsi = "";
+    private int jumlahAwal = 0;
+    private int hargaBeliAwal = 0;
+    private KategoriProduk kategoriProduk = new KategoriProduk();
+    private Satuan satuan = new Satuan();
 
     public Long getId() {
         return id;

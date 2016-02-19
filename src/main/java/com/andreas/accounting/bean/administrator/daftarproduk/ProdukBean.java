@@ -13,13 +13,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.model.LazyDataModel;
 
 /**
  *
  * @author Andreas Dharmawan <andreas.ds90@gmail.com>
  */
-@ManagedBean(name="produkBean")
+@ManagedBean(name = "produkBean")
 @ViewScoped
 public class ProdukBean implements BaseBeanInterface, Serializable {
 
@@ -47,9 +48,11 @@ public class ProdukBean implements BaseBeanInterface, Serializable {
     @Override
     public void viewInput() {
         init();
-        produkModel = new Produk();
-        kategoriProdukModels = (ArrayList<KategoriProduk>) kategoriProdukService.listNama();
-        satuanModels = (ArrayList<Satuan>) satuanService.listKode();
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            produkModel = new Produk();
+            kategoriProdukModels = (ArrayList<KategoriProduk>) kategoriProdukService.listNama();
+            satuanModels = (ArrayList<Satuan>) satuanService.listKode();
+        }
     }
 
     @Override
@@ -61,11 +64,13 @@ public class ProdukBean implements BaseBeanInterface, Serializable {
     @Override
     public void viewEdit(long id) {
         init();
-        produkModel = (Produk) produkService.get(id);
-        satuanId = produkModel.getSatuan().getId();
-        kategoriProdukId = produkModel.getKategoriProduk().getId();
-        kategoriProdukModels = (ArrayList<KategoriProduk>) kategoriProdukService.listNama();
-        satuanModels = (ArrayList<Satuan>) satuanService.listAll();
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            produkModel = (Produk) produkService.get(id);
+            satuanId = produkModel.getSatuan().getId();
+            kategoriProdukId = produkModel.getKategoriProduk().getId();
+            kategoriProdukModels = (ArrayList<KategoriProduk>) kategoriProdukService.listNama();
+            satuanModels = (ArrayList<Satuan>) satuanService.listAll();
+        }
     }
 
     @Override

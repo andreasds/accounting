@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
     <div class="box-body">
         <div class="col-md-10">
             <div class="form-group">
@@ -11,13 +12,14 @@
                                value="Perusahaan *" />
                 <div class="col-md-9">
                     <p:selectOneMenu id="penjual_perusahaan"
-                                     immediate="true"
                                      style="width: 100% !important;"
                                      filter="true"
                                      filterMatchMode="contains"
                                      value="#{penjualBean.perusahaanId}">
+                        <f:ajax render="penjual_nama_valid footer_button"
+                                listener="#{penjualBean.checkNama()}" />
                         <f:selectItem itemLabel="-- Pilih Perusahaan --"
-                                      itemValue="" />
+                                      itemValue="0" />
                         <f:selectItems value="#{penjualBean.perusahaanModels}"
                                        var="perusahaan"
                                        itemLabel="#{perusahaan.nama}"
@@ -33,8 +35,19 @@
                 <div class="col-md-9">
                     <p:inputText id="penjual_nama"
                                  styleClass="form-control"
-                                 immediate="true"
-                                 value="#{penjualBean.penjualModel.nama}" />
+                                 maxlength="100"
+                                 value="#{penjualBean.penjualModel.nama}">
+                        <f:ajax render="penjual_nama_valid footer_button"
+                                listener="#{penjualBean.checkNama()}" />
+                    </p:inputText>
+                    <h:panelGroup id="penjual_nama_valid">
+                        <p:outputLabel styleClass="label #{penjualBean.namaValid ? 'label-success' : 'label-danger'}"
+                                       rendered="#{penjualBean.perusahaanId ne 0 and
+                                                   penjualBean.penjualModel.nama ne '' and
+                                                   (penjualBean.perusahaanIdBefore ne penjualBean.perusahaanId or
+                                                   penjualBean.namaBefore ne penjualBean.penjualModel.nama)}"
+                                       value="Nama#{penjualBean.namaValid ? '' : ' tidak'} dapat digunakan" />
+                    </h:panelGroup>
                 </div>
             </div>
 
@@ -45,7 +58,7 @@
                 <div class="col-md-9">
                     <p:inputText id="penjual_telepon"
                                  styleClass="form-control"
-                                 immediate="true"
+                                 maxlength="15"
                                  value="#{penjualBean.penjualModel.telepon}" />
                 </div>
             </div>
@@ -57,7 +70,7 @@
                 <div class="col-md-9">
                     <p:inputText id="penjual_hp"
                                  styleClass="form-control"
-                                 immediate="true"
+                                 maxlength="15"
                                  value="#{penjualBean.penjualModel.hp}" />
                 </div>
             </div>

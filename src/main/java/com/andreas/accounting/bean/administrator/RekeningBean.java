@@ -8,6 +8,7 @@ import com.andreas.accounting.util.Util;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.model.LazyDataModel;
 
 /**
@@ -27,6 +28,8 @@ public class RekeningBean implements BaseBeanInterface, Serializable {
     private Rekening rekeningModel;
     private final RekeningService rekeningService = new RekeningService();
     private long rekeningId;
+    private String namaBefore;
+    private boolean namaValid;
 
     @Override
     public void init() {
@@ -36,7 +39,10 @@ public class RekeningBean implements BaseBeanInterface, Serializable {
     @Override
     public void viewInput() {
         init();
-        rekeningModel = new Rekening();
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            rekeningModel = new Rekening();
+            namaBefore = "";
+        }
     }
 
     @Override
@@ -48,7 +54,11 @@ public class RekeningBean implements BaseBeanInterface, Serializable {
     @Override
     public void viewEdit(long id) {
         init();
-        rekeningModel = (Rekening) rekeningService.get(id);
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            rekeningModel = (Rekening) rekeningService.get(id);
+            namaBefore = rekeningModel.getNama();
+            namaValid = true;
+        }
     }
 
     @Override
@@ -96,6 +106,14 @@ public class RekeningBean implements BaseBeanInterface, Serializable {
         Util.redirectToPage(baseModule + "list.xhtml");
     }
 
+    public void checkNama() {
+        if (rekeningModel.getNama().equalsIgnoreCase(namaBefore)) {
+            namaValid = true;
+        } else {
+            namaValid = rekeningService.checkNama(rekeningModel.getNama());
+        }
+    }
+
     public String getPageName() {
         return pageName;
     }
@@ -126,5 +144,21 @@ public class RekeningBean implements BaseBeanInterface, Serializable {
 
     public void setRekeningId(long rekeningId) {
         this.rekeningId = rekeningId;
+    }
+
+    public String getNamaBefore() {
+        return namaBefore;
+    }
+
+    public void setNamaBefore(String namaBefore) {
+        this.namaBefore = namaBefore;
+    }
+
+    public boolean getNamaValid() {
+        return namaValid;
+    }
+
+    public void setNamaValid(boolean namaValid) {
+        this.namaValid = namaValid;
     }
 }

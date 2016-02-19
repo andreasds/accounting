@@ -10,9 +10,9 @@ public class Satuan implements Serializable {
 
     private static final long serialVersionUID = -4216740843728413251L;
 
-    private Long id;
-    private String kode;
-    private String deskripsi;
+    private Long id = 0L;
+    private String kode = "";
+    private String deskripsi = "";
 
     public Long getId() {
         return id;

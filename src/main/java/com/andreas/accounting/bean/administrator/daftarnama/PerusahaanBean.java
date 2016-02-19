@@ -8,6 +8,7 @@ import com.andreas.accounting.util.Util;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.model.LazyDataModel;
 
 /**
@@ -27,6 +28,8 @@ public class PerusahaanBean implements BaseBeanInterface, Serializable {
     private Perusahaan perusahaanModel;
     private final PerusahaanService perusahaanService = new PerusahaanService();
     private long perusahaanId;
+    private String namaBefore;
+    private boolean namaValid;
 
     @Override
     public void init() {
@@ -36,7 +39,10 @@ public class PerusahaanBean implements BaseBeanInterface, Serializable {
     @Override
     public void viewInput() {
         init();
-        perusahaanModel = new Perusahaan();
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            perusahaanModel = new Perusahaan();
+            namaBefore = "";
+        }
     }
 
     @Override
@@ -48,7 +54,11 @@ public class PerusahaanBean implements BaseBeanInterface, Serializable {
     @Override
     public void viewEdit(long id) {
         init();
-        perusahaanModel = (Perusahaan) perusahaanService.get(id);
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            perusahaanModel = (Perusahaan) perusahaanService.get(id);
+            namaBefore = perusahaanModel.getNama();
+            namaValid = true;
+        }
     }
 
     @Override
@@ -96,6 +106,14 @@ public class PerusahaanBean implements BaseBeanInterface, Serializable {
         Util.redirectToPage(baseModule + "list.xhtml");
     }
 
+    public void checkNama() {
+        if (perusahaanModel.getNama().equalsIgnoreCase(namaBefore)) {
+            namaValid = true;
+        } else {
+            namaValid = perusahaanService.checkNama(perusahaanModel.getNama());
+        }
+    }
+
     public String getPageName() {
         return pageName;
     }
@@ -126,5 +144,21 @@ public class PerusahaanBean implements BaseBeanInterface, Serializable {
 
     public void setPerusahaanId(long perusahaanId) {
         this.perusahaanId = perusahaanId;
+    }
+
+    public String getNamaBefore() {
+        return namaBefore;
+    }
+
+    public void setNamaBefore(String namaBefore) {
+        this.namaBefore = namaBefore;
+    }
+
+    public boolean getNamaValid() {
+        return namaValid;
+    }
+
+    public void setNamaValid(boolean namaValid) {
+        this.namaValid = namaValid;
     }
 }

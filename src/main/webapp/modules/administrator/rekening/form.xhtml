@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <div class="box-body">
         <div class="col-md-10">
@@ -11,8 +13,17 @@
                 <div class="col-md-9">
                     <p:inputText id="rekening_nama"
                                  styleClass="form-control"
-                                 immediate="true"
-                                 value="#{rekeningBean.rekeningModel.nama}" />
+                                 maxlength="100"
+                                 value="#{rekeningBean.rekeningModel.nama}">
+                        <f:ajax render="rekening_nama_valid footer_button"
+                                listener="#{rekeningBean.checkNama()}" />
+                    </p:inputText>
+                    <h:panelGroup id="rekening_nama_valid">
+                        <p:outputLabel styleClass="label #{rekeningBean.namaValid ? 'label-success' : 'label-danger'}"
+                                       rendered="#{rekeningBean.rekeningModel.nama ne '' and
+                                                   rekeningBean.namaBefore ne rekeningBean.rekeningModel.nama}"
+                                       value="Nama#{rekeningBean.namaValid ? '' : ' tidak'} dapat digunakan" />
+                    </h:panelGroup>
                 </div>
             </div>
 
@@ -23,7 +34,7 @@
                 <div class="col-md-9">
                     <p:inputTextarea id="rekening_deskripsi"
                                      styleClass="form-control"
-                                     immediate="true"
+                                     maxlength="500"
                                      value="#{rekeningBean.rekeningModel.deskripsi}" />
                 </div>
             </div>

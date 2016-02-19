@@ -70,6 +70,7 @@
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
         </dependency>
+        <!-- java servlet api -->
         
         <!-- jstl -->
         <dependency>
@@ -77,6 +78,7 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+        <!-- jstl -->
         
         <!-- junit -->
         <dependency>

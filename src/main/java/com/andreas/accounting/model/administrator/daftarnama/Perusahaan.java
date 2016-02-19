@@ -10,10 +10,10 @@ public class Perusahaan implements Serializable {
 
     private static final long serialVersionUID = -4825756718947072529L;
 
-    private Long id;
-    private String nama;
-    private String alamat;
-    private String kota;
+    private Long id = 0L;
+    private String nama = "";
+    private String alamat = "";
+    private String kota = "";
 
     public Long getId() {
         return id;

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <div class="box-body">
         <div class="col-md-10">
@@ -11,8 +13,17 @@
                 <div class="col-md-9">
                     <p:inputText id="perusahaan_nama"
                                  styleClass="form-control"
-                                 immediate="true"
-                                 value="#{perusahaanBean.perusahaanModel.nama}" />
+                                 maxlength="100"
+                                 value="#{perusahaanBean.perusahaanModel.nama}">
+                        <f:ajax render="perusahaan_nama_valid footer_button"
+                                listener="#{perusahaanBean.checkNama()}" />
+                    </p:inputText>
+                    <h:panelGroup id="perusahaan_nama_valid">
+                        <p:outputLabel styleClass="label #{perusahaanBean.namaValid ? 'label-success' : 'label-danger'}"
+                                       rendered="#{perusahaanBean.perusahaanModel.nama ne '' and
+                                                   perusahaanBean.namaBefore ne perusahaanBean.perusahaanModel.nama}"
+                                       value="Nama#{perusahaanBean.namaValid ? '' : ' tidak'} dapat digunakan" />
+                    </h:panelGroup>
                 </div>
             </div>
 
@@ -23,7 +34,7 @@
                 <div class="col-md-9">
                     <p:inputTextarea id="perusahaan_alamat"
                                      styleClass="form-control"
-                                     immediate="true"
+                                     maxlength="500"
                                      value="#{perusahaanBean.perusahaanModel.alamat}" />
                 </div>
             </div>
@@ -35,7 +46,7 @@
                 <div class="col-md-9">
                     <p:inputText id="perusahaan_kota"
                                  styleClass="form-control"
-                                 immediate="true"
+                                 maxlength="20"
                                  value="#{perusahaanBean.perusahaanModel.kota}" />
                 </div>
             </div>

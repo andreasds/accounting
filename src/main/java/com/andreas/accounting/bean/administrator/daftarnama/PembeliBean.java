@@ -11,13 +11,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.model.LazyDataModel;
 
 /**
  *
  * @author Andreas Dharmawan <andreas.ds90@gmail.com>
  */
-@ManagedBean(name="pembeliBean")
+@ManagedBean(name = "pembeliBean")
 @ViewScoped
 public class PembeliBean implements BaseBeanInterface, Serializable {
 
@@ -33,6 +34,9 @@ public class PembeliBean implements BaseBeanInterface, Serializable {
     private final PerusahaanService perusahaanService = new PerusahaanService();
     private long pembeliId;
     private long perusahaanId;
+    private long perusahaanIdBefore;
+    private String namaBefore;
+    private boolean namaValid;
 
     @Override
     public void init() {
@@ -42,8 +46,12 @@ public class PembeliBean implements BaseBeanInterface, Serializable {
     @Override
     public void viewInput() {
         init();
-        pembeliModel = new Orang();
-        perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNama();
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            pembeliModel = new Orang();
+            perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNama();
+            perusahaanIdBefore = 0;
+            namaBefore = "";
+        }
     }
 
     @Override
@@ -55,9 +63,14 @@ public class PembeliBean implements BaseBeanInterface, Serializable {
     @Override
     public void viewEdit(long id) {
         init();
-        pembeliModel = (Orang) pembeliService.get(id);
-        perusahaanId = pembeliModel.getPerusahaan().getId();
-        perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNama();
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            pembeliModel = (Orang) pembeliService.get(id);
+            perusahaanId = pembeliModel.getPerusahaan().getId();
+            perusahaanIdBefore = pembeliModel.getPerusahaan().getId();
+            perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNama();
+            namaBefore = pembeliModel.getNama();
+            namaValid = true;
+        }
     }
 
     @Override
@@ -107,6 +120,15 @@ public class PembeliBean implements BaseBeanInterface, Serializable {
         Util.redirectToPage(baseModule + "list.xhtml");
     }
 
+    public void checkNama() {
+        if (pembeliModel.getNama().equalsIgnoreCase(namaBefore) &&
+                perusahaanId == perusahaanIdBefore) {
+            namaValid = true;
+        } else {
+            namaValid = pembeliService.checkNama(pembeliModel.getNama(), perusahaanId);
+        }
+    }
+
     public String getPageName() {
         return pageName;
     }
@@ -153,5 +175,29 @@ public class PembeliBean implements BaseBeanInterface, Serializable {
 
     public void setPerusahaanId(long perusahaanId) {
         this.perusahaanId = perusahaanId;
+    }
+
+    public long getPerusahaanIdBefore() {
+        return perusahaanIdBefore;
+    }
+
+    public void setPerusahaanIdBefore(long perusahaanIdBefore) {
+        this.perusahaanIdBefore = perusahaanIdBefore;
+    }
+
+    public String getNamaBefore() {
+        return namaBefore;
+    }
+
+    public void setNamaBefore(String namaBefore) {
+        this.namaBefore = namaBefore;
+    }
+
+    public boolean getNamaValid() {
+        return namaValid;
+    }
+
+    public void setNamaValid(boolean namaValid) {
+        this.namaValid = namaValid;
     }
 }
