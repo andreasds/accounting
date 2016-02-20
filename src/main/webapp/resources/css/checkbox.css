@@ -6,3 +6,8 @@
 .ui-chkbox {
     padding-top: 10px !important;
 }
+
+.ui-icon-check {
+    margin-top: -2px;
+    margin-left: -1px;
+}

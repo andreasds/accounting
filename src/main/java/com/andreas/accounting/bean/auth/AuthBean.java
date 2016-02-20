@@ -78,7 +78,6 @@ public class AuthBean implements Serializable {
                 current_url = StringUtils.join(menuFragment, "/");
             }
             menu.setCurrentMenu(current_url);
-            System.out.println("currentMenu = " + menu.getCurrentMenu());
         }
     }
 
