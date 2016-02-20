@@ -18,6 +18,7 @@ public class MenuBean implements Serializable {
     private static final long serialVersionUID = -2192728682604636301L;
 
     private ArrayList<Menu> menus = new ArrayList<>();
+    private String currentMenu;
 
     public ArrayList<Menu> getMenus() {
         return menus;
@@ -25,6 +26,14 @@ public class MenuBean implements Serializable {
 
     public void setMenus(ArrayList<Menu> menus) {
         this.menus = menus;
+    }
+
+    public String getCurrentMenu() {
+        return currentMenu;
+    }
+
+    public void setCurrentMenu(String currentMenu) {
+        this.currentMenu = currentMenu;
     }
 
     public ArrayList<String> getBreadcrumbs() {

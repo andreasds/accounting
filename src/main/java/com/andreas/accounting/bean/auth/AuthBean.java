@@ -14,6 +14,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -68,6 +70,15 @@ public class AuthBean implements Serializable {
     public void validate() {
         if (!loggedIn) {
             Util.redirectToPage("/login.xhtml");
+        } else {
+            String current_url = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURI();
+            if (!current_url.contains("home.xhtml")) {
+                String[] menuFragment = current_url.split("/");
+                menuFragment[menuFragment.length - 1] = "list.xhtml";
+                current_url = StringUtils.join(menuFragment, "/");
+            }
+            menu.setCurrentMenu(current_url);
+            System.out.println("currentMenu = " + menu.getCurrentMenu());
         }
     }
 

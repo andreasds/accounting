@@ -28,6 +28,16 @@
             </div>
 
             <div class="form-group">
+                <p:outputLabel for="perusahaan_pemilik"
+                               styleClass="control-label col-md-3"
+                               value="Pemilik" />
+                <div class="col-md-9">
+                    <p:selectBooleanCheckbox id="perusahaan_pemilik"
+                                             value="#{perusahaanBean.perusahaanModel.pemilik}" />
+                </div>
+            </div>
+
+            <div class="form-group">
                 <p:outputLabel for="perusahaan_alamat"
                                styleClass="control-label col-md-3"
                                value="Alamat" />

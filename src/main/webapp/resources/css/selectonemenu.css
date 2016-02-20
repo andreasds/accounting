@@ -7,3 +7,7 @@
     padding-top: 4px !important;
     width: 30px !important;
 }
+
+.ui-selectonemenu-label {
+    padding-left: 12px !important;
+}

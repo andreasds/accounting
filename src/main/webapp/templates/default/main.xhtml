@@ -22,6 +22,17 @@
                         name="jquery/jquery.js"/>
         <h:outputScript name="webjars/adminlte/2.3.2/bootstrap/js/bootstrap.js"/>
         <h:outputScript name="webjars/adminlte/2.3.2/dist/js/app.min.js"/>
+        <script type="text/javascript">
+            $('windows').ready(function () {
+                var selectedMenu = '${menuBean.currentMenu}';
+                $("a[href='" + selectedMenu + "']")
+                        .closest('ul').closest('li').closest('ul').closest('li').addClass('active');
+                $("a[href='" + selectedMenu + "']")
+                        .closest('ul').closest('li').addClass('active');
+                $("a[href='" + selectedMenu + "']")
+                        .closest('li').addClass('active');
+            });
+        </script>
 
         <!-- Ajax Status -->
         <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
@@ -56,6 +67,7 @@
               href="#{request.contextPath}/webjars/font-awesome/4.5.0/css/font-awesome.min.css"/>
         <h:outputStylesheet name="css/font-awesome-fix.css"/>
         <h:outputStylesheet name="css/selectonemenu.css"/>
+        <h:outputStylesheet name="css/checkbox.css"/>
 
         <!-- Wrapper -->
         <div class="wrapper">

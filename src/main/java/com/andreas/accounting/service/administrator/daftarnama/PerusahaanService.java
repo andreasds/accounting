@@ -49,6 +49,13 @@ public class PerusahaanService implements BaseServiceInterface, Serializable {
         return gson.fromJson(response, type);
     }
 
+    public Object listNamaPemilik() {
+        String response = grc.get(endpoint + "/listNamaPemilik");
+        Type type = new TypeToken<ArrayList<Perusahaan>>() {
+        }.getType();
+        return gson.fromJson(response, type);
+    }
+
     @Override
     public Object save(Object obj) {
         String response = grc.add(endpoint + "/save", obj);

@@ -14,6 +14,7 @@ public class Perusahaan implements Serializable {
     private String nama = "";
     private String alamat = "";
     private String kota = "";
+    private boolean pemilik = false;
 
     public Long getId() {
         return id;
@@ -45,5 +46,13 @@ public class Perusahaan implements Serializable {
 
     public void setKota(String kota) {
         this.kota = kota;
+    }
+
+    public boolean getPemilik() {
+        return pemilik;
+    }
+
+    public void setPemilik(boolean pemilik) {
+        this.pemilik = pemilik;
     }
 }
