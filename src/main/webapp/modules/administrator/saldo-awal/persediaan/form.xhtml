@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+    <div class="box-body">
+        <div class="col-md-10">
+            <div class="form-group">
+                <p:outputLabel for="produk_kode"
+                               styleClass="control-label col-md-3"
+                               value="Kode Barang *" />
+                <div class="col-md-9">
+                    <p:selectOneMenu id="produk_kode"
+                                     style="width: 100% !important;"
+                                     filter="true"
+                                     filterMatchMode="contains"
+                                     value="#{awalPersediaanBean.produkId}">
+                        <f:ajax render="produk_kode_valid footer_button"
+                                listener="#{awalPersediaanBean.checkProduk()}" />
+                        <f:selectItem itemLabel="-- Pilih Kode Barang --"
+                                      itemValue="0" />
+                        <f:selectItems value="#{awalPersediaanBean.produkModels}"
+                                       var="produk"
+                                       itemLabel="#{produk.kategoriProduk.kode}-#{produk.indeks} - #{produk.deskripsi}"
+                                       itemValue="#{produk.id}" />
+                    </p:selectOneMenu>
+                    <h:panelGroup id="produk_kode_valid">
+                        <p:outputLabel styleClass="label #{awalPersediaanBean.produkValid ? 'label-success' : 'label-danger'}"
+                                       rendered="#{awalPersediaanBean.produkId ne 0 and
+                                                   awalPersediaanBean.produkIdBefore ne awalPersediaanBean.produkId}"
+                                       value="Produk#{awalPersediaanBean.produkValid ? '' : ' tidak'} dapat digunakan" />
+                    </h:panelGroup>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p:outputLabel for="produk_jumlah_awal"
+                               styleClass="control-label col-md-3"
+                               value="Jumlah Awal *" />
+                <div class="col-md-9">
+                    <pe:inputNumber id="produk_jumlah_awal"
+                                    style="width: 100% !important;"
+                                    value="#{awalPersediaanBean.produkModel.jumlahAwal}"
+                                    decimalPlaces="0"
+                                    thousandSeparator="."
+                                    decimalSeparator=",">
+                        <f:ajax render="footer_button" />
+                    </pe:inputNumber>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p:outputLabel for="produk_harga_awal"
+                               styleClass="control-label col-md-3"
+                               value="Harga Beli" />
+                <div class="col-md-9">
+                    <pe:inputNumber id="produk_harga_awal"
+                                    style="width: 100% !important;"
+                                    value="#{awalPersediaanBean.produkModel.hargaBeliAwal}"
+                                    thousandSeparator="."
+                                    decimalSeparator="," />
+                </div>
+            </div>
+        </div>
+    </div>
+</html>

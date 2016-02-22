@@ -1,4 +1,4 @@
-package com.andreas.accounting.service.administrator.daftarproduk;
+package com.andreas.accounting.service.administrator.saldoawal;
 
 import com.andreas.accounting.model.administrator.daftarproduk.Produk;
 import com.andreas.accounting.util.BaseServiceInterface;
@@ -16,13 +16,13 @@ import org.primefaces.model.SortOrder;
  *
  * @author Andreas Dharmawan <andreas.ds90@gmail.com>
  */
-public class ProdukService implements BaseServiceInterface, Serializable {
+public class AwalPersediaanService implements BaseServiceInterface, Serializable {
 
-    private static final long serialVersionUID = -4327841090883899039L;
+    private static final long serialVersionUID = -8740374934330485586L;
 
     private final GrailsRestClient grc = new GrailsRestClient();
     private final Gson gson = new Gson();
-    private final String endpoint = "produk";
+    private final String endpoint = "awalPersediaan";
 
     @Override
     public Object listAll() {
@@ -40,16 +40,10 @@ public class ProdukService implements BaseServiceInterface, Serializable {
         return gson.fromJson(response, type);
     }
 
-    public Object listKode() {
-        String response = grc.get(endpoint + "/listKode");
-        Type type = new TypeToken<ArrayList<Produk>>() {
-        }.getType();
-        return gson.fromJson(response, type);
-    }
-
     @Override
     public Object save(Object obj) {
-        String response = grc.add(endpoint + "/save", obj);
+        Produk produk = (Produk) obj;
+        String response = grc.add(endpoint + "/save?id=" + produk.getId(), obj);
         JsonObject jsonObject = gson.fromJson(response, JsonObject.class);
         if (jsonObject.get("message").toString().equalsIgnoreCase("failed")) {
             return jsonObject.get("error");
@@ -85,6 +79,11 @@ public class ProdukService implements BaseServiceInterface, Serializable {
     @Override
     public Object search(Object obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public boolean checkProduk(long id) {
+        String response = grc.get(endpoint + "/checkProduk?id=" + id);
+        return Integer.parseInt(response) == 0;
     }
 
     public int count(Map<String, Object> filters) {
