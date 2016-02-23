@@ -1,34 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Accounting Login</title>
     </h:head>
     <h:body>
-        <div>
-            <h2>Aplikasi Accounting</h2>
-            <h:form>
-                <div>
-                    <p:outputLabel for="username"
-                                   value="Username" />
-                    <p:inputText id="username"
-                                 immediate="true"
-                                 value="#{authBean.session.username}" />
+        <!-- Script -->
+        <!-- jQuery yang digunakan dari Primefaces supaya tidak bentrok -->
+        <h:outputScript library="primefaces"
+                        name="jquery/jquery.js"/>
+        <h:outputScript name="webjars/adminlte/2.3.2/bootstrap/js/bootstrap.js"/>
+        <h:outputScript name="webjars/adminlte/2.3.2/dist/js/app.min.js"/>
+
+        <!-- CSS -->
+        <link rel="stylesheet"
+              type="text/css"
+              media="all"
+              href="#{request.contextPath}/webjars/adminlte/2.3.2/bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet"
+              type="text/css"
+              media="all"
+              href="#{request.contextPath}/webjars/adminlte/2.3.2/dist/css/AdminLTE.min.css"/>
+        <link rel="stylesheet"
+              type="text/css"
+              media="all"
+              href="#{request.contextPath}/webjars/adminlte/2.3.2/dist/css/skins/_all-skins.min.css"/>
+        <h:outputStylesheet name="css/templates/template.css"/>
+
+        <h:form role="form"
+                styleClass="form-horizontal">
+            <div class="col-md-3">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3>Aplikasi Accounting</h3>
+                    </div>
+
+                    <div class="box-body">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p:outputLabel for="username"
+                                               styleClass="control-label col-md-3"
+                                               value="Username" />
+                                <div class="col-md-9">
+                                    <p:inputText id="username"
+                                                 style="width: 100% !important;"
+                                                 value="#{authBean.session.username}" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <p:outputLabel for="password"
+                                               styleClass="control-label col-md-3"
+                                               value="Password" />
+                                <div class="col-md-9">
+                                    <p:inputText id="password"
+                                                 type="password"
+                                                 style="width: 100% !important;"
+                                                 value="#{authBean.session.password}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-footer">
+                        <p:ajaxStatus>
+                            <f:facet name="default">
+                                <p:commandButton value="Masuk"
+                                                 styleClass="btn btn-primary btn-flat btn-sm"
+                                                 actionListener="#{authBean.login}" />
+                            </f:facet>
+
+                            <f:facet name="start">
+                                <div class="btn btn-primary btn-flat btn-sm">
+                                    <p:graphicImage library="img"
+                                                    name="/486.GIF" />
+                                    <h:outputText value="&#160;&#160;Logged In" />
+                                </div>
+                            </f:facet>
+
+                            <f:facet name="complete">
+                                <p:commandButton value="Masuk"
+                                                 styleClass="btn btn-primary btn-flat btn-sm"
+                                                 actionListener="#{authBean.login}" />
+                            </f:facet>
+                        </p:ajaxStatus>
+                    </div>
                 </div>
-                <div>
-                    <p:outputLabel for="password"
-                                   value="Password" />
-                    <p:inputText id="password"
-                                 immediate="true"
-                                 type="password"
-                                 value="#{authBean.session.password}" />
-                </div>
-                <div>
-                    <p:commandButton value="Login" actionListener="#{authBean.login}" />
-                </div>
-            </h:form>
-        </div>
+            </div>
+        </h:form>
     </h:body>
 </html>
