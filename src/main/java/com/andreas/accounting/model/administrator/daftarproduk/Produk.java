@@ -13,8 +13,6 @@ public class Produk implements Serializable {
     private Long id = 0L;
     private int indeks = 0;
     private String deskripsi = "";
-    private int jumlahAwal = 0;
-    private int hargaBeliAwal = 0;
     private KategoriProduk kategoriProduk = new KategoriProduk();
     private Satuan satuan = new Satuan();
 
@@ -40,22 +38,6 @@ public class Produk implements Serializable {
 
     public void setDeskripsi(String deskripsi) {
         this.deskripsi = deskripsi;
-    }
-
-    public int getJumlahAwal() {
-        return jumlahAwal;
-    }
-
-    public void setJumlahAwal(int jumlahAwal) {
-        this.jumlahAwal = jumlahAwal;
-    }
-    
-    public int getHargaBeliAwal() {
-        return hargaBeliAwal;
-    }
-
-    public void setHargaBeliAwal(int hargaBeliAwal) {
-        this.hargaBeliAwal = hargaBeliAwal;
     }
 
     public KategoriProduk getKategoriProduk() {

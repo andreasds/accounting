@@ -1,4 +1,4 @@
-package com.andreas.accounting.model.auth;
+package com.andreas.accounting.model.util;
 
 import java.io.Serializable;
 import java.util.ArrayList;

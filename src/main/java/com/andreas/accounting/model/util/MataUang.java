@@ -1,4 +1,4 @@
-package com.andreas.accounting.model.administrator;
+package com.andreas.accounting.model.util;
 
 import java.io.Serializable;
 
@@ -6,13 +6,13 @@ import java.io.Serializable;
  *
  * @author Andreas Dharmawan <andreas.ds90@gmail.com>
  */
-public class Rekening implements Serializable {
+public class MataUang implements Serializable {
 
-    private static final long serialVersionUID = -191083231951307883L;
+    private static final long serialVersionUID = 5514207339954623937L;
 
     private Long id = 0L;
     private String nama = "";
-    private String deskripsi = "";
+    private String kode = "";
 
     public Long getId() {
         return id;
@@ -30,11 +30,11 @@ public class Rekening implements Serializable {
         this.nama = nama;
     }
 
-    public String getDeskripsi() {
-        return deskripsi;
+    public String getKode() {
+        return kode;
     }
 
-    public void setDeskripsi(String deskripsi) {
-        this.deskripsi = deskripsi;
+    public void setKode(String kode) {
+        this.kode = kode;
     }
 }

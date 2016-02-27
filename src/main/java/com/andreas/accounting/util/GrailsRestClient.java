@@ -76,8 +76,21 @@ public class GrailsRestClient implements Serializable {
         return output;
     }
 
-    public String put(String path, Object post) {
+    public String get_out(String path) throws Exception {
         String output;
+        Client client = Client.create();
+        WebResource webResource = client.resource(path);
+        ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
+        if (response.getStatus() != 200) {
+            System.out.println("Status = " + response.getStatus() + ", Get error");
+            output = null;
+        } else {
+            output = response.getEntity(String.class);
+        }
+        return output;
+    }
+
+    public String put(String path, Object post) {
         Client client = Client.create();
         WebResource webResource = client.resource(url + path);
         Gson gson = new Gson();
@@ -90,7 +103,6 @@ public class GrailsRestClient implements Serializable {
     }
 
     public String delete(String path) {
-        String output;
         Client client = Client.create();
         WebResource webResource = client.resource(url + path);
         ClientResponse response = webResource.accept("application/json").header("X-Auth-Token", getToken()).delete(ClientResponse.class);

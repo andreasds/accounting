@@ -1,6 +1,6 @@
 package com.andreas.accounting.bean.auth;
 
-import com.andreas.accounting.model.auth.Menu;
+import com.andreas.accounting.model.util.Menu;
 import com.andreas.accounting.util.Util;
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package com.andreas.accounting.bean.auth;
 
-import com.andreas.accounting.model.auth.Menu;
+import com.andreas.accounting.model.util.Menu;
 import com.andreas.accounting.model.auth.Session;
 import com.andreas.accounting.service.auth.MenuService;
 import com.andreas.accounting.util.GrailsRestClient;

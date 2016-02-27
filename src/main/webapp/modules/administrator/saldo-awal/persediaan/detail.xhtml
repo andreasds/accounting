@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <f:metadata>
-        <f:viewParam name="id" value="#{awalPersediaanBean.produkId}" />
-        <f:event listener="#{awalPersediaanBean.viewDetail(awalPersediaanBean.produkId)}" type="preRenderView" />
+        <f:viewParam name="id" value="#{produkAwalBean.produkAwalId}" />
+        <f:event listener="#{produkAwalBean.viewDetail(produkAwalBean.produkAwalId)}" type="preRenderView" />
     </f:metadata>
     <ui:composition template="/templates/default/main.xhtml">
         <ui:define name="headerContent">
             <h1>
-                Rincian #{awalPersediaanBean.pageName}
+                Rincian #{produkAwalBean.pageName}
             </h1>
             <ol class="breadcrumb">
                 <li>
@@ -35,12 +36,23 @@
                     styleClass="form-horizontal">
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">#{awalPersediaanBean.pageName} Detail</h3>
+                        <h3 class="box-title">#{produkAwalBean.pageName} Detail</h3>
                     </div>
 
                     <!-- detail form -->
                     <div class="box-body">
                         <div class="col-md-10">
+                            <div class="form-group">
+                                <p:outputLabel for="produk_perusahaan"
+                                               styleClass="control-label col-md-3"
+                                               value="Perusahaan Pemilik" />
+                                <div class="col-md-9">
+                                    <p:outputLabel id="produk_perusahaan"
+                                                   styleClass="control-label"
+                                                   value="#{produkAwalBean.produkAwalModel.perusahaan.nama}" />
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <p:outputLabel for="produk_kode"
                                                styleClass="control-label col-md-3"
@@ -48,29 +60,38 @@
                                 <div class="col-md-9">
                                     <p:outputLabel id="produk_kode"
                                                    styleClass="control-label"
-                                                   value="#{awalPersediaanBean.produkModel.kategoriProduk.kode}-#{awalPersediaanBean.produkModel.indeks} - #{awalPersediaanBean.produkModel.deskripsi}" />
+                                                   value="#{produkAwalBean.produkAwalModel.produk.kategoriProduk.kode}-#{produkAwalBean.produkAwalModel.produk.indeks} - #{produkAwalBean.produkAwalModel.produk.deskripsi}" />
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <p:outputLabel for="produk_jumlah_awal"
+                                <p:outputLabel for="produk_jumlah"
                                                styleClass="control-label col-md-3"
                                                value="Jumlah Awal" />
                                 <div class="col-md-9">
-                                    <p:outputLabel id="produk_jumlah_awal"
+                                    <p:outputLabel id="produk_jumlah"
                                                    styleClass="control-label"
-                                                   value="#{awalPersediaanBean.produkModel.jumlahAwal}" />
+                                                   value="#{produkAwalBean.produkAwalModel.jumlah}">
+                                        <f:convertNumber minFractionDigits="2"
+                                                         pattern="#,##0.00" />
+                                    </p:outputLabel>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <p:outputLabel for="produk_harga_awal"
+                                <p:outputLabel for="produk_harga"
                                                styleClass="control-label col-md-3"
                                                value="Harga Beli" />
                                 <div class="col-md-9">
-                                    <p:outputLabel id="produk_harga_awal"
+                                    <p:outputLabel id="produk_mata_uang"
                                                    styleClass="control-label"
-                                                   value="#{awalPersediaanBean.produkModel.hargaBeliAwal}" />
+                                                   value="#{produkAwalBean.produkAwalModel.mataUang.kode}&nbsp;" />
+                                    <p:outputLabel id="produk_harga"
+                                                   styleClass="control-label"
+                                                   value="#{produkAwalBean.produkAwalModel.hargaBeli}">
+                                        <f:convertNumber minFractionDigits="2"
+                                                         pattern="#,##0.00" />
+                                    </p:outputLabel>
                                 </div>
                             </div>
                         </div>
@@ -79,11 +100,11 @@
                     <div class="box-footer">
                         <p:commandButton styleClass="btn btn-sm btn-flat"
                                          icon="fa fa-pencil"
-                                         actionListener="#{awalPersediaanBean.edit(awalPersediaanBean.produkModel.id)}"
+                                         actionListener="#{produkAwalBean.edit(produkAwalBean.produkAwalModel.id)}"
                                          value="Edit" />
                         <p:commandButton styleClass="btn btn-sm btn-flat"
                                          icon="fa fa-mail-reply"
-                                         actionListener="#{awalPersediaanBean.list()}"
+                                         actionListener="#{produkAwalBean.list()}"
                                          value="Kembali" />
                     </div>
                 </div>

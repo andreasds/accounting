@@ -6,13 +6,13 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <f:metadata>
-        <f:viewParam name="id" value="#{awalPersediaanBean.produkId}" />
-        <f:event listener="#{awalPersediaanBean.viewEdit(awalPersediaanBean.produkId)}" type="preRenderView" />
+        <f:viewParam name="id" value="#{produkAwalBean.produkAwalId}" />
+        <f:event listener="#{produkAwalBean.viewEdit(produkAwalBean.produkAwalId)}" type="preRenderView" />
     </f:metadata>
     <ui:composition template="/templates/default/main.xhtml">
         <ui:define name="headerContent">
             <h1>
-                Edit #{awalPersediaanBean.pageName}
+                Edit #{produkAwalBean.pageName}
             </h1>
             <ol class="breadcrumb">
                 <li>
@@ -31,7 +31,7 @@
                     styleClass="form-horizontal">
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">#{awalPersediaanBean.pageName} Form</h3>
+                        <h3 class="box-title">#{produkAwalBean.pageName} Form</h3>
                     </div>
 
                     <!-- form start -->
@@ -41,14 +41,17 @@
                         <h:panelGroup id="footer_button">
                             <p:commandButton styleClass="btn btn-primary btn-sm btn-flat"
                                              icon="fa fa-save"
-                                             rendered="#{awalPersediaanBean.produkId ne 0 and
-                                                         awalPersediaanBean.produkValid and
-                                                         awalPersediaanBean.produkModel.jumlahAwal ne 0}"
-                                             actionListener="#{awalPersediaanBean.update()}"
+                                             rendered="#{produkAwalBean.perusahaanId ne 0 and
+                                                         produkAwalBean.produkId ne 0 and
+                                                         produkAwalBean.produkValid and
+                                                         produkAwalBean.mataUangId ne 0 and
+                                                         produkAwalBean.produkAwalModel.jumlah ne 0 and
+                                                         produkAwalBean.produkAwalModel.rate ne 0}"
+                                             actionListener="#{produkAwalBean.update()}"
                                              value="Update" />
                             <p:commandButton styleClass="btn btn-sm btn-flat"
                                              icon="fa fa-mail-reply"
-                                             actionListener="#{awalPersediaanBean.list()}"
+                                             actionListener="#{produkAwalBean.list()}"
                                              value="Kembali" />
                         </h:panelGroup>
                     </div>

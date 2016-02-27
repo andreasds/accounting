@@ -8,6 +8,28 @@
     <div class="box-body">
         <div class="col-md-10">
             <div class="form-group">
+                <p:outputLabel for="produk_perusahaan"
+                               styleClass="control-label col-md-3"
+                               value="Preusahaan Pemilik *" />
+                <div class="col-md-9">
+                    <p:selectOneMenu id="produk_perusahaan"
+                                     style="width: 100% !important;"
+                                     filter="true"
+                                     filterMatchMode="contains"
+                                     value="#{produkAwalBean.perusahaanId}">
+                        <f:ajax render="produk_kode_valid footer_button"
+                                listener="#{produkAwalBean.checkProduk()}" />
+                        <f:selectItem itemLabel="-- Pilih Perusahaan Pemilik --"
+                                      itemValue="0" />
+                        <f:selectItems value="#{produkAwalBean.perusahaanModels}"
+                                       var="perusahaan"
+                                       itemLabel="#{perusahaan.nama}"
+                                       itemValue="#{perusahaan.id}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <p:outputLabel for="produk_kode"
                                styleClass="control-label col-md-3"
                                value="Kode Barang *" />
@@ -16,33 +38,35 @@
                                      style="width: 100% !important;"
                                      filter="true"
                                      filterMatchMode="contains"
-                                     value="#{awalPersediaanBean.produkId}">
+                                     value="#{produkAwalBean.produkId}">
                         <f:ajax render="produk_kode_valid footer_button"
-                                listener="#{awalPersediaanBean.checkProduk()}" />
+                                listener="#{produkAwalBean.checkProduk()}" />
                         <f:selectItem itemLabel="-- Pilih Kode Barang --"
                                       itemValue="0" />
-                        <f:selectItems value="#{awalPersediaanBean.produkModels}"
+                        <f:selectItems value="#{produkAwalBean.produkModels}"
                                        var="produk"
                                        itemLabel="#{produk.kategoriProduk.kode}-#{produk.indeks} - #{produk.deskripsi}"
                                        itemValue="#{produk.id}" />
                     </p:selectOneMenu>
                     <h:panelGroup id="produk_kode_valid">
-                        <p:outputLabel styleClass="label #{awalPersediaanBean.produkValid ? 'label-success' : 'label-danger'}"
-                                       rendered="#{awalPersediaanBean.produkId ne 0 and
-                                                   awalPersediaanBean.produkIdBefore ne awalPersediaanBean.produkId}"
-                                       value="Produk#{awalPersediaanBean.produkValid ? '' : ' tidak'} dapat digunakan" />
+                        <p:outputLabel styleClass="label #{produkAwalBean.produkValid ? 'label-success' : 'label-danger'}"
+                                       rendered="#{produkAwalBean.perusahaanId ne 0 and
+                                                   produkAwalBean.produkId ne 0 and
+                                                   (produkAwalBean.perusahaanIdBefore ne produkAwalBean.perusahaanId or 
+                                                   produkAwalBean.produkIdBefore ne produkAwalBean.produkId)}"
+                                       value="Produk#{produkAwalBean.produkValid ? '' : ' tidak'} dapat digunakan" />
                     </h:panelGroup>
                 </div>
             </div>
 
             <div class="form-group">
-                <p:outputLabel for="produk_jumlah_awal"
+                <p:outputLabel for="produk_jumlah"
                                styleClass="control-label col-md-3"
                                value="Jumlah Awal *" />
                 <div class="col-md-9">
-                    <pe:inputNumber id="produk_jumlah_awal"
+                    <pe:inputNumber id="produk_jumlah"
                                     style="width: 100% !important;"
-                                    value="#{awalPersediaanBean.produkModel.jumlahAwal}"
+                                    value="#{produkAwalBean.produkAwalModel.jumlah}"
                                     decimalPlaces="0"
                                     thousandSeparator="."
                                     decimalSeparator=",">
@@ -52,13 +76,76 @@
             </div>
 
             <div class="form-group">
-                <p:outputLabel for="produk_harga_awal"
+                <p:outputLabel for="produk_tanggal"
+                               styleClass="control-label col-md-3"
+                               value="Tanggal *" />
+                <div class="col-md-9">
+                    <p:calendar id="produk_tanggal"
+                                pattern="dd MMM yyyy"
+                                maxdate="#{produkAwalBean.currentDate}"
+                                navigator="true"
+                                value="#{produkAwalBean.produkAwalModel.tanggal}">
+                        <f:ajax event="dateSelect"
+                                render="produk_mata_uang_rate produk_nilai_tukar footer_button"
+                                listener="#{produkAwalBean.checkRates()}" />
+                    </p:calendar>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p:outputLabel for="produk_mata_uang"
+                               styleClass="control-label col-md-3"
+                               value="Mata Uang *" />
+                <div class="col-md-9">
+                    <p:selectOneMenu id="produk_mata_uang"
+                                     style="width: 100% !important;"
+                                     filter="true"
+                                     filterMatchMode="contains"
+                                     value="#{produkAwalBean.mataUangId}">
+                        <f:ajax render="produk_mata_uang_rate produk_nilai_tukar footer_button"
+                                listener="#{produkAwalBean.checkRates()}" />
+                        <f:selectItem itemLabel="-- Pilih Mata Uang --"
+                                      itemValue="0" />
+                        <f:selectItems value="#{produkAwalBean.mataUangModels}"
+                                       var="mataUang"
+                                       itemLabel="#{mataUang.nama} - #{mataUang.kode}"
+                                       itemValue="#{mataUang.id}" />
+                    </p:selectOneMenu>
+                    <h:panelGroup id="produk_mata_uang_rate">
+                        <p:outputLabel styleClass="label label-success"
+                                       rendered="#{produkAwalBean.rate ne 0}"
+                                       value="1 #{produkAwalBean.getKodeMataUang(produkAwalBean.mataUangId)} = #{produkAwalBean.rate} IDR" />
+                        <p:outputLabel styleClass="label label-danger"
+                                       rendered="#{produkAwalBean.rate eq 0}"
+                                       value="Data tidak ditemukan" />
+                    </h:panelGroup>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p:outputLabel for="produk_nilai_tukar"
+                               styleClass="control-label col-md-3"
+                               value="Nilai Tukar *" />
+                <div class="col-md-9">
+                    <pe:inputNumber id="produk_nilai_tukar"
+                                    style="width: 100% !important;"
+                                    value="#{produkAwalBean.produkAwalModel.rate}"
+                                    decimalPlaces="4"
+                                    thousandSeparator="."
+                                    decimalSeparator=",">
+                        <f:ajax render="footer_button" />
+                    </pe:inputNumber>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p:outputLabel for="produk_harga"
                                styleClass="control-label col-md-3"
                                value="Harga Beli" />
                 <div class="col-md-9">
-                    <pe:inputNumber id="produk_harga_awal"
+                    <pe:inputNumber id="produk_harga"
                                     style="width: 100% !important;"
-                                    value="#{awalPersediaanBean.produkModel.hargaBeliAwal}"
+                                    value="#{produkAwalBean.produkAwalModel.hargaBeli}"
                                     thousandSeparator="."
                                     decimalSeparator="," />
                 </div>

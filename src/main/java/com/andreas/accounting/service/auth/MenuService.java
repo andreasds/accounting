@@ -1,6 +1,6 @@
 package com.andreas.accounting.service.auth;
 
-import com.andreas.accounting.model.auth.Menu;
+import com.andreas.accounting.model.util.Menu;
 import com.andreas.accounting.util.GrailsRestClient;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

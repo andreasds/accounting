@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <f:metadata>
-        <f:event listener="#{awalPersediaanBean.viewAll()}" type="preRenderView" />
+        <f:event listener="#{produkAwalBean.viewAll()}" type="preRenderView" />
     </f:metadata>
     <ui:composition template="/templates/default/main.xhtml">
         <ui:define name="headerContent">
             <h1>
-                List #{awalPersediaanBean.pageName}
+                List #{produkAwalBean.pageName}
             </h1>
             <ol class="breadcrumb">
                 <li>
@@ -31,11 +32,32 @@
             </div>
 
             <div class="box">
+                <div class="box-header">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <p:outputLabel for="produk_total"
+                                           styleClass="control-label col-md-3"
+                                           value="Total" />
+                            <div class="col-md-9">
+                                <p:outputLabel id="produk_mata_uang"
+                                               styleClass="control-label"
+                                               value="Rp&nbsp;" />
+                                <p:outputLabel id="produk_total"
+                                               styleClass="control-label"
+                                               value="#{produkAwalBean.total}">
+                                    <f:convertNumber minFractionDigits="2"
+                                                     pattern="#,##0.00" />
+                                </p:outputLabel>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="box-body">
                     <h:form id="list_produk">
-                        <p:dataTable var="produk"
+                        <p:dataTable var="produkAwal"
                                      styleClass="table table-hover table-bordered"
-                                     value="#{awalPersediaanBean.awalPersediaanModels}"
+                                     value="#{produkAwalBean.produkAwalModels}"
                                      reflow="true"
                                      rows="10"
                                      rowIndexVar="index"
@@ -48,31 +70,33 @@
                             </p:column>
 
                             <p:column headerText="Kode">
-                                #{produk.kategoriProduk.kode}-#{produk.indeks}
+                                #{produkAwal.produk.kategoriProduk.kode}-#{produkAwal.produk.indeks}
                             </p:column>
 
                             <p:column headerText="Deskripsi">
-                                #{produk.deskripsi}
+                                #{produkAwal.produk.deskripsi}
                             </p:column>
 
                             <p:column headerText="Jumlah">
-                                <h:outputText value="#{produk.jumlahAwal}">
+                                <h:outputText value="#{produkAwal.jumlah}">
                                     <f:convertNumber minFractionDigits="2"
                                                      pattern="#,##0.00" />
                                 </h:outputText>
                             </p:column>
 
                             <p:column headerText="Harga Beli">
-                                <h:outputText value="#{produk.hargaBeliAwal}">
+                                #{produkAwal.mataUang.kode}
+                                <h:outputText value="#{produkAwal.hargaBeli}">
                                     <f:convertNumber minFractionDigits="2"
                                                      pattern="#,##0.00" />
                                 </h:outputText>
                             </p:column>
 
                             <p:column headerText="Total Nilai">
-                                <h:outputText value="#{produk.jumlahAwal * produk.hargaBeliAwal}">
+                                IDR
+                                <h:outputText value="#{produkAwal.jumlah * produkAwal.hargaBeli * produkAwal.rate}">
                                     <f:convertNumber minFractionDigits="2"
-                                                     pattern="Rp #,##0.00" />
+                                                     pattern="#,##0.00" />
                                 </h:outputText>
                             </p:column>
 
@@ -81,13 +105,13 @@
                                 <div class="btn-group">
                                     <p:commandButton styleClass="btn btn-sm"
                                                      icon="fa fa-info"
-                                                     actionListener="#{awalPersediaanBean.detail(produk.id)}" />
+                                                     actionListener="#{produkAwalBean.detail(produkAwal.id)}" />
                                     <p:commandButton styleClass="btn btn-sm"
                                                      icon="fa fa-pencil"
-                                                     actionListener="#{awalPersediaanBean.edit(produk.id)}" />
+                                                     actionListener="#{produkAwalBean.edit(produkAwal.id)}" />
                                     <p:commandButton styleClass="btn btn-sm"
                                                      icon="fa fa-trash"
-                                                     actionListener="#{awalPersediaanBean.delete(produk.id)}" />
+                                                     actionListener="#{produkAwalBean.delete(produkAwal.id)}" />
                                 </div>
                             </p:column>
                         </p:dataTable>
