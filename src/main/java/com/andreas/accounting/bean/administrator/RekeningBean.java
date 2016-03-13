@@ -42,6 +42,7 @@ public class RekeningBean implements BaseBeanInterface, Serializable {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             rekeningModel = new Rekening();
             namaBefore = "";
+            namaValid = false;
         }
     }
 

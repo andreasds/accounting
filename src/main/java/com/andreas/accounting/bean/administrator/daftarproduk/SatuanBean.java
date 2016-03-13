@@ -42,6 +42,7 @@ public class SatuanBean implements BaseBeanInterface, Serializable {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             satuanModel = new Satuan();
             kodeBefore = "";
+            kodeValid = false;
         }
     }
 

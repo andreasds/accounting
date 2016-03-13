@@ -7,9 +7,12 @@
     <div class="box-body">
         <div class="col-md-10">
             <div class="form-group">
-                <p:outputLabel for="perusahaan_nama"
-                               styleClass="control-label col-md-3"
-                               value="Nama *" />
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="perusahaan_nama"
+                                   styleClass="control-label"
+                                   value="Nama *" />
+                </div>
                 <div class="col-md-9">
                     <p:inputText id="perusahaan_nama"
                                  styleClass="form-control"
@@ -28,9 +31,12 @@
             </div>
 
             <div class="form-group">
-                <p:outputLabel for="perusahaan_pemilik"
-                               styleClass="control-label col-md-3"
-                               value="Pemilik" />
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="perusahaan_pemilik"
+                                   styleClass="control-label"
+                                   value="Pemilik" />
+                </div>
                 <div class="col-md-9">
                     <p:selectBooleanCheckbox id="perusahaan_pemilik"
                                              value="#{perusahaanBean.perusahaanModel.pemilik}" />
@@ -38,9 +44,12 @@
             </div>
 
             <div class="form-group">
-                <p:outputLabel for="perusahaan_alamat"
-                               styleClass="control-label col-md-3"
-                               value="Alamat" />
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="perusahaan_alamat"
+                                   styleClass="control-label"
+                                   value="Alamat" />
+                </div>
                 <div class="col-md-9">
                     <p:inputTextarea id="perusahaan_alamat"
                                      styleClass="form-control"
@@ -50,9 +59,12 @@
             </div>
 
             <div class="form-group">
-                <p:outputLabel for="perusahaan_kota"
-                               styleClass="control-label col-md-3"
-                               value="Kota" />
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="perusahaan_kota"
+                                   styleClass="control-label"
+                                   value="Kota" />
+                </div>
                 <div class="col-md-9">
                     <p:inputText id="perusahaan_kota"
                                  styleClass="form-control"

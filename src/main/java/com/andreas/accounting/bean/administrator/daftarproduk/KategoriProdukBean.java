@@ -44,7 +44,9 @@ public class KategoriProdukBean implements BaseBeanInterface, Serializable {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             kategoriProdukModel = new KategoriProduk();
             namaBefore = "";
+            namaValid = false;
             kodeBefore = "";
+            kodeValid = false;
         }
     }
 

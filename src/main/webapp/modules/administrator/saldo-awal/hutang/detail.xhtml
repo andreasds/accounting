@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <f:metadata>
-        <f:viewParam name="id" value="#{pembeliBean.pembeliId}" />
-        <f:event listener="#{pembeliBean.viewDetail(pembeliBean.pembeliId)}" type="preRenderView" />
+        <f:viewParam name="id" value="#{hutangAwalBean.hutangAwalId}" />
+        <f:event listener="#{hutangAwalBean.viewDetail(hutangAwalBean.hutangAwalId)}" type="preRenderView" />
     </f:metadata>
     <ui:composition template="/templates/default/main.xhtml">
         <ui:define name="headerContent">
             <h1>
-                Rincian #{pembeliBean.pageName}
+                Rincian #{hutangAwalBean.pageName}
             </h1>
             <ol class="breadcrumb">
                 <li>
@@ -35,7 +36,7 @@
                     styleClass="form-horizontal">
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">#{pembeliBean.pageName} Detail</h3>
+                        <h3 class="box-title">#{hutangAwalBean.pageName} Detail</h3>
                     </div>
 
                     <!-- detail form -->
@@ -44,56 +45,79 @@
                             <div class="form-group">
                                 <div class="col-md-3"
                                      style="text-align: right;">
-                                    <p:outputLabel for="pembeli_perusahaan"
+                                    <p:outputLabel for="hutang_perusahaan"
                                                    styleClass="control-label"
-                                                   value="Perusahaan" />
+                                                   value="Perusahaan Pemilik" />
                                 </div>
                                 <div class="col-md-9">
-                                    <p:outputLabel id="pembeli_perusahaan"
+                                    <p:outputLabel id="hutang_perusahaan"
                                                    styleClass="control-label"
-                                                   value="#{pembeliBean.pembeliModel.perusahaan.nama}" />
+                                                   value="#{hutangAwalBean.hutangAwalModel.invoice.perusahaan.nama}" />
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-md-3"
                                      style="text-align: right;">
-                                    <p:outputLabel for="pembeli_nama"
+                                    <p:outputLabel for="hutang_penjual"
                                                    styleClass="control-label"
-                                                   value="Nama" />
+                                                   value="Penjual" />
                                 </div>
                                 <div class="col-md-9">
-                                    <p:outputLabel id="pembeli_nama"
+                                    <p:outputLabel id="hutang_penjual"
                                                    styleClass="control-label"
-                                                   value="#{pembeliBean.pembeliModel.nama}" />
+                                                   value="#{hutangAwalBean.hutangAwalModel.invoice.orang.nama}" />
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-md-3"
                                      style="text-align: right;">
-                                    <p:outputLabel for="pembeli_telepon"
+                                    <p:outputLabel for="hutang_no"
                                                    styleClass="control-label"
-                                                   value="Telepon" />
+                                                   value="No Invoice" />
                                 </div>
                                 <div class="col-md-9">
-                                    <p:outputLabel id="pembeli_telepon"
+                                    <p:outputLabel id="hutang_no"
                                                    styleClass="control-label"
-                                                   value="#{pembeliBean.pembeliModel.telepon}" />
+                                                   value="#{hutangAwalBean.hutangAwalModel.invoice.no}" />
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-md-3"
                                      style="text-align: right;">
-                                    <p:outputLabel for="pembeli_hp"
+                                    <p:outputLabel for="hutang_tanggal"
                                                    styleClass="control-label"
-                                                   value="HP" />
+                                                   value="Tanggal" />
                                 </div>
                                 <div class="col-md-9">
-                                    <p:outputLabel id="pembeli_hp"
+                                    <p:outputLabel id="hutang_tanggal"
                                                    styleClass="control-label"
-                                                   value="#{pembeliBean.pembeliModel.hp}" />
+                                                   value="#{hutangAwalBean.hutangAwalModel.invoice.tanggal}">
+                                        <f:convertDateTime type="date"
+                                                           pattern="dd MMM yyyy" />
+                                    </p:outputLabel>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3"
+                                     style="text-align: right;">
+                                    <p:outputLabel for="hutang_nilai_hutang"
+                                                   styleClass="control-label"
+                                                   value="Nilai Hutang" />
+                                </div>
+                                <div class="col-md-9">
+                                    <p:outputLabel id="hutang_mata_uang"
+                                                   styleClass="control-label"
+                                                   value="#{hutangAwalBean.hutangAwalModel.mataUang.kode}&nbsp;" />
+                                    <p:outputLabel id="hutang_nilai_hutang"
+                                                   styleClass="control-label"
+                                                   value="#{hutangAwalBean.hutangAwalModel.jumlah}">
+                                        <f:convertNumber minFractionDigits="2"
+                                                         pattern="#,##0.00" />
+                                    </p:outputLabel>
                                 </div>
                             </div>
                         </div>
@@ -102,11 +126,11 @@
                     <div class="box-footer">
                         <p:commandButton styleClass="btn btn-sm btn-flat"
                                          icon="fa fa-pencil"
-                                         actionListener="#{pembeliBean.edit(pembeliBean.pembeliModel.id)}"
+                                         actionListener="#{hutangAwalBean.edit(hutangAwalBean.hutangAwalModel.id)}"
                                          value="Edit" />
                         <p:commandButton styleClass="btn btn-sm btn-flat"
                                          icon="fa fa-mail-reply"
-                                         actionListener="#{pembeliBean.list()}"
+                                         actionListener="#{hutangAwalBean.list()}"
                                          value="Kembali" />
                     </div>
                 </div>

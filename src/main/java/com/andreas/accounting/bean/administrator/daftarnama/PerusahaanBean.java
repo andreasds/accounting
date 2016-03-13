@@ -42,6 +42,7 @@ public class PerusahaanBean implements BaseBeanInterface, Serializable {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             perusahaanModel = new Perusahaan();
             namaBefore = "";
+            namaValid = false;
         }
     }
 

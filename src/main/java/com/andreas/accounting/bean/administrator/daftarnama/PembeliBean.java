@@ -51,6 +51,7 @@ public class PembeliBean implements BaseBeanInterface, Serializable {
             perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNama();
             perusahaanIdBefore = 0;
             namaBefore = "";
+            namaValid = false;
         }
     }
 
@@ -121,8 +122,8 @@ public class PembeliBean implements BaseBeanInterface, Serializable {
     }
 
     public void checkNama() {
-        if (pembeliModel.getNama().equalsIgnoreCase(namaBefore) &&
-                perusahaanId == perusahaanIdBefore) {
+        if (pembeliModel.getNama().equalsIgnoreCase(namaBefore)
+                && perusahaanId == perusahaanIdBefore) {
             namaValid = true;
         } else {
             namaValid = pembeliService.checkNama(pembeliModel.getNama(), perusahaanId);

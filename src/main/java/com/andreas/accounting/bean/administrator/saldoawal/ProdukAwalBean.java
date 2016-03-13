@@ -74,6 +74,7 @@ public class ProdukAwalBean implements BaseBeanInterface, Serializable {
             perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNamaPemilik();
             produkModels = (ArrayList<Produk>) produkService.listKode();
             mataUangModels = (ArrayList<MataUang>) mataUangService.listKode();
+            produkValid = false;
             rate = new BigDecimal(1.0);
             produkAwalModel.setRate(new BigDecimal(1.0));
         }
@@ -292,14 +293,6 @@ public class ProdukAwalBean implements BaseBeanInterface, Serializable {
         this.produkValid = produkValid;
     }
 
-    public Date getCurrentDate() {
-        return currentDate;
-    }
-
-    public void setCurrentDate(Date currentDate) {
-        this.currentDate = currentDate;
-    }
-
     public BigDecimal getRate() {
         return rate;
     }
@@ -314,5 +307,13 @@ public class ProdukAwalBean implements BaseBeanInterface, Serializable {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    public Date getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(Date currentDate) {
+        this.currentDate = currentDate;
     }
 }
