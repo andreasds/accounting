@@ -8,11 +8,11 @@
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Production</param-value>
     </context-param>
-    
+
     <welcome-file-list>
         <welcome-file>login.xhtml</welcome-file>
     </welcome-file-list>
-    
+
     <!-- jsf -->
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
@@ -36,19 +36,19 @@
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
     <!-- jsf -->
-    
+
     <!-- primefaces -->
     <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>bootstrap</param-value>
     </context-param>
     <!-- primefaces -->
-    
+
     <context-param>
         <param-name>grailsEndPoint</param-name>
         <param-value>http://localhost:8081/accounting-server/</param-value>
     </context-param>
-    
+
     <mime-mapping>
         <extension>gif</extension>
         <mime-type>image/gif</mime-type>

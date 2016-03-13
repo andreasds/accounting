@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+    <div class="box-body">
+        <div class="col-md-10">
+            <div class="form-group">
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="piutang_perusahaan"
+                                   styleClass="control-label"
+                                   value="Perusahaan Pemilik *" />
+                </div>
+                <div class="col-md-9">
+                    <p:selectOneMenu id="piutang_perusahaan"
+                                     style="width: 100% !important;"
+                                     filter="true"
+                                     filterMatchMode="contains"
+                                     value="#{piutangAwalBean.perusahaanId}">
+                        <f:ajax render="piutang_no_valid footer_button"
+                                listener="#{piutangAwalBean.checkNo()}" />
+                        <f:selectItem itemLabel="-- Pilih Perusahaan Pemilik --"
+                                      itemValue="0" />
+                        <f:selectItems value="#{piutangAwalBean.perusahaanModels}"
+                                       var="perusahaan"
+                                       itemLabel="#{perusahaan.nama}"
+                                       itemValue="#{perusahaan.id}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="piutang_pembeli"
+                                   styleClass="control-label"
+                                   value="Pembeli *" />
+                </div>
+                <div class="col-md-9">
+                    <p:selectOneMenu id="piutang_pembeli"
+                                     style="width: 100% !important;"
+                                     filter="true"
+                                     filterMatchMode="contains"
+                                     value="#{piutangAwalBean.pembeliId}">
+                        <f:ajax render="footer_button" />
+                        <f:selectItem itemLabel="-- Pilih Pembeli --"
+                                      itemValue="0" />
+                        <f:selectItems value="#{piutangAwalBean.pembeliModels}"
+                                       var="pembeli"
+                                       itemLabel="#{pembeli.perusahaan.nama} - #{pembeli.nama}"
+                                       itemValue="#{pembeli.id}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="piutang_no"
+                                   styleClass="control-label"
+                                   value="Nomor Invoice *" />
+                </div>
+                <div class="col-md-9">
+                    <p:inputText id="piutang_no"
+                                 styleClass="form-control"
+                                 maxlength="20"
+                                 value="#{piutangAwalBean.invoiceModel.no}">
+                        <f:ajax render="piutang_no_valid footer_button"
+                                listener="#{piutangAwalBean.checkNo()}" />
+                    </p:inputText>
+                    <h:panelGroup id="piutang_no_valid">
+                        <p:outputLabel styleClass="label #{piutangAwalBean.noValid ? 'label-success' : 'label-danger'}"
+                                       rendered="#{piutangAwalBean.perusahaanId ne 0 and
+                                                   piutangAwalBean.invoiceModel.no ne '' and
+                                                   (piutangAwalBean.perusahaanIdBefore ne piutangAwalBean.perusahaanId or
+                                                   piutangAwalBean.noBefore ne piutangAwalBean.invoiceModel.no)}"
+                                       value="Nomor#{piutangAwalBean.noValid ? '' : ' tidak'} dapat digunakan" />
+                    </h:panelGroup>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="piutang_tanggal"
+                                   styleClass="control-label"
+                                   value="Tanggal *" />
+                </div>
+                <div class="col-md-9">
+                    <p:calendar id="piutang_tanggal"
+                                pattern="dd MMM yyyy"
+                                maxdate="#{piutangAwalBean.currentDate}"
+                                navigator="true"
+                                value="#{piutangAwalBean.invoiceModel.tanggal}">
+                        <f:ajax event="dateSelect"
+                                render="piutang_mata_uang_rate piutang_nilai_tukar footer_button"
+                                listener="#{piutangAwalBean.checkRates()}" />
+                    </p:calendar>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="piutang_mata_uang"
+                                   styleClass="control-label"
+                                   value="Mata Uang *" />
+                </div>
+                <div class="col-md-9">
+                    <p:selectOneMenu id="piutang_mata_uang"
+                                     style="width: 100% !important;"
+                                     filter="true"
+                                     filterMatchMode="contains"
+                                     value="#{piutangAwalBean.mataUangId}">
+                        <f:ajax render="piutang_mata_uang_rate piutang_nilai_tukar footer_button"
+                                listener="#{piutangAwalBean.checkRates()}" />
+                        <f:selectItem itemLabel="-- Pilih Mata Uang --"
+                                      itemValue="0" />
+                        <f:selectItems value="#{piutangAwalBean.mataUangModels}"
+                                       var="mataUang"
+                                       itemLabel="#{mataUang.nama} - #{mataUang.kode}"
+                                       itemValue="#{mataUang.id}" />
+                    </p:selectOneMenu>
+                    <h:panelGroup id="piutang_mata_uang_rate">
+                        <p:outputLabel styleClass="label label-success"
+                                       rendered="#{piutangAwalBean.rate ne 0}"
+                                       value="1 #{piutangAwalBean.getKodeMataUang(piutangAwalBean.mataUangId)} = #{piutangAwalBean.rate} IDR" />
+                        <p:outputLabel styleClass="label label-danger"
+                                       rendered="#{piutangAwalBean.rate eq 0}"
+                                       value="Data tidak ditemukan" />
+                    </h:panelGroup>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="piutang_nilai_tukar"
+                                   styleClass="control-label"
+                                   value="Nilai Tukar *" />
+                </div>
+                <div class="col-md-9">
+                    <pe:inputNumber id="piutang_nilai_tukar"
+                                    style="width: 100% !important;"
+                                    value="#{piutangAwalBean.piutangAwalModel.rate}"
+                                    decimalPlaces="4"
+                                    thousandSeparator="."
+                                    decimalSeparator=",">
+                        <f:ajax render="footer_button" />
+                    </pe:inputNumber>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="piutang_nilai_piutang"
+                                   styleClass="control-label"
+                                   value="Nilai Piutang" />
+                </div>
+                <div class="col-md-9">
+                    <pe:inputNumber id="piutang_nilai_piutang"
+                                    style="width: 100% !important;"
+                                    value="#{piutangAwalBean.piutangAwalModel.jumlah}"
+                                    thousandSeparator="."
+                                    decimalSeparator="," />
+                </div>
+            </div>
+        </div>
+    </div>
+</html>

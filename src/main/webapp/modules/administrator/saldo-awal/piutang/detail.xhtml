@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <f:metadata>
+        <f:viewParam name="id" value="#{piutangAwalBean.piutangAwalId}" />
+        <f:event listener="#{piutangAwalBean.viewDetail(piutangAwalBean.piutangAwalId)}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/default/main.xhtml">
+        <ui:define name="headerContent">
+            <h1>
+                Rincian #{piutangAwalBean.pageName}
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#">
+                        <i class="fa fa-dashboard" /> Home
+                    </a>
+                </li>
+                <ui:repeat var="breadcrumb" value="#{menuBean.breadcrumbs}">
+                    <li>#{breadcrumb}</li>
+                </ui:repeat>
+            </ol>
+        </ui:define>
+
+        <ui:define name="content">
+            <div class="box">
+                <ui:include src="create-button.xhtml" />
+            </div>
+
+            <h:form role="form" id="main-form"
+                    styleClass="form-horizontal">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">#{piutangAwalBean.pageName} Detail</h3>
+                    </div>
+
+                    <!-- detail form -->
+                    <div class="box-body">
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <div class="col-md-3"
+                                     style="text-align: right;">
+                                    <p:outputLabel for="piutang_perusahaan"
+                                                   styleClass="control-label"
+                                                   value="Perusahaan Pemilik" />
+                                </div>
+                                <div class="col-md-9">
+                                    <p:outputLabel id="piutang_perusahaan"
+                                                   styleClass="control-label"
+                                                   value="#{piutangAwalBean.piutangAwalModel.invoice.perusahaan.nama}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3"
+                                     style="text-align: right;">
+                                    <p:outputLabel for="piutang_pembeli"
+                                                   styleClass="control-label"
+                                                   value="Pembeli" />
+                                </div>
+                                <div class="col-md-9">
+                                    <p:outputLabel id="piutang_pembeli"
+                                                   styleClass="control-label"
+                                                   value="#{piutangAwalBean.piutangAwalModel.invoice.orang.nama}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3"
+                                     style="text-align: right;">
+                                    <p:outputLabel for="piutang_no"
+                                                   styleClass="control-label"
+                                                   value="No Invoice" />
+                                </div>
+                                <div class="col-md-9">
+                                    <p:outputLabel id="piutang_no"
+                                                   styleClass="control-label"
+                                                   value="#{piutangAwalBean.piutangAwalModel.invoice.no}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3"
+                                     style="text-align: right;">
+                                    <p:outputLabel for="piutang_tanggal"
+                                                   styleClass="control-label"
+                                                   value="Tanggal" />
+                                </div>
+                                <div class="col-md-9">
+                                    <p:outputLabel id="piutang_tanggal"
+                                                   styleClass="control-label"
+                                                   value="#{piutangAwalBean.piutangAwalModel.invoice.tanggal}">
+                                        <f:convertDateTime type="date"
+                                                           pattern="dd MMM yyyy" />
+                                    </p:outputLabel>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3"
+                                     style="text-align: right;">
+                                    <p:outputLabel for="piutang_nilai_piutang"
+                                                   styleClass="control-label"
+                                                   value="Nilai Piutang" />
+                                </div>
+                                <div class="col-md-9">
+                                    <p:outputLabel id="piutang_mata_uang"
+                                                   styleClass="control-label"
+                                                   value="#{piutangAwalBean.piutangAwalModel.mataUang.kode}&nbsp;" />
+                                    <p:outputLabel id="piutang_nilai_piutang"
+                                                   styleClass="control-label"
+                                                   value="#{piutangAwalBean.piutangAwalModel.jumlah}">
+                                        <f:convertNumber minFractionDigits="2"
+                                                         pattern="#,##0.00" />
+                                    </p:outputLabel>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-footer">
+                        <p:commandButton styleClass="btn btn-sm btn-flat"
+                                         icon="fa fa-pencil"
+                                         actionListener="#{piutangAwalBean.edit(piutangAwalBean.piutangAwalModel.id)}"
+                                         value="Edit" />
+                        <p:commandButton styleClass="btn btn-sm btn-flat"
+                                         icon="fa fa-mail-reply"
+                                         actionListener="#{piutangAwalBean.list()}"
+                                         value="Kembali" />
+                    </div>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

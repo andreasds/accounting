@@ -1,14 +1,14 @@
 package com.andreas.accounting.bean.administrator.saldoawal;
 
-import com.andreas.accounting.lazy.administator.saldoawal.HutangAwalLazy;
+import com.andreas.accounting.lazy.administator.saldoawal.PiutangAwalLazy;
 import com.andreas.accounting.model.administrator.daftarnama.Orang;
 import com.andreas.accounting.model.administrator.daftarnama.Perusahaan;
 import com.andreas.accounting.model.administrator.saldoawal.InvoiceAwal;
 import com.andreas.accounting.model.util.Invoice;
 import com.andreas.accounting.model.util.MataUang;
-import com.andreas.accounting.service.administrator.daftarnama.PenjualService;
+import com.andreas.accounting.service.administrator.daftarnama.PembeliService;
 import com.andreas.accounting.service.administrator.daftarnama.PerusahaanService;
-import com.andreas.accounting.service.administrator.saldoawal.HutangAwalService;
+import com.andreas.accounting.service.administrator.saldoawal.PiutangAwalService;
 import com.andreas.accounting.service.util.ExchangeRatesService;
 import com.andreas.accounting.service.util.MataUangService;
 import com.andreas.accounting.util.BaseBeanInterface;
@@ -26,31 +26,31 @@ import org.primefaces.model.LazyDataModel;
  *
  * @author Andreas Dharmawan <andreas.ds90@gmail.com>
  */
-@ManagedBean(name = "hutangAwalBean")
+@ManagedBean(name = "piutangAwalBean")
 @ViewScoped
-public class HutangAwalBean implements BaseBeanInterface, Serializable {
+public class PiutangAwalBean implements BaseBeanInterface, Serializable {
 
-    private static final long serialVersionUID = -2546840710565627576L;
+    private static final long serialVersionUID = -4367980476989176851L;
 
     private String pageName;
-    private final String baseModule = "/modules/administrator/saldo-awal/hutang/";
+    private final String baseModule = "/modules/administrator/saldo-awal/piutang/";
 
-    private LazyDataModel<InvoiceAwal> hutangAwalModels;
+    private LazyDataModel<InvoiceAwal> piutangAwalModels;
     private ArrayList<MataUang> mataUangModels;
     private ArrayList<Perusahaan> perusahaanModels;
-    private ArrayList<Orang> penjualModels;
-    private InvoiceAwal hutangAwalModel;
+    private ArrayList<Orang> pembeliModels;
+    private InvoiceAwal piutangAwalModel;
     private Invoice invoiceModel;
-    private final HutangAwalService hutangAwalService = new HutangAwalService();
+    private final PiutangAwalService piutangAwalService = new PiutangAwalService();
     private final MataUangService mataUangService = new MataUangService();
     private final PerusahaanService perusahaanService = new PerusahaanService();
-    private final PenjualService penjualService = new PenjualService();
+    private final PembeliService pembeliService = new PembeliService();
     private final ExchangeRatesService exchangeRatesService = new ExchangeRatesService();
-    private long hutangAwalId;
+    private long piutangAwalId;
     private long perusahaanId;
     private long perusahaanIdBefore;
-    private long penjualId;
-    private long penjualIdBefore;
+    private long pembeliId;
+    private long pembeliIdBefore;
     private String noBefore;
     private boolean noValid;
     private long mataUangId;
@@ -62,71 +62,71 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
 
     @Override
     public void init() {
-        pageName = "Hutang Awal";
+        pageName = "Piutang Awal";
     }
 
     @Override
     public void viewInput() {
         init();
         if (!FacesContext.getCurrentInstance().isPostback()) {
-            hutangAwalModel = new InvoiceAwal();
+            piutangAwalModel = new InvoiceAwal();
             invoiceModel = new Invoice();
             perusahaanIdBefore = 0;
-            penjualIdBefore = 0;
+            pembeliIdBefore = 0;
             noBefore = "";
             mataUangId = ((MataUang) mataUangService.getIDR()).getId();
             mataUangIdBefore = 0;
             perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNamaPemilik();
-            penjualModels = (ArrayList<Orang>) penjualService.listNama();
+            pembeliModels = (ArrayList<Orang>) pembeliService.listNama();
             mataUangModels = (ArrayList<MataUang>) mataUangService.listKode();
             noValid = false;
             rate = new BigDecimal(1.0);
-            hutangAwalModel.setRate(new BigDecimal(1.0));
+            piutangAwalModel.setRate(new BigDecimal(1.0));
         }
     }
 
     @Override
     public void viewDetail(long id) {
         init();
-        hutangAwalModel = (InvoiceAwal) hutangAwalService.get(id);
+        piutangAwalModel = (InvoiceAwal) piutangAwalService.get(id);
     }
 
     @Override
     public void viewEdit(long id) {
         init();
         if (!FacesContext.getCurrentInstance().isPostback()) {
-            hutangAwalModel = (InvoiceAwal) hutangAwalService.get(id);
-            invoiceModel = hutangAwalModel.getInvoice();
-            perusahaanId = hutangAwalModel.getInvoice().getPerusahaan().getId();
-            perusahaanIdBefore = hutangAwalModel.getInvoice().getPerusahaan().getId();
-            penjualId = hutangAwalModel.getInvoice().getOrang().getId();
-            penjualIdBefore = hutangAwalModel.getInvoice().getOrang().getId();
-            mataUangId = hutangAwalModel.getMataUang().getId();
-            mataUangIdBefore = hutangAwalModel.getMataUang().getId();
+            piutangAwalModel = (InvoiceAwal) piutangAwalService.get(id);
+            invoiceModel = piutangAwalModel.getInvoice();
+            perusahaanId = piutangAwalModel.getInvoice().getPerusahaan().getId();
+            perusahaanIdBefore = piutangAwalModel.getInvoice().getPerusahaan().getId();
+            pembeliId = piutangAwalModel.getInvoice().getOrang().getId();
+            pembeliIdBefore = piutangAwalModel.getInvoice().getOrang().getId();
+            mataUangId = piutangAwalModel.getMataUang().getId();
+            mataUangIdBefore = piutangAwalModel.getMataUang().getId();
             perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNamaPemilik();
-            penjualModels = (ArrayList<Orang>) penjualService.listNama();
+            pembeliModels = (ArrayList<Orang>) pembeliService.listNama();
             mataUangModels = (ArrayList<MataUang>) mataUangService.listKode();
             noValid = true;
-            rate = exchangeRatesService.getRate(getKodeMataUang(mataUangId), hutangAwalModel.getInvoice().getTanggal());
+            rate = exchangeRatesService.getRate(getKodeMataUang(mataUangId), piutangAwalModel.getInvoice().getTanggal());
         }
     }
 
     @Override
     public void viewAll() {
         init();
-        hutangAwalModels = new HutangAwalLazy();
+        piutangAwalModels = new PiutangAwalLazy();
         perusahaanId = 0;
-        total = hutangAwalService.getTotal(perusahaanId);
+        total = piutangAwalService.getTotal(perusahaanId);
     }
 
     public void save() {
         String response;
         invoiceModel.setPerusahaan((Perusahaan) perusahaanService.get(perusahaanId));
-        invoiceModel.setOrang((Orang) penjualService.get(penjualId));
+        invoiceModel.setOrang((Orang) pembeliService.get(pembeliId));
 
-        hutangAwalModel.setInvoice(invoiceModel);
-        hutangAwalModel.setMataUang((MataUang) mataUangService.get(mataUangId));
-        response = hutangAwalService.save(hutangAwalModel).toString();
+        piutangAwalModel.setInvoice(invoiceModel);
+        piutangAwalModel.setMataUang((MataUang) mataUangService.get(mataUangId));
+        response = piutangAwalService.save(piutangAwalModel).toString();
 
         if (response != null) {
             Util.redirectToPage(baseModule + "detail.xhtml?id=" + response);
@@ -138,11 +138,11 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
     public void update() {
         String response;
         invoiceModel.setPerusahaan((Perusahaan) perusahaanService.get(perusahaanId));
-        invoiceModel.setOrang((Orang) penjualService.get(penjualId));
+        invoiceModel.setOrang((Orang) pembeliService.get(pembeliId));
 
-        hutangAwalModel.setInvoice(invoiceModel);
-        hutangAwalModel.setMataUang((MataUang) mataUangService.get(mataUangId));
-        response = hutangAwalService.update(hutangAwalModel).toString();
+        piutangAwalModel.setInvoice(invoiceModel);
+        piutangAwalModel.setMataUang((MataUang) mataUangService.get(mataUangId));
+        response = piutangAwalService.update(piutangAwalModel).toString();
 
         if (response != null) {
             Util.redirectToPage(baseModule + "detail.xhtml?id=" + response);
@@ -160,7 +160,7 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
     }
 
     public void delete(long id) {
-        hutangAwalService.delete(id);
+        piutangAwalService.delete(id);
         list();
     }
 
@@ -173,13 +173,13 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
                 && perusahaanId == perusahaanIdBefore) {
             noValid = true;
         } else {
-            noValid = hutangAwalService.checkNo(invoiceModel.getNo(), perusahaanId);
+            noValid = piutangAwalService.checkNo(invoiceModel.getNo(), perusahaanId);
         }
     }
 
     public void checkRates() {
         rate = exchangeRatesService.getRate(getKodeMataUang(mataUangId), invoiceModel.getTanggal());
-        hutangAwalModel.setRate(rate);
+        piutangAwalModel.setRate(rate);
     }
 
     public String getKodeMataUang(long mataUangId) {
@@ -200,12 +200,12 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
         this.pageName = pageName;
     }
 
-    public LazyDataModel<InvoiceAwal> getHutangAwalModels() {
-        return hutangAwalModels;
+    public LazyDataModel<InvoiceAwal> getPiutangAwalModels() {
+        return piutangAwalModels;
     }
 
-    public void setHutangAwalModels(LazyDataModel<InvoiceAwal> hutangAwalModels) {
-        this.hutangAwalModels = hutangAwalModels;
+    public void setPiutangAwalModels(LazyDataModel<InvoiceAwal> piutangAwalModels) {
+        this.piutangAwalModels = piutangAwalModels;
     }
 
     public ArrayList<MataUang> getMataUangModels() {
@@ -224,20 +224,20 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
         this.perusahaanModels = perusahaanModels;
     }
 
-    public ArrayList<Orang> getPenjualModels() {
-        return penjualModels;
+    public ArrayList<Orang> getPembeliModels() {
+        return pembeliModels;
     }
 
-    public void setPenjualModels(ArrayList<Orang> penjualModels) {
-        this.penjualModels = penjualModels;
+    public void setPembeliModels(ArrayList<Orang> pembeliModels) {
+        this.pembeliModels = pembeliModels;
     }
 
-    public InvoiceAwal getHutangAwalModel() {
-        return hutangAwalModel;
+    public InvoiceAwal getPiutangAwalModel() {
+        return piutangAwalModel;
     }
 
-    public void setHutangAwalModel(InvoiceAwal hutangAwalModel) {
-        this.hutangAwalModel = hutangAwalModel;
+    public void setPiutangAwalModel(InvoiceAwal piutangAwalModel) {
+        this.piutangAwalModel = piutangAwalModel;
     }
 
     public Invoice getInvoiceModel() {
@@ -248,12 +248,12 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
         this.invoiceModel = invoiceModel;
     }
 
-    public long getHutangAwalId() {
-        return hutangAwalId;
+    public long getPiutangAwalId() {
+        return piutangAwalId;
     }
 
-    public void setHutangAwalId(long hutangAwalId) {
-        this.hutangAwalId = hutangAwalId;
+    public void setPiutangAwalId(long piutangAwalId) {
+        this.piutangAwalId = piutangAwalId;
     }
 
     public long getPerusahaanId() {
@@ -272,20 +272,20 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
         this.perusahaanIdBefore = perusahaanIdBefore;
     }
 
-    public long getPenjualId() {
-        return penjualId;
+    public long getPembeliId() {
+        return pembeliId;
     }
 
-    public void setPenjualId(long penjualId) {
-        this.penjualId = penjualId;
+    public void setPembeliId(long pembeliId) {
+        this.pembeliId = pembeliId;
     }
 
-    public long getPenjualIdBefore() {
-        return penjualIdBefore;
+    public long getPembeliIdBefore() {
+        return pembeliIdBefore;
     }
 
-    public void setPenjualIdBefore(long penjualIdBefore) {
-        this.penjualIdBefore = penjualIdBefore;
+    public void setPembeliIdBefore(long pembeliIdBefore) {
+        this.pembeliIdBefore = pembeliIdBefore;
     }
 
     public String getNoBefore() {
