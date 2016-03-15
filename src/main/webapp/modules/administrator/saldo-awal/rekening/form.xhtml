@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+    <div class="box-body">
+        <div class="col-md-10">
+            <div class="form-group">
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="rekening_perusahaan"
+                                   styleClass="control-label"
+                                   value="Perusahaan Pemilik *" />
+                </div>
+                <div class="col-md-9">
+                    <p:selectOneMenu id="rekening_perusahaan"
+                                     style="width: 100% !important;"
+                                     filter="true"
+                                     filterMatchMode="contains"
+                                     value="#{rekeningAwalBean.perusahaanId}">
+                        <f:ajax render="rekening_valid footer_button"
+                                listener="#{rekeningAwalBean.checkRekening()}" />
+                        <f:selectItem itemLabel="-- Pilih Perusahaan Pemilik --"
+                                      itemValue="0" />
+                        <f:selectItems value="#{rekeningAwalBean.perusahaanModels}"
+                                       var="perusahaan"
+                                       itemLabel="#{perusahaan.nama}"
+                                       itemValue="#{perusahaan.id}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="rekening_rekening"
+                                   styleClass="control-label"
+                                   value="Rekening *" />
+                </div>
+                <div class="col-md-9">
+                    <p:selectOneMenu id="rekening_rekening"
+                                     style="width: 100% !important;"
+                                     filter="true"
+                                     filterMatchMode="contains"
+                                     value="#{rekeningAwalBean.rekeningId}">
+                        <f:ajax render="rekening_valid footer_button"
+                                listener="#{rekeningAwalBean.checkRekening()}" />
+                        <f:selectItem itemLabel="-- Pilih Rekening --"
+                                      itemValue="0" />
+                        <f:selectItems value="#{rekeningAwalBean.rekeningModels}"
+                                       var="rekening"
+                                       itemLabel="#{rekening.nama}"
+                                       itemValue="#{rekening.id}" />
+                    </p:selectOneMenu>
+                    <h:panelGroup id="rekening_valid">
+                        <p:outputLabel styleClass="label #{rekeningAwalBean.rekeningValid ? 'label-success' : 'label-danger'}"
+                                       rendered="#{rekeningAwalBean.perusahaanId ne 0 and
+                                                   rekeningAwalBean.rekeningId ne 0 and
+                                                   (rekeningAwalBean.perusahaanIdBefore ne rekeningAwalBean.perusahaanId or
+                                                   rekeningAwalBean.rekeningIdBefore ne rekeningAwalBean.rekeningId)}"
+                                       value="Rekening#{rekeningAwalBean.rekeningValid ? '' : ' tidak'} dapat digunakan" />
+                    </h:panelGroup>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="rekening_saldo"
+                                   styleClass="control-label"
+                                   value="Saldo" />
+                </div>
+                <div class="col-md-9">
+                    <pe:inputNumber id="rekening_saldo"
+                                    style="width: 100% !important;"
+                                    value="#{rekeningAwalBean.rekeningAwalModel.saldo}"
+                                    thousandSeparator="."
+                                    decimalSeparator="," />
+                </div>
+            </div>
+        </div>
+    </div>
+</html>
