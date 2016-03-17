@@ -24,7 +24,7 @@ public class PerusahaanBean implements BaseBeanInterface, Serializable {
     private String pageName;
     private final String baseModule = "/modules/administrator/daftar-nama/perusahaan/";
 
-    private LazyDataModel<Perusahaan> perusahaanModels;
+    private PerusahaanLazy perusahaanModels;
     private Perusahaan perusahaanModel;
     private final PerusahaanService perusahaanService = new PerusahaanService();
     private long perusahaanId;
@@ -127,7 +127,7 @@ public class PerusahaanBean implements BaseBeanInterface, Serializable {
         return perusahaanModels;
     }
 
-    public void setPerusahaanModels(LazyDataModel<Perusahaan> perusahaanModels) {
+    public void setPerusahaanModels(PerusahaanLazy perusahaanModels) {
         this.perusahaanModels = perusahaanModels;
     }
 

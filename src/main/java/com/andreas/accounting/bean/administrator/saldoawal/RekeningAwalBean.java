@@ -30,7 +30,7 @@ public class RekeningAwalBean implements BaseBeanInterface, Serializable {
     private String pageName;
     private final String baseModule = "/modules/administrator/saldo-awal/rekening/";
 
-    private LazyDataModel<RekeningAwal> rekeningAwalModels;
+    private RekeningAwalLazy rekeningAwalModels;
     private ArrayList<Perusahaan> perusahaanModels;
     private ArrayList<Rekening> rekeningModels;
     private RekeningAwal rekeningAwalModel;
@@ -156,7 +156,7 @@ public class RekeningAwalBean implements BaseBeanInterface, Serializable {
         return rekeningAwalModels;
     }
 
-    public void setRekeningAwalModels(LazyDataModel<RekeningAwal> rekeningAwalModels) {
+    public void setRekeningAwalModels(RekeningAwalLazy rekeningAwalModels) {
         this.rekeningAwalModels = rekeningAwalModels;
     }
 

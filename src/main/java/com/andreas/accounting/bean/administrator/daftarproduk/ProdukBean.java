@@ -29,7 +29,7 @@ public class ProdukBean implements BaseBeanInterface, Serializable {
     private String pageName;
     private final String baseModule = "/modules/administrator/daftar-produk/produk/";
 
-    private LazyDataModel<Produk> produkModels;
+    private ProdukLazy produkModels;
     private ArrayList<KategoriProduk> kategoriProdukModels;
     private ArrayList<Satuan> satuanModels;
     private Produk produkModel;
@@ -134,7 +134,7 @@ public class ProdukBean implements BaseBeanInterface, Serializable {
         return produkModels;
     }
 
-    public void setProdukModels(LazyDataModel<Produk> produkModels) {
+    public void setProdukModels(ProdukLazy produkModels) {
         this.produkModels = produkModels;
     }
 

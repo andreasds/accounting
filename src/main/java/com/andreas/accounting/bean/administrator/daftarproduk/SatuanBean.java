@@ -24,7 +24,7 @@ public class SatuanBean implements BaseBeanInterface, Serializable {
     private String pageName;
     private final String baseModule = "/modules/administrator/daftar-produk/satuan-pengukuran/";
 
-    private LazyDataModel<Satuan> satuanModels;
+    private SatuanLazy satuanModels;
     private Satuan satuanModel;
     private final SatuanService satuanService = new SatuanService();
     private long satuanId;
@@ -127,7 +127,7 @@ public class SatuanBean implements BaseBeanInterface, Serializable {
         return satuanModels;
     }
 
-    public void setSatuanModels(LazyDataModel<Satuan> satuanModels) {
+    public void setSatuanModels(SatuanLazy satuanModels) {
         this.satuanModels = satuanModels;
     }
 

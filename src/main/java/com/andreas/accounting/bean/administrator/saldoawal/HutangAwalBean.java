@@ -35,7 +35,7 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
     private String pageName;
     private final String baseModule = "/modules/administrator/saldo-awal/hutang/";
 
-    private LazyDataModel<InvoiceAwal> hutangAwalModels;
+    private HutangAwalLazy hutangAwalModels;
     private ArrayList<MataUang> mataUangModels;
     private ArrayList<Perusahaan> perusahaanModels;
     private ArrayList<Orang> penjualModels;
@@ -204,7 +204,7 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
         return hutangAwalModels;
     }
 
-    public void setHutangAwalModels(LazyDataModel<InvoiceAwal> hutangAwalModels) {
+    public void setHutangAwalModels(HutangAwalLazy hutangAwalModels) {
         this.hutangAwalModels = hutangAwalModels;
     }
 

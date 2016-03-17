@@ -34,7 +34,7 @@ public class ProdukAwalBean implements BaseBeanInterface, Serializable {
     private String pageName;
     private final String baseModule = "/modules/administrator/saldo-awal/persediaan/";
 
-    private LazyDataModel<ProdukAwal> produkAwalModels;
+    private ProdukAwalLazy produkAwalModels;
     private ArrayList<Perusahaan> perusahaanModels;
     private ArrayList<Produk> produkModels;
     private ArrayList<MataUang> mataUangModels;
@@ -193,7 +193,7 @@ public class ProdukAwalBean implements BaseBeanInterface, Serializable {
         return produkAwalModels;
     }
 
-    public void setProdukAwalModels(LazyDataModel<ProdukAwal> produkAwalModels) {
+    public void setProdukAwalModels(ProdukAwalLazy produkAwalModels) {
         this.produkAwalModels = produkAwalModels;
     }
 

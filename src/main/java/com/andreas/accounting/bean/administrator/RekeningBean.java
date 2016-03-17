@@ -24,7 +24,7 @@ public class RekeningBean implements BaseBeanInterface, Serializable {
     private String pageName;
     private final String baseModule = "/modules/administrator/rekening/";
 
-    private LazyDataModel<Rekening> rekeningModels;
+    private RekeningLazy rekeningModels;
     private Rekening rekeningModel;
     private final RekeningService rekeningService = new RekeningService();
     private long rekeningId;
@@ -123,11 +123,11 @@ public class RekeningBean implements BaseBeanInterface, Serializable {
         this.pageName = pageName;
     }
 
-    public LazyDataModel<Rekening> getRekeningModels() {
+    public RekeningLazy getRekeningModels() {
         return rekeningModels;
     }
 
-    public void setRekeningModels(LazyDataModel<Rekening> rekeningModels) {
+    public void setRekeningModels(RekeningLazy rekeningModels) {
         this.rekeningModels = rekeningModels;
     }
 

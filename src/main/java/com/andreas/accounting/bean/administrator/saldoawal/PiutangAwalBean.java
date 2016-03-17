@@ -35,7 +35,7 @@ public class PiutangAwalBean implements BaseBeanInterface, Serializable {
     private String pageName;
     private final String baseModule = "/modules/administrator/saldo-awal/piutang/";
 
-    private LazyDataModel<InvoiceAwal> piutangAwalModels;
+    private PiutangAwalLazy piutangAwalModels;
     private ArrayList<MataUang> mataUangModels;
     private ArrayList<Perusahaan> perusahaanModels;
     private ArrayList<Orang> pembeliModels;
@@ -204,7 +204,7 @@ public class PiutangAwalBean implements BaseBeanInterface, Serializable {
         return piutangAwalModels;
     }
 
-    public void setPiutangAwalModels(LazyDataModel<InvoiceAwal> piutangAwalModels) {
+    public void setPiutangAwalModels(PiutangAwalLazy piutangAwalModels) {
         this.piutangAwalModels = piutangAwalModels;
     }
 

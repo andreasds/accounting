@@ -27,7 +27,7 @@ public class PenjualBean implements BaseBeanInterface, Serializable {
     private String pageName;
     private final String baseModule = "/modules/administrator/daftar-nama/penjual/";
 
-    private LazyDataModel<Orang> penjualModels;
+    private PenjualLazy penjualModels;
     private ArrayList<Perusahaan> perusahaanModels;
     private Orang penjualModel;
     private final PenjualService penjualService = new PenjualService();
@@ -142,7 +142,7 @@ public class PenjualBean implements BaseBeanInterface, Serializable {
         return penjualModels;
     }
 
-    public void setPenjualModels(LazyDataModel<Orang> penjualModels) {
+    public void setPenjualModels(PenjualLazy penjualModels) {
         this.penjualModels = penjualModels;
     }
 

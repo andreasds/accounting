@@ -24,7 +24,7 @@ public class KategoriProdukBean implements BaseBeanInterface, Serializable {
     private String pageName;
     private final String baseModule = "/modules/administrator/daftar-produk/kategori/";
 
-    private LazyDataModel<KategoriProduk> kategoriProdukModels;
+    private KategoriProdukLazy kategoriProdukModels;
     private KategoriProduk kategoriProdukModel;
     private final KategoriProdukService kategoriProdukService = new KategoriProdukService();
     private long kategoriProdukId;
@@ -141,7 +141,7 @@ public class KategoriProdukBean implements BaseBeanInterface, Serializable {
         return kategoriProdukModels;
     }
 
-    public void setKategoriProdukModels(LazyDataModel<KategoriProduk> kategoriProdukModels) {
+    public void setKategoriProdukModels(KategoriProdukLazy kategoriProdukModels) {
         this.kategoriProdukModels = kategoriProdukModels;
     }
 
