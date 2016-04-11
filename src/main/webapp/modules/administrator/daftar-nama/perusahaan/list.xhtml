@@ -40,6 +40,7 @@
                                      rows="10"
                                      rowIndexVar="index"
                                      lazy="true"
+                                     filterEvent="blur"
                                      paginator="true"
                                      paginatorPosition="bottom"
                                      paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
@@ -48,20 +49,26 @@
                                 <h:outputText value="#{index + 1}" />
                             </p:column>
 
-                            <p:column headerText="Nama">
+                            <p:column headerText="Nama"
+                                      sortBy="#{perusahaan.nama}"
+                                      filterBy="#{perusahaan.nama}">
                                 #{perusahaan.nama}
                             </p:column>
 
-                            <p:column headerText="Alamat">
+                            <p:column headerText="Alamat"
+                                      sortBy="#{perusahaan.alamat}"
+                                      filterBy="#{perusahaan.alamat}">
                                 #{perusahaan.alamat}
                             </p:column>
 
-                            <p:column headerText="Kota">
+                            <p:column headerText="Kota"
+                                      sortBy="#{perusahaan.kota}"
+                                      filterBy="#{perusahaan.kota}">
                                 #{perusahaan.kota}
                             </p:column>
 
                             <p:column headerText="Pilihan"
-                                      style="text-align: center;">
+                                      style="width: 120px; text-align: center;">
                                 <div class="btn-group">
                                     <p:commandButton styleClass="btn btn-sm"
                                                      icon="fa fa-info"

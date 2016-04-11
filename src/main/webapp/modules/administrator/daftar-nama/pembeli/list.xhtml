@@ -40,6 +40,7 @@
                                      rows="10"
                                      rowIndexVar="index"
                                      lazy="true"
+                                     filterEvent="blur"
                                      paginator="true"
                                      paginatorPosition="bottom"
                                      paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
@@ -48,24 +49,32 @@
                                 <h:outputText value="#{index + 1}" />
                             </p:column>
 
-                            <p:column headerText="Perusahaan">
+                            <p:column headerText="Perusahaan"
+                                      sortBy="#{pembeli.perusahaan.nama}"
+                                      filterBy="#{pembeli.perusahaan.nama}">
                                 #{pembeli.perusahaan.nama}
                             </p:column>
 
-                            <p:column headerText="Nama">
+                            <p:column headerText="Nama"
+                                      sortBy="#{pembeli.nama}"
+                                      filterBy="#{pembeli.nama}">
                                 #{pembeli.nama}
                             </p:column>
 
-                            <p:column headerText="Telepon">
+                            <p:column headerText="Telepon"
+                                      sortBy="#{pembeli.telepon}"
+                                      filterBy="#{pembeli.telepon}">
                                 #{pembeli.telepon}
                             </p:column>
 
-                            <p:column headerText="HP">
+                            <p:column headerText="HP"
+                                      sortBy="#{pembeli.hp}"
+                                      filterBy="#{pembeli.hp}">
                                 #{pembeli.hp}
                             </p:column>
 
                             <p:column headerText="Pilihan"
-                                      style="text-align: center;">
+                                      style="width: 120px; text-align: center;">
                                 <div class="btn-group">
                                     <p:commandButton styleClass="btn btn-sm"
                                                      icon="fa fa-info"

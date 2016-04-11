@@ -40,6 +40,7 @@
                                      rows="10"
                                      rowIndexVar="index"
                                      lazy="true"
+                                     filterEvent="blur"
                                      paginator="true"
                                      paginatorPosition="bottom"
                                      paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
@@ -48,16 +49,20 @@
                                 <h:outputText value="#{index + 1}" />
                             </p:column>
 
-                            <p:column headerText="Nama">
+                            <p:column headerText="Nama"
+                                      sortBy="#{rekening.nama}"
+                                      filterBy="#{rekening.nama}">
                                 #{rekening.nama}
                             </p:column>
 
-                            <p:column headerText="Deskripsi">
+                            <p:column headerText="Deskripsi"
+                                      sortBy="#{rekening.deskripsi}"
+                                      filterBy="#{rekening.deskripsi}">
                                 #{rekening.deskripsi}
                             </p:column>
 
                             <p:column headerText="Pilihan"
-                                      style="text-align: center;">
+                                      style="width: 120px; text-align: center;">
                                 <div class="btn-group">
                                     <p:commandButton styleClass="btn btn-sm"
                                                      icon="fa fa-info"

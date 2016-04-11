@@ -36,7 +36,7 @@ public class PerusahaanService implements BaseServiceInterface, Serializable {
 
     public Object list(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
         String params = "?offset=" + first + "&max=" + pageSize + "&sort=" + sortField + "&order=" + (sortOrder == SortOrder.DESCENDING ? "desc" : "asc");
-        String response = grc.get(endpoint + "/list" + params);
+        String response = grc.put(endpoint + "/list" + params, filters);
         Type type = new TypeToken<ArrayList<Perusahaan>>() {
         }.getType();
         return gson.fromJson(response, type);
@@ -106,7 +106,7 @@ public class PerusahaanService implements BaseServiceInterface, Serializable {
     }
 
     public int count(Map<String, Object> filters) {
-        String response = grc.get(endpoint + "/count");
+        String response = grc.put(endpoint + "/count", filters);
         return Integer.parseInt(response);
     }
 }

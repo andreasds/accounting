@@ -32,85 +32,114 @@
             </div>
 
             <div class="box">
+                <div class="box-body">
+                    <div class="col-md-12">
+                        <h:form id="filter_form"
+                                role="form"
+                                styleClass="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-md-3"
+                                     style="text-align: right;">
+                                    <p:outputLabel for="piutang_perusahaan"
+                                                   styleClass="control-label"
+                                                   value="Perusahaan Pemilik" />
+                                </div>
+                                <div class="col-md-5">
+                                    <p:selectOneMenu id="piutang_perusahaan"
+                                                     style="width: 100% !important;"
+                                                     filter="true"
+                                                     filterMatchMode="contains"
+                                                     value="#{piutangAwalBean.pemilikId}">
+                                        <f:ajax render="piutang_jumlah list_piutang"
+                                                listener="#{piutangAwalBean.refreshList()}" />
+                                        <f:selectItem itemLabel="-- Pilih Perusahaan Pemilik --"
+                                                      itemValue="0" />
+                                        <f:selectItems value="#{piutangAwalBean.perusahaanModels}"
+                                                       var="perusahaan"
+                                                       itemLabel="#{perusahaan.nama}"
+                                                       itemValue="#{perusahaan.id}" />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box">
                 <div class="box-header">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <div class="form-group">
-                            <div class="col-md-2"
+                            <div class="col-md-3"
                                  style="text-align: right;">
                                 <p:outputLabel for="piutang_total"
                                                styleClass="control-label"
                                                value="Total" />
                             </div>
-                            <div class="col-md-10">
-                                <p:outputLabel id="piutang_mata_uang"
-                                               styleClass="control-label"
-                                               value="Rp&nbsp;" />
-                                <p:outputLabel id="piutang_total"
-                                               styleClass="control-label"
-                                               value="#{piutangAwalBean.total}">
-                                    <f:convertNumber minFractionDigits="2"
-                                                     pattern="#,##0.00" />
-                                </p:outputLabel>
+                            <div class="col-md-9">
+                                <h:panelGroup id="piutang_jumlah">
+                                    <p:outputLabel id="piutang_mata_uang"
+                                                   styleClass="control-label"
+                                                   value="Rp&nbsp;" />
+                                    <p:outputLabel id="piutang_total"
+                                                   styleClass="control-label"
+                                                   value="#{piutangAwalBean.total}">
+                                        <f:convertNumber minFractionDigits="2"
+                                                         pattern="#,##0.00" />
+                                    </p:outputLabel>
+                                </h:panelGroup>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="box-body">
-                    <h:form id="list_produk">
-                        <p:dataTable var="piutangAwal"
-                                     styleClass="table table-hover table-bordered"
-                                     value="#{piutangAwalBean.piutangAwalModels}"
-                                     reflow="true"
-                                     rows="10"
-                                     rowIndexVar="index"
-                                     lazy="true"
-                                     paginator="true"
-                                     paginatorPosition="bottom"
-                                     paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
-                            <p:column headerText="No"
-                                      style="width: 40px; text-align: center;">
-                                <h:outputText value="#{index + 1}" />
-                            </p:column>
+                    <h:form id="list_piutang"
+                            role="form"
+                            styleClass="form-horizontal">
+                        <h:panelGroup id="piutang_list">
+                            <p:dataTable var="piutangAwal"
+                                         styleClass="table table-hover table-bordered"
+                                         value="#{piutangAwalBean.piutangAwalModels}"
+                                         reflow="true"
+                                         rows="10"
+                                         rowIndexVar="index"
+                                         lazy="true"
+                                         filterEvent="blur"
+                                         paginator="true"
+                                         paginatorPosition="bottom"
+                                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+                                <p:column headerText="No"
+                                          style="width: 40px; text-align: center;">
+                                    <h:outputText value="#{index + 1}" />
+                                </p:column>
 
-                            <p:column headerText="Nama">
-                                #{piutangAwal.invoice.orang.perusahaan.nama}
-                            </p:column>
+                                <p:column headerText="Nama"
+                                          sortBy="#{piutangAwal.perusahaan.nama}"
+                                          filterBy="#{piutangAwal.perusahaan.nama}">
+                                    #{piutangAwal.perusahaan.nama}
+                                </p:column>
 
-                            <p:column headerText="Tanggal">
-                                <h:outputText value="#{piutangAwal.invoice.tanggal}">
-                                    <f:convertDateTime type="date"
-                                                       pattern="dd MMM yyyy" />
-                                </h:outputText>
-                            </p:column>
+                                <p:column headerText="Jumlah"
+                                          sortBy="#{piutangAwal.total}"
+                                          filterBy="#{piutangAwal.total}">
+                                    IDR
+                                    <h:outputText value="#{piutangAwal.total}">
+                                        <f:convertNumber minFractionDigits="2"
+                                                         pattern="#,##0.00" />
+                                    </h:outputText>
+                                </p:column>
 
-                            <p:column headerText="No Invoice">
-                                #{piutangAwal.invoice.no}
-                            </p:column>
-
-                            <p:column headerText="Jumlah">
-                                IDR
-                                <h:outputText value="#{piutangAwal.jumlah * piutangAwal.rate}">
-                                    <f:convertNumber minFractionDigits="2"
-                                                     pattern="#,##0.00" />
-                                </h:outputText>
-                            </p:column>
-
-                            <p:column headerText="Pilihan"
-                                      style="text-align: center;">
-                                <div class="btn-group">
-                                    <p:commandButton styleClass="btn btn-sm"
-                                                     icon="fa fa-info"
-                                                     actionListener="#{piutangAwalBean.detail(piutangAwal.id)}" />
-                                    <p:commandButton styleClass="btn btn-sm"
-                                                     icon="fa fa-pencil"
-                                                     actionListener="#{piutangAwalBean.edit(piutangAwal.id)}" />
-                                    <p:commandButton styleClass="btn btn-sm"
-                                                     icon="fa fa-trash"
-                                                     actionListener="#{piutangAwalBean.delete(piutangAwal.id)}" />
-                                </div>
-                            </p:column>
-                        </p:dataTable>
+                                <p:column headerText="Pilihan"
+                                          style="width: 120px; text-align: center;">
+                                    <div class="btn-group">
+                                        <p:commandButton styleClass="btn btn-sm"
+                                                         icon="fa fa-info"
+                                                         actionListener="#{piutangAwalBean.detailPerusahaan(piutangAwal.id)}" />
+                                    </div>
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGroup>
                     </h:form>
                 </div>
             </div>

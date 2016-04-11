@@ -41,6 +41,7 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
     private ArrayList<Orang> penjualModels;
     private InvoiceAwal hutangAwalModel;
     private Invoice invoiceModel;
+    private Perusahaan perusahaanModel;
     private final HutangAwalService hutangAwalService = new HutangAwalService();
     private final MataUangService mataUangService = new MataUangService();
     private final PerusahaanService perusahaanService = new PerusahaanService();
@@ -49,6 +50,7 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
     private long hutangAwalId;
     private long perusahaanId;
     private long perusahaanIdBefore;
+    private long pemilikId;
     private long penjualId;
     private long penjualIdBefore;
     private String noBefore;
@@ -85,6 +87,17 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
         }
     }
 
+    public void viewDetailPerusahaan(long id) {
+        init();
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            pemilikId = 0;
+            perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNamaPemilik();
+            hutangAwalModels = new HutangAwalLazy(id, pemilikId);
+            perusahaanModel = (Perusahaan) perusahaanService.get(id);
+            total = hutangAwalService.getTotal(perusahaanId, pemilikId);
+        }
+    }
+
     @Override
     public void viewDetail(long id) {
         init();
@@ -114,9 +127,13 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
     @Override
     public void viewAll() {
         init();
-        hutangAwalModels = new HutangAwalLazy();
-        perusahaanId = 0;
-        total = hutangAwalService.getTotal(perusahaanId);
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            perusahaanId = 0;
+            pemilikId = 0;
+            perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNamaPemilik();
+            hutangAwalModels = new HutangAwalLazy(perusahaanId, pemilikId);
+            total = hutangAwalService.getTotal(perusahaanId, pemilikId);
+        }
     }
 
     public void save() {
@@ -151,6 +168,10 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
         }
     }
 
+    public void detailPerusahaan(long id) {
+        Util.redirectToPage(baseModule + "details.xhtml?id=" + id);
+    }
+
     public void detail(long id) {
         Util.redirectToPage(baseModule + "detail.xhtml?id=" + id);
     }
@@ -161,11 +182,16 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
 
     public void delete(long id) {
         hutangAwalService.delete(id);
-        list();
+        detailPerusahaan(perusahaanId);
     }
 
     public void list() {
         Util.redirectToPage(baseModule + "list.xhtml");
+    }
+
+    public void refreshList() {
+        hutangAwalModels = new HutangAwalLazy(perusahaanId, pemilikId);
+        total = hutangAwalService.getTotal(perusahaanId, pemilikId);
     }
 
     public void checkNo() {
@@ -248,6 +274,14 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
         this.invoiceModel = invoiceModel;
     }
 
+    public Perusahaan getPerusahaanModel() {
+        return perusahaanModel;
+    }
+
+    public void setPerusahaanModel(Perusahaan perusahaanModel) {
+        this.perusahaanModel = perusahaanModel;
+    }
+
     public long getHutangAwalId() {
         return hutangAwalId;
     }
@@ -270,6 +304,14 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
 
     public void setPerusahaanIdBefore(long perusahaanIdBefore) {
         this.perusahaanIdBefore = perusahaanIdBefore;
+    }
+
+    public long getPemilikId() {
+        return pemilikId;
+    }
+
+    public void setPemilikId(long pemilikId) {
+        this.pemilikId = pemilikId;
     }
 
     public long getPenjualId() {

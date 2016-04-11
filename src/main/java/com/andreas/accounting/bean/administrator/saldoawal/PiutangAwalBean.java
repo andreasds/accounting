@@ -41,6 +41,7 @@ public class PiutangAwalBean implements BaseBeanInterface, Serializable {
     private ArrayList<Orang> pembeliModels;
     private InvoiceAwal piutangAwalModel;
     private Invoice invoiceModel;
+    private Perusahaan perusahaanModel;
     private final PiutangAwalService piutangAwalService = new PiutangAwalService();
     private final MataUangService mataUangService = new MataUangService();
     private final PerusahaanService perusahaanService = new PerusahaanService();
@@ -49,6 +50,7 @@ public class PiutangAwalBean implements BaseBeanInterface, Serializable {
     private long piutangAwalId;
     private long perusahaanId;
     private long perusahaanIdBefore;
+    private long pemilikId;
     private long pembeliId;
     private long pembeliIdBefore;
     private String noBefore;
@@ -85,6 +87,17 @@ public class PiutangAwalBean implements BaseBeanInterface, Serializable {
         }
     }
 
+    public void viewDetailPerusahaan(long id) {
+        init();
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            pemilikId = 0;
+            perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNamaPemilik();
+            piutangAwalModels = new PiutangAwalLazy(id, pemilikId);
+            perusahaanModel = (Perusahaan) perusahaanService.get(id);
+            total = piutangAwalService.getTotal(perusahaanId, pemilikId);
+        }
+    }
+
     @Override
     public void viewDetail(long id) {
         init();
@@ -114,9 +127,13 @@ public class PiutangAwalBean implements BaseBeanInterface, Serializable {
     @Override
     public void viewAll() {
         init();
-        piutangAwalModels = new PiutangAwalLazy();
-        perusahaanId = 0;
-        total = piutangAwalService.getTotal(perusahaanId);
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            perusahaanId = 0;
+            pemilikId = 0;
+            perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNamaPemilik();
+            piutangAwalModels = new PiutangAwalLazy(perusahaanId, pemilikId);
+            total = piutangAwalService.getTotal(perusahaanId, pemilikId);
+        }
     }
 
     public void save() {
@@ -151,6 +168,10 @@ public class PiutangAwalBean implements BaseBeanInterface, Serializable {
         }
     }
 
+    public void detailPerusahaan(long id) {
+        Util.redirectToPage(baseModule + "details.xhtml?id=" + id);
+    }
+
     public void detail(long id) {
         Util.redirectToPage(baseModule + "detail.xhtml?id=" + id);
     }
@@ -161,11 +182,16 @@ public class PiutangAwalBean implements BaseBeanInterface, Serializable {
 
     public void delete(long id) {
         piutangAwalService.delete(id);
-        list();
+        detailPerusahaan(perusahaanId);
     }
 
     public void list() {
         Util.redirectToPage(baseModule + "list.xhtml");
+    }
+
+    public void refreshList() {
+        piutangAwalModels = new PiutangAwalLazy(perusahaanId, pemilikId);
+        total = piutangAwalService.getTotal(perusahaanId, pemilikId);
     }
 
     public void checkNo() {
@@ -248,6 +274,14 @@ public class PiutangAwalBean implements BaseBeanInterface, Serializable {
         this.invoiceModel = invoiceModel;
     }
 
+    public Perusahaan getPerusahaanModel() {
+        return perusahaanModel;
+    }
+
+    public void setPerusahaanModel(Perusahaan perusahaanModel) {
+        this.perusahaanModel = perusahaanModel;
+    }
+
     public long getPiutangAwalId() {
         return piutangAwalId;
     }
@@ -270,6 +304,14 @@ public class PiutangAwalBean implements BaseBeanInterface, Serializable {
 
     public void setPerusahaanIdBefore(long perusahaanIdBefore) {
         this.perusahaanIdBefore = perusahaanIdBefore;
+    }
+
+    public long getPemilikId() {
+        return pemilikId;
+    }
+
+    public void setPemilikId(long pemilikId) {
+        this.pemilikId = pemilikId;
     }
 
     public long getPembeliId() {

@@ -40,6 +40,7 @@
                                      rows="10"
                                      rowIndexVar="index"
                                      lazy="true"
+                                     filterEvent="blur"
                                      paginator="true"
                                      paginatorPosition="bottom"
                                      paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
@@ -48,24 +49,32 @@
                                 <h:outputText value="#{index + 1}" />
                             </p:column>
 
-                            <p:column headerText="Kategori">
+                            <p:column headerText="Kategori"
+                                      sortBy="#{produk.kategoriProduk.nama}"
+                                      filterBy="#{produk.kategoriProduk.nama}">
                                 #{produk.kategoriProduk.nama}
                             </p:column>
 
-                            <p:column headerText="Kode">
-                                #{produk.kategoriProduk.kode}-#{produk.indeks}
+                            <p:column headerText="Kode"
+                                      sortBy="#{produk.kode}"
+                                      filterBy="#{produk.kode}">
+                                #{produk.kode}
                             </p:column>
 
-                            <p:column headerText="Deskripsi">
+                            <p:column headerText="Deskripsi"
+                                      sortBy="#{produk.deskripsi}"
+                                      filterBy="#{produk.deskripsi}">
                                 #{produk.deskripsi}
                             </p:column>
 
-                            <p:column headerText="Satuan">
+                            <p:column headerText="Satuan"
+                                      sortBy="#{produk.satuan.kode}"
+                                      filterBy="#{produk.satuan.kode}">
                                 #{produk.satuan.kode}
                             </p:column>
 
                             <p:column headerText="Pilihan"
-                                      style="text-align: center;">
+                                      style="width: 120px; text-align: center;">
                                 <div class="btn-group">
                                     <p:commandButton styleClass="btn btn-sm"
                                                      icon="fa fa-info"

@@ -24,8 +24,8 @@ public class Produk implements Serializable {
         this.id = id;
     }
 
-    public String getIndeks() {
-        return String.format("%05d", indeks);
+    public int getIndeks() {
+        return indeks;
     }
 
     public void setIndeks(int indeks) {
@@ -54,5 +54,9 @@ public class Produk implements Serializable {
 
     public void setSatuan(Satuan satuan) {
         this.satuan = satuan;
+    }
+
+    public String getKode() {
+        return kategoriProduk.getKode() + "-" + String.format("%05d", indeks);
     }
 }

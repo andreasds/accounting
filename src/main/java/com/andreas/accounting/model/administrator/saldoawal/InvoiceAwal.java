@@ -1,5 +1,6 @@
 package com.andreas.accounting.model.administrator.saldoawal;
 
+import com.andreas.accounting.model.administrator.daftarnama.Perusahaan;
 import com.andreas.accounting.model.util.Invoice;
 import com.andreas.accounting.model.util.MataUang;
 import java.io.Serializable;
@@ -18,6 +19,8 @@ public class InvoiceAwal implements Serializable {
     private BigDecimal rate = new BigDecimal(0.0);
     private Invoice invoice = new Invoice();
     private MataUang mataUang = new MataUang();
+
+    private Perusahaan perusahaan = new Perusahaan();
 
     public Long getId() {
         return id;
@@ -57,5 +60,17 @@ public class InvoiceAwal implements Serializable {
 
     public void setMataUang(MataUang mataUang) {
         this.mataUang = mataUang;
+    }
+
+    public Perusahaan getPerusahaan() {
+        return perusahaan;
+    }
+
+    public void setPerusahaan(Perusahaan perusahaan) {
+        this.perusahaan = perusahaan;
+    }
+
+    public BigDecimal getTotal() {
+        return jumlah.multiply(rate);
     }
 }

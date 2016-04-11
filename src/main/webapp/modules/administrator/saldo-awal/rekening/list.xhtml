@@ -65,6 +65,7 @@
                                      rows="10"
                                      rowIndexVar="index"
                                      lazy="true"
+                                     filterEvent="blur"
                                      paginator="true"
                                      paginatorPosition="bottom"
                                      paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
@@ -73,11 +74,15 @@
                                 <h:outputText value="#{index + 1}" />
                             </p:column>
 
-                            <p:column headerText="Nama">
+                            <p:column headerText="Nama"
+                                      sortBy="#{rekeningAwal.rekening.nama}"
+                                      filterBy="#{rekeningAwal.rekening.nama}">
                                 #{rekeningAwal.rekening.nama}
                             </p:column>
 
-                            <p:column headerText="Jumlah">
+                            <p:column headerText="Jumlah"
+                                      sortBy="#{rekeningAwal.saldo}"
+                                      filterBy="#{rekeningAwal.saldo}">
                                 IDR
                                 <h:outputText value="#{rekeningAwal.saldo}">
                                     <f:convertNumber minFractionDigits="2"
@@ -86,7 +91,7 @@
                             </p:column>
 
                             <p:column headerText="Pilihan"
-                                      style="text-align: center;">
+                                      style="width: 120px; text-align: center;">
                                 <div class="btn-group">
                                     <p:commandButton styleClass="btn btn-sm"
                                                      icon="fa fa-info"
