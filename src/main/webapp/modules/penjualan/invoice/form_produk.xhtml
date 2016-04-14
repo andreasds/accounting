@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+    <p:dialog widgetVar="form_produk"
+              header="Form Tambah Produk"
+              modal="true"
+              width="80%"
+              height="80%">
+        <h:form id="form-produk"
+                role="form"
+                styleClass="form-horizontal">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <div class="col-md-3"
+                                 style="text-align: right;">
+                                <p:outputLabel for="invoice_produk"
+                                               styleClass="control-label"
+                                               value="Produk *" />
+                            </div>
+                            <div class="col-md-9">
+                                <p:selectOneMenu id="invoice_produk"
+                                                 style="width: 100% !important;"
+                                                 filter="true"
+                                                 filterMatchMode="contains"
+                                                 value="#{invoicePenjualanBean.produkId}">
+                                    <f:ajax render="invoice_produk_valid tambah_button"
+                                            listener="#{invoicePenjualanBean.checkProduk()}" />
+                                    <f:selectItem itemLabel="-- Pilih Produk --"
+                                                  itemValue="0" />
+                                    <f:selectItems value="#{invoicePenjualanBean.produkModels}"
+                                                   var="produk"
+                                                   itemLabel="#{produk.kode} - #{produk.deskripsi}"
+                                                   itemValue="#{produk.id}" />
+                                </p:selectOneMenu>
+                                <h:panelGroup id="invoice_produk_valid">
+                                    <p:outputLabel styleClass="label #{invoicePenjualanBean.produkValid ? 'label-success' : 'label-danger'}"
+                                                   rendered="#{invoicePenjualanBean.produkId ne 0 and
+                                                               invoicePenjualanBean.produkIdBefore ne invoicePenjualanBean.produkId}"
+                                                   value="Produk#{invoicePenjualanBean.produkValid ? '' : ' tidak'} dapat digunakan" />
+                                </h:panelGroup>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3"
+                                 style="text-align: right;">
+                                <p:outputLabel for="invoice_jumlah"
+                                               styleClass="control-label"
+                                               value="Jumlah *" />
+                            </div>
+                            <div class="col-md-9">
+                                <pe:inputNumber id="invoice_jumlah"
+                                                style="width: 100% !important;"
+                                                value="#{invoicePenjualanBean.produkInvoiceModel.jumlah}"
+                                                decimalPlaces="4"
+                                                thousandSeparator="."
+                                                decimalSeparator=",">
+                                    <f:ajax render="tambah_button" />
+                                </pe:inputNumber>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3"
+                                 style="text-align: right;">
+                                <p:outputLabel for="invoice_mata_uang"
+                                               styleClass="control-label"
+                                               value="Mata Uang *" />
+                            </div>
+                            <div class="col-md-9">
+                                <p:selectOneMenu id="invoice_mata_uang"
+                                                 style="width: 100% !important;"
+                                                 filter="true"
+                                                 filterMatchMode="contains"
+                                                 value="#{invoicePenjualanBean.mataUangId}">
+                                    <f:ajax render="invoice_mata_uang_rate invoice_nilai_tukar tambah_button"
+                                            listener="#{invoicePenjualanBean.checkRates()}" />
+                                    <f:selectItem itemLabel="-- Pilih Mata Uang --"
+                                                  itemValue="0" />
+                                    <f:selectItems value="#{invoicePenjualanBean.mataUangModels}"
+                                                   var="mataUang"
+                                                   itemLabel="#{mataUang.nama} - #{mataUang.kode}"
+                                                   itemValue="#{mataUang.id}" />
+                                </p:selectOneMenu>
+                                <h:panelGroup id="invoice_mata_uang_rate">
+                                    <p:outputLabel styleClass="label label-success"
+                                                   rendered="#{invoicePenjualanBean.rate ne 0}"
+                                                   value="1 #{invoicePenjualanBean.getKodeMataUang(invoicePenjualanBean.mataUangId)} = #{invoicePenjualanBean.rate} IDR" />
+                                    <p:outputLabel styleClass="label label-danger"
+                                                   rendered="#{invoicePenjualanBean.rate eq 0}"
+                                                   value="Data tidak ditemukan" />
+                                </h:panelGroup>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3"
+                                 style="text-align: right;">
+                                <p:outputLabel for="invoice_nilai_tukar"
+                                               styleClass="control-label"
+                                               value="Nilai Tukar *" />
+                            </div>
+                            <div class="col-md-9">
+                                <pe:inputNumber id="invoice_nilai_tukar"
+                                                style="width: 100% !important;"
+                                                value="#{invoicePenjualanBean.produkInvoiceModel.rate}"
+                                                decimalPlaces="4"
+                                                thousandSeparator="."
+                                                decimalSeparator=",">
+                                    <f:ajax render="tambah_button" />
+                                </pe:inputNumber>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3"
+                                 style="text-align: right;">
+                                <p:outputLabel for="invoice_harga"
+                                               styleClass="control-label"
+                                               value="Harga *" />
+                            </div>
+                            <div class="col-md-9">
+                                <pe:inputNumber id="invoice_harga"
+                                                style="width: 100% !important;"
+                                                value="#{invoicePenjualanBean.produkInvoiceModel.harga}"
+                                                thousandSeparator="."
+                                                decimalSeparator=",">
+                                    <f:ajax render="tambah_button" />
+                                </pe:inputNumber>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box-footer">
+                    <h:panelGroup id="tambah_button">
+                        <p:commandButton styleClass="btn btn-sm btn-flat"
+                                         icon="fa fa-save"
+                                         rendered="#{invoicePenjualanBean.produkId ne 0 and
+                                                     invoicePenjualanBean.produkInvoiceModel.jumlah ne 0 and
+                                                     invoicePenjualanBean.mataUangId ne 0 and
+                                                     invoicePenjualanBean.produkInvoiceModel.rate ne 0 and
+                                                     invoicePenjualanBean.produkInvoiceModel.harga ne 0 and
+                                                     invoicePenjualanBean.produkValid}"
+                                         onclick="PF('form_produk').hide();"
+                                         value="Simpan">
+                            <f:ajax render="main-form:list_produk form-produk"
+                                    listener="#{invoicePenjualanBean.addProduk}" />
+                        </p:commandButton>
+                        <p:commandButton styleClass="btn btn-sm btn-flat"
+                                         icon="fa fa-mail-reply"
+                                         onclick="PF('form_produk').hide();"
+                                         value="Kembali">
+                            <f:ajax render="form-produk"
+                                    listener="#{invoicePenjualanBean.refreshProduk()}" />
+                        </p:commandButton>
+                    </h:panelGroup>
+                </div>
+            </div>
+        </h:form>
+    </p:dialog>
+</html>

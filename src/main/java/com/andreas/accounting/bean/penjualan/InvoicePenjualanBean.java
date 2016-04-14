@@ -12,6 +12,7 @@ import com.andreas.accounting.service.administrator.daftarnama.PerusahaanService
 import com.andreas.accounting.service.administrator.daftarproduk.ProdukService;
 import com.andreas.accounting.service.penjualan.InvoicePenjualanService;
 import com.andreas.accounting.service.util.ExchangeRatesService;
+import com.andreas.accounting.service.util.MataUangService;
 import com.andreas.accounting.util.BaseBeanInterface;
 import com.andreas.accounting.util.Util;
 import java.io.Serializable;
@@ -35,7 +36,7 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
 
     private String pageName;
     private final String baseModule = "/modules/penjualan/invoice/";
-    
+
     private InvoicePenjualanLazy invoiceModels;
     private ArrayList<Perusahaan> perusahaanModels;
     private ArrayList<Orang> pembeliModels;
@@ -48,6 +49,7 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
     private final PerusahaanService perusahaanService = new PerusahaanService();
     private final PembeliService pembeliService = new PembeliService();
     private final ProdukService produkService = new ProdukService();
+    private final MataUangService mataUangService = new MataUangService();
     private final ExchangeRatesService exchangeRatesService = new ExchangeRatesService();
     private long invoiceId;
     private long pemilikId;
@@ -77,13 +79,14 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
             perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNamaPemilik();
             pembeliModels = (ArrayList<Orang>) pembeliService.listNama();
             produkModels = (ArrayList<Produk>) produkService.listKode();
+            mataUangModels = (ArrayList<MataUang>) mataUangService.listKode();
             invoiceModel = new Invoice();
             produkInvoices = new ArrayList<>();
             pemilikIdBefore = 0;
             pembeliIdBefore = 0;
             noBefore = "";
             noValid = false;
-            produkIdBefore = 0;
+            refreshProduk();
         }
     }
 
@@ -96,7 +99,7 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
     public void viewEdit(long id) {
         init();
         if (!FacesContext.getCurrentInstance().isPostback()) {
-            
+
         }
     }
 
@@ -104,16 +107,16 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
     public void viewAll() {
         init();
         if (!FacesContext.getCurrentInstance().isPostback()) {
-            
+
         }
     }
 
     public void save() {
-        
+
     }
 
     public void update() {
-        
+
     }
 
     public void detail(long id) {
@@ -125,7 +128,7 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
     }
 
     public void delete(long id) {
-        
+
     }
 
     public void list() {
@@ -145,8 +148,34 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
         if (produkId == produkIdBefore) {
             produkValid = true;
         } else {
-//            noValid = invoicePenjualanService.checkNo(invoiceModel.getNo(), pemilikId);
+            produkValid = !invoiceModel.getProdukInvoices().contains(getProduk());
         }
+    }
+
+    public void addProduk() {
+        ArrayList<ProdukInvoice> temp = invoiceModel.getProdukInvoices();
+        produkInvoiceModel.setProduk(getProduk());
+        produkInvoiceModel.setMataUang(getMataUang());
+        temp.add(produkInvoiceModel);
+        invoiceModel.setProdukInvoices(temp);
+        refreshProduk();
+    }
+
+    public void deleteProduk(int index) {
+        ArrayList<ProdukInvoice> temp = invoiceModel.getProdukInvoices();
+        temp.remove(index);
+        invoiceModel.setProdukInvoices(temp);
+    }
+
+    public void refreshProduk() {
+        produkInvoiceModel = new ProdukInvoice();
+        produkId = 0;
+        produkIdBefore = 0;
+        produkValid = false;
+        mataUangId = ((MataUang) mataUangService.getIDR()).getId();
+        mataUangIdBefore = 0;
+        rate = new BigDecimal(1.0);
+        produkInvoiceModel.setRate(new BigDecimal(1.0));
     }
 
     public void checkRates() {
@@ -162,6 +191,24 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
         }
 
         return "";
+    }
+
+    public Produk getProduk() {
+        for (Produk produk : produkModels) {
+            if (produk.getId() == produkId) {
+                return produk;
+            }
+        }
+        return null;
+    }
+
+    public MataUang getMataUang() {
+        for (MataUang mataUang : mataUangModels) {
+            if (mataUang.getId() == mataUangId) {
+                return mataUang;
+            }
+        }
+        return null;
     }
 
     public String getPageName() {

@@ -17,7 +17,7 @@ import org.primefaces.model.SortOrder;
  * @author Andreas Dharmawan <andreas.ds90@gmail.com>
  */
 public class InvoicePenjualanService implements BaseServiceInterface, Serializable {
-    
+
     private static final long serialVersionUID = -2359198142883742287L;
 
     private final GrailsRestClient grc = new GrailsRestClient();
