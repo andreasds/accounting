@@ -3,6 +3,8 @@ package com.andreas.accounting.model.util;
 import com.andreas.accounting.model.administrator.daftarnama.Orang;
 import com.andreas.accounting.model.administrator.daftarnama.Perusahaan;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -18,6 +20,7 @@ public class Invoice implements Serializable {
     private Date tanggal = new Date();
     private Perusahaan perusahaan = new Perusahaan();
     private Orang orang = new Orang();
+    private ArrayList<ProdukInvoice> produkInvoices = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -57,5 +60,21 @@ public class Invoice implements Serializable {
 
     public void setOrang(Orang orang) {
         this.orang = orang;
+    }
+
+    public ArrayList<ProdukInvoice> getProdukInvoices() {
+        return produkInvoices;
+    }
+
+    public void setProdukInvoices(ArrayList<ProdukInvoice> produkInvoices) {
+        this.produkInvoices = produkInvoices;
+    }
+
+    public BigDecimal getTotal() {
+        BigDecimal temp = new BigDecimal(0.0);
+        produkInvoices.stream().forEach((produkInvoice) -> {
+            temp.add(produkInvoice.getTotal());
+        });
+        return temp;
     }
 }
