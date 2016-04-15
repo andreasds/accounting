@@ -5,7 +5,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:pe="http://primefaces.org/ui/extensions">
-    <p:dialog widgetVar="form_produk"
+    <p:dialog id="dialog_produk"
+              widgetVar="form_produk"
               header="Form Tambah Produk"
               modal="true"
               width="80%"
@@ -148,17 +149,16 @@
                                                      invoicePenjualanBean.produkInvoiceModel.rate ne 0 and
                                                      invoicePenjualanBean.produkInvoiceModel.harga ne 0 and
                                                      invoicePenjualanBean.produkValid}"
-                                         onclick="PF('form_produk').hide();"
+                                         oncomplete="PF('form_produk').hide();"
                                          value="Simpan">
-                            <f:ajax render="main-form:list_produk form-produk"
+                            <f:ajax render="main-form:list_produk"
                                     listener="#{invoicePenjualanBean.addProduk}" />
                         </p:commandButton>
                         <p:commandButton styleClass="btn btn-sm btn-flat"
                                          icon="fa fa-mail-reply"
-                                         onclick="PF('form_produk').hide();"
+                                         oncomplete="PF('form_produk').hide();"
                                          value="Kembali">
-                            <f:ajax render="form-produk"
-                                    listener="#{invoicePenjualanBean.refreshProduk()}" />
+                            <f:ajax listener="#{invoicePenjualanBean.refreshProduk()}" />
                         </p:commandButton>
                     </h:panelGroup>
                 </div>

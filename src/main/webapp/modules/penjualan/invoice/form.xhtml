@@ -165,7 +165,9 @@
                             </p:column>
                         </p:dataTable>
                         <p:commandButton styleClass="btn btn-primary btn-sm btn-flat"
-                                         onclick="PF('form_produk').show();"
+                                         update="form-produk"
+                                         actionListener="#{invoicePenjualanBean.refreshProduk()}"
+                                         oncomplete="PF('form_produk').show();"
                                          value="Tambah Produk" />
                     </h:panelGroup>
                 </div>

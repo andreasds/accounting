@@ -148,7 +148,14 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
         if (produkId == produkIdBefore) {
             produkValid = true;
         } else {
-            produkValid = !invoiceModel.getProdukInvoices().contains(getProduk());
+            produkValid = true;
+            ArrayList<ProdukInvoice> temp = invoiceModel.getProdukInvoices();
+            for (ProdukInvoice produkInvoice : temp) {
+                if (produkInvoice.getProduk().getId() == produkId) {
+                    produkValid = false;
+                    break;
+                }
+            }
         }
     }
 
@@ -158,7 +165,6 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
         produkInvoiceModel.setMataUang(getMataUang());
         temp.add(produkInvoiceModel);
         invoiceModel.setProdukInvoices(temp);
-        refreshProduk();
     }
 
     public void deleteProduk(int index) {
