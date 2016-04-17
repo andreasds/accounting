@@ -12,13 +12,20 @@ import org.primefaces.model.SortOrder;
  * @author Andreas Dharmawan <andreas.ds90@gmail.com>
  */
 public class InvoicePenjualanLazy extends LazyDataModel<Invoice> {
-    
+
     private static final long serialVersionUID = -1332135337120472778L;
 
     private final InvoicePenjualanService invoicePenjualanService = new InvoicePenjualanService();
+    private long pemilikId = 0;
+
+    public InvoicePenjualanLazy(long pemilikId) {
+        this.pemilikId = pemilikId;
+    }
 
     @Override
     public List<Invoice> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+        filters.put("pemilikId", pemilikId);
+
         setRowCount(invoicePenjualanService.count(filters));
         return (List<Invoice>) invoicePenjualanService.list(first, pageSize, sortField, sortOrder, filters);
     }

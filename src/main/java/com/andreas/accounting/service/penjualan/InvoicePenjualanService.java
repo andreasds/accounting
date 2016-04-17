@@ -42,8 +42,7 @@ public class InvoicePenjualanService implements BaseServiceInterface, Serializab
 
     @Override
     public Object save(Object obj) {
-        Invoice invoice = (Invoice) obj;
-        String response = grc.add(endpoint + "/save?id=" + invoice.getId(), obj);
+        String response = grc.add(endpoint + "/save", obj);
         JsonObject jsonObject = gson.fromJson(response, JsonObject.class);
         if (jsonObject.get("message").toString().equalsIgnoreCase("failed")) {
             return jsonObject.get("error");

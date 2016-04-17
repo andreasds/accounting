@@ -107,12 +107,23 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
     public void viewAll() {
         init();
         if (!FacesContext.getCurrentInstance().isPostback()) {
-
+            pemilikId = 0;
+            perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNamaPemilik();
+            invoiceModels = new InvoicePenjualanLazy(pemilikId);
         }
     }
 
     public void save() {
+        String response;
+        invoiceModel.setPerusahaan((Perusahaan) perusahaanService.get(pemilikId));
+        invoiceModel.setOrang((Orang) pembeliService.get(pembeliId));
+        response = invoicePenjualanService.save(invoiceModel).toString();
 
+        if (response != null) {
+            Util.redirectToPage(baseModule + "detail.xhtml?id=" + response);
+        } else {
+            Util.redirectToPage(baseModule + "list.xhtml");
+        }
     }
 
     public void update() {
