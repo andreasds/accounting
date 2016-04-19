@@ -93,6 +93,7 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
     @Override
     public void viewDetail(long id) {
         init();
+        invoiceModel = (Invoice) invoicePenjualanService.get(id);
     }
 
     @Override
@@ -144,6 +145,10 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
 
     public void list() {
         Util.redirectToPage(baseModule + "list.xhtml");
+    }
+
+    public void refreshList() {
+        invoiceModels = new InvoicePenjualanLazy(pemilikId);
     }
 
     public void checkNo() {

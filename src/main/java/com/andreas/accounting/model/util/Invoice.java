@@ -72,9 +72,9 @@ public class Invoice implements Serializable {
 
     public BigDecimal getTotal() {
         BigDecimal temp = new BigDecimal(0.0);
-        produkInvoices.stream().forEach((produkInvoice) -> {
-            temp.add(produkInvoice.getTotal());
-        });
+        for (ProdukInvoice produkInvoice : produkInvoices) {
+            temp = temp.add(produkInvoice.getTotal());
+        }
         return temp;
     }
 }

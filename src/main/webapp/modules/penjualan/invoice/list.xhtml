@@ -50,8 +50,8 @@
                                                      filter="true"
                                                      filterMatchMode="contains"
                                                      value="#{invoicePenjualanBean.pemilikId}">
-<!--                                        <f:ajax render="invoice_jumlah list_invoice"
-                                                listener="#{invoicePenjualanBean.refreshList()}" />-->
+                                        <f:ajax render="list_invoice"
+                                                listener="#{invoicePenjualanBean.refreshList()}" />
                                         <f:selectItem itemLabel="-- Pilih Perusahaan Pemilik --"
                                                       itemValue="0" />
                                         <f:selectItems value="#{invoicePenjualanBean.perusahaanModels}"
@@ -93,6 +93,12 @@
                                           sortBy="#{invoicePenjualan.no}"
                                           filterBy="#{invoicePenjualan.no}">
                                     #{invoicePenjualan.no}
+                                </p:column>
+
+                                <p:column headerText="Perusahaan"
+                                          sortBy="#{invoicePenjualan.orang.perusahaan.nama}"
+                                          filterBy="#{invoicePenjualan.orang.perusahaan.nama}">
+                                    #{invoicePenjualan.orang.perusahaan.nama}
                                 </p:column>
 
                                 <p:column headerText="Tanggal"
