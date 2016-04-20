@@ -153,9 +153,11 @@
                             <p:column headerText="Pilihan"
                                       style="width: 80px; text-align: center;">
                                 <div class="btn-group">
-                                    <!--<p:commandButton styleClass="btn btn-sm"
+                                    <p:commandButton styleClass="btn btn-sm"
                                                      icon="fa fa-pencil"
-                                                     actionListener="{invoicePenjualanBean.edit(invoicePenjualan.id)}" />-->
+                                                     update="form-produk"
+                                                     oncomplete="PF('form_produk').show();"
+                                                     actionListener="#{invoicePenjualanBean.editProduk(index)}" />
                                     <p:commandButton styleClass="btn btn-sm"
                                                      icon="fa fa-trash"
                                                      update="main-form:list_produk"
@@ -166,7 +168,7 @@
                         </p:dataTable>
                         <p:commandButton styleClass="btn btn-primary btn-sm btn-flat"
                                          update="form-produk"
-                                         actionListener="#{invoicePenjualanBean.refreshProduk()}"
+                                         actionListener="#{invoicePenjualanBean.refreshProduk}"
                                          oncomplete="PF('form_produk').show();"
                                          value="Tambah Produk" />
                     </h:panelGroup>

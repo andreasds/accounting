@@ -44,7 +44,6 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
     private ArrayList<MataUang> mataUangModels;
     private Invoice invoiceModel;
     private ProdukInvoice produkInvoiceModel;
-    private ArrayList<ProdukInvoice> produkInvoices;
     private final InvoicePenjualanService invoicePenjualanService = new InvoicePenjualanService();
     private final PerusahaanService perusahaanService = new PerusahaanService();
     private final PembeliService pembeliService = new PembeliService();
@@ -66,6 +65,7 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
     private BigDecimal rate;
 
     private Date currentDate = new Date();
+    private int produkInvoiceIndex;
 
     @Override
     public void init() {
@@ -81,7 +81,6 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
             produkModels = (ArrayList<Produk>) produkService.listKode();
             mataUangModels = (ArrayList<MataUang>) mataUangService.listKode();
             invoiceModel = new Invoice();
-            produkInvoices = new ArrayList<>();
             pemilikIdBefore = 0;
             pembeliIdBefore = 0;
             noBefore = "";
@@ -100,7 +99,18 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
     public void viewEdit(long id) {
         init();
         if (!FacesContext.getCurrentInstance().isPostback()) {
-
+            perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNamaPemilik();
+            pembeliModels = (ArrayList<Orang>) pembeliService.listNama();
+            produkModels = (ArrayList<Produk>) produkService.listKode();
+            mataUangModels = (ArrayList<MataUang>) mataUangService.listKode();
+            invoiceModel = (Invoice) invoicePenjualanService.get(id);
+            pemilikId = invoiceModel.getPerusahaan().getId();
+            pemilikIdBefore = invoiceModel.getPerusahaan().getId();
+            pembeliId = invoiceModel.getOrang().getId();
+            pembeliIdBefore = invoiceModel.getOrang().getId();
+            noBefore = invoiceModel.getNo();
+            noValid = true;
+            refreshProduk();
         }
     }
 
@@ -149,6 +159,7 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
 
     public void refreshList() {
         invoiceModels = new InvoicePenjualanLazy(pemilikId);
+        produkInvoiceIndex = -1;
     }
 
     public void checkNo() {
@@ -176,11 +187,23 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
     }
 
     public void addProduk() {
+        System.out.println("produkInvoiceIndex = " + produkInvoiceIndex);
         ArrayList<ProdukInvoice> temp = invoiceModel.getProdukInvoices();
         produkInvoiceModel.setProduk(getProduk());
         produkInvoiceModel.setMataUang(getMataUang());
         temp.add(produkInvoiceModel);
         invoiceModel.setProdukInvoices(temp);
+    }
+
+    public void editProduk(int index) {
+        produkInvoiceIndex = index;
+        ArrayList<ProdukInvoice> temp = invoiceModel.getProdukInvoices();
+        produkInvoiceModel = temp.get(index);
+        produkId = produkInvoiceModel.getProduk().getId();
+        produkIdBefore = produkInvoiceModel.getProduk().getId();
+        mataUangId = produkInvoiceModel.getMataUang().getId();
+        mataUangIdBefore = produkInvoiceModel.getMataUang().getId();
+        rate = exchangeRatesService.getRate(getKodeMataUang(mataUangId), invoiceModel.getTanggal());
     }
 
     public void deleteProduk(int index) {
@@ -190,6 +213,7 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
     }
 
     public void refreshProduk() {
+        System.out.println("produkInvoiceIndex = " + produkInvoiceIndex);
         produkInvoiceModel = new ProdukInvoice();
         produkId = 0;
         produkIdBefore = 0;
@@ -295,14 +319,6 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
 
     public void setProdukInvoiceModel(ProdukInvoice produkInvoiceModel) {
         this.produkInvoiceModel = produkInvoiceModel;
-    }
-
-    public ArrayList<ProdukInvoice> getProdukInvoices() {
-        return produkInvoices;
-    }
-
-    public void setProdukInvoices(ArrayList<ProdukInvoice> produkInvoices) {
-        this.produkInvoices = produkInvoices;
     }
 
     public long getInvoiceId() {
