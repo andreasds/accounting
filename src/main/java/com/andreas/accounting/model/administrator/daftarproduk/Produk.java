@@ -24,8 +24,8 @@ public class Produk implements Serializable {
         this.id = id;
     }
 
-    public int getIndeks() {
-        return indeks;
+    public String getIndeks() {
+        return String.format("%05d", indeks);
     }
 
     public void setIndeks(int indeks) {
