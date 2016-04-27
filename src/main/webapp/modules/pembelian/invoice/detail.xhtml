@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <f:metadata>
+        <f:viewParam name="id" value="#{invoicePembelianBean.invoiceId}" />
+        <f:event listener="#{invoicePembelianBean.viewDetail(invoicePembelianBean.invoiceId)}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/default/main.xhtml">
+        <ui:define name="headerContent">
+            <h1>
+                Rincian #{invoicePembelianBean.pageName}
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#">
+                        <i class="fa fa-dashboard" /> Home
+                    </a>
+                </li>
+                <ui:repeat var="breadcrumb" value="#{menuBean.breadcrumbs}">
+                    <li>#{breadcrumb}</li>
+                </ui:repeat>
+            </ol>
+        </ui:define>
+
+        <ui:define name="content">
+            <div class="box">
+                <ui:include src="create-button.xhtml" />
+            </div>
+
+            <h:form role="form" id="main-form"
+                    styleClass="form-horizontal">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">#{invoicePembelianBean.pageName} Detail</h3>
+                    </div>
+
+                    <!-- detail form -->
+                    <div class="box-body">
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <div class="col-md-3"
+                                     style="text-align: right;">
+                                    <p:outputLabel for="invoice_perusahaan"
+                                                   styleClass="control-label"
+                                                   value="Perusahaan Pemilik" />
+                                </div>
+                                <div class="col-md-9">
+                                    <p:outputLabel id="invoice_perusahaan"
+                                                   styleClass="control-label"
+                                                   value="#{invoicePembelianBean.invoiceModel.perusahaan.nama}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3"
+                                     style="text-align: right;">
+                                    <p:outputLabel for="invoice_penjual"
+                                                   styleClass="control-label"
+                                                   value="Penjual" />
+                                </div>
+                                <div class="col-md-9">
+                                    <p:outputLabel id="invoice_penjual"
+                                                   styleClass="control-label"
+                                                   value="#{invoicePembelianBean.invoiceModel.orang.nama}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3"
+                                     style="text-align: right;">
+                                    <p:outputLabel for="invoice_no"
+                                                   styleClass="control-label"
+                                                   value="No Invoice" />
+                                </div>
+                                <div class="col-md-9">
+                                    <p:outputLabel id="invoice_no"
+                                                   styleClass="control-label"
+                                                   value="#{invoicePembelianBean.invoiceModel.no}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3"
+                                     style="text-align: right;">
+                                    <p:outputLabel for="invoice_tanggal"
+                                                   styleClass="control-label"
+                                                   value="Tanggal" />
+                                </div>
+                                <div class="col-md-9">
+                                    <p:outputLabel id="invoice_tanggal"
+                                                   styleClass="control-label"
+                                                   value="#{invoicePembelianBean.invoiceModel.tanggal}">
+                                        <f:convertDateTime type="date"
+                                                           timeZone="Asia/Jakarta"
+                                                           pattern="dd MMM yyyy" />
+                                    </p:outputLabel>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3"
+                                     style="text-align: right;">
+                                    <p:outputLabel styleClass="control-label"
+                                                   value="Produk" />
+                                </div>
+                                <div class="col-md-9">
+                                    <p:dataTable var="produkInvoice"
+                                                 styleClass="table table-hover table-bordered"
+                                                 value="#{invoicePembelianBean.invoiceModel.produkInvoices}"
+                                                 reflow="true"
+                                                 rowIndexVar="index">
+                                        <p:column headerText="No"
+                                                  style="width: 40px; text-align: center;">
+                                            <h:outputText value="#{index + 1}" />
+                                        </p:column>
+
+                                        <p:column headerText="Kode">
+                                            #{produkInvoice.produk.kode}
+                                        </p:column>
+
+                                        <p:column headerText="Deskripsi">
+                                            #{produkInvoice.produk.deskripsi}
+                                        </p:column>
+
+                                        <p:column headerText="Jumlah">
+                                            <h:outputText value="#{produkInvoice.jumlah}">
+                                                <f:convertNumber minFractionDigits="2"
+                                                                 pattern="#,##0.00" />
+                                            </h:outputText>
+                                        </p:column>
+
+                                        <p:column headerText="Harga">
+                                            #{produkInvoice.mataUang.kode}
+                                            <h:outputText value="#{produkInvoice.harga}">
+                                                <f:convertNumber minFractionDigits="2"
+                                                                 pattern="#,##0.00" />
+                                            </h:outputText>
+                                        </p:column>
+
+                                        <p:column headerText="Total">
+                                            IDR
+                                            <h:outputText value="#{produkInvoice.total}">
+                                                <f:convertNumber minFractionDigits="2"
+                                                                 pattern="#,##0.00" />
+                                            </h:outputText>
+                                        </p:column>
+                                    </p:dataTable>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-footer">
+                        <p:commandButton styleClass="btn btn-sm btn-flat"
+                                         icon="fa fa-pencil"
+                                         actionListener="#{invoicePembelianBean.edit(invoicePembelianBean.invoiceModel.id)}"
+                                         value="Edit" />
+                        <p:commandButton styleClass="btn btn-sm btn-flat"
+                                         icon="fa fa-mail-reply"
+                                         actionListener="#{invoicePembelianBean.list()}"
+                                         value="Kembali" />
+                    </div>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

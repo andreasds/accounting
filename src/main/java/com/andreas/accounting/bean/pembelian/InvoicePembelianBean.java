@@ -1,16 +1,16 @@
-package com.andreas.accounting.bean.penjualan;
+package com.andreas.accounting.bean.pembelian;
 
-import com.andreas.accounting.lazy.penjualan.InvoicePenjualanLazy;
+import com.andreas.accounting.lazy.pembelian.InvoicePembelianLazy;
 import com.andreas.accounting.model.administrator.daftarnama.Orang;
 import com.andreas.accounting.model.administrator.daftarnama.Perusahaan;
 import com.andreas.accounting.model.administrator.daftarproduk.Produk;
 import com.andreas.accounting.model.util.Invoice;
 import com.andreas.accounting.model.util.MataUang;
 import com.andreas.accounting.model.util.ProdukInvoice;
-import com.andreas.accounting.service.administrator.daftarnama.PembeliService;
+import com.andreas.accounting.service.administrator.daftarnama.PenjualService;
 import com.andreas.accounting.service.administrator.daftarnama.PerusahaanService;
 import com.andreas.accounting.service.administrator.daftarproduk.ProdukService;
-import com.andreas.accounting.service.penjualan.InvoicePenjualanService;
+import com.andreas.accounting.service.pembelian.InvoicePembelianService;
 import com.andreas.accounting.service.util.ExchangeRatesService;
 import com.andreas.accounting.service.util.MataUangService;
 import com.andreas.accounting.util.BaseBeanInterface;
@@ -28,33 +28,33 @@ import org.primefaces.model.LazyDataModel;
  *
  * @author Andreas Dharmawan <andreas.ds90@gmail.com>
  */
-@ManagedBean(name = "invoicePenjualanBean")
+@ManagedBean(name = "invoicePembelianBean")
 @ViewScoped
-public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
+public class InvoicePembelianBean implements BaseBeanInterface, Serializable {
 
     private static final long serialVersionUID = 1462945210158159943L;
 
     private String pageName;
-    private final String baseModule = "/modules/penjualan/invoice/";
+    private final String baseModule = "/modules/pembelian/invoice/";
 
-    private InvoicePenjualanLazy invoiceModels;
+    private InvoicePembelianLazy invoiceModels;
     private ArrayList<Perusahaan> perusahaanModels;
-    private ArrayList<Orang> pembeliModels;
+    private ArrayList<Orang> penjualModels;
     private ArrayList<Produk> produkModels;
     private ArrayList<MataUang> mataUangModels;
     private Invoice invoiceModel;
     private ProdukInvoice produkInvoiceModel;
-    private final InvoicePenjualanService invoicePenjualanService = new InvoicePenjualanService();
+    private final InvoicePembelianService invoicePembelianService = new InvoicePembelianService();
     private final PerusahaanService perusahaanService = new PerusahaanService();
-    private final PembeliService pembeliService = new PembeliService();
+    private final PenjualService penjualService = new PenjualService();
     private final ProdukService produkService = new ProdukService();
     private final MataUangService mataUangService = new MataUangService();
     private final ExchangeRatesService exchangeRatesService = new ExchangeRatesService();
     private long invoiceId;
     private long pemilikId;
     private long pemilikIdBefore;
-    private long pembeliId;
-    private long pembeliIdBefore;
+    private long penjualId;
+    private long penjualIdBefore;
     private String noBefore;
     private boolean noValid;
     private long produkId;
@@ -70,7 +70,7 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
 
     @Override
     public void init() {
-        pageName = "Invoice Penjualan";
+        pageName = "Invoice Pembelian";
     }
 
     @Override
@@ -78,12 +78,12 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
         init();
         if (!FacesContext.getCurrentInstance().isPostback()) {
             perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNamaPemilik();
-            pembeliModels = (ArrayList<Orang>) pembeliService.listNama();
+            penjualModels = (ArrayList<Orang>) penjualService.listNama();
             produkModels = (ArrayList<Produk>) produkService.listKode();
             mataUangModels = (ArrayList<MataUang>) mataUangService.listKode();
             invoiceModel = new Invoice();
             pemilikIdBefore = 0;
-            pembeliIdBefore = 0;
+            penjualIdBefore = 0;
             noBefore = "";
             noValid = false;
             produkInvoicesDeleted = new ArrayList<>();
@@ -94,7 +94,7 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
     @Override
     public void viewDetail(long id) {
         init();
-        invoiceModel = (Invoice) invoicePenjualanService.get(id);
+        invoiceModel = (Invoice) invoicePembelianService.get(id);
     }
 
     @Override
@@ -102,14 +102,14 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
         init();
         if (!FacesContext.getCurrentInstance().isPostback()) {
             perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNamaPemilik();
-            pembeliModels = (ArrayList<Orang>) pembeliService.listNama();
+            penjualModels = (ArrayList<Orang>) penjualService.listNama();
             produkModels = (ArrayList<Produk>) produkService.listKode();
             mataUangModels = (ArrayList<MataUang>) mataUangService.listKode();
-            invoiceModel = (Invoice) invoicePenjualanService.get(id);
+            invoiceModel = (Invoice) invoicePembelianService.get(id);
             pemilikId = invoiceModel.getPerusahaan().getId();
             pemilikIdBefore = invoiceModel.getPerusahaan().getId();
-            pembeliId = invoiceModel.getOrang().getId();
-            pembeliIdBefore = invoiceModel.getOrang().getId();
+            penjualId = invoiceModel.getOrang().getId();
+            penjualIdBefore = invoiceModel.getOrang().getId();
             noBefore = invoiceModel.getNo();
             noValid = true;
             produkInvoicesDeleted = new ArrayList<>();
@@ -123,15 +123,15 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             pemilikId = 0;
             perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNamaPemilik();
-            invoiceModels = new InvoicePenjualanLazy(pemilikId);
+            invoiceModels = new InvoicePembelianLazy(pemilikId);
         }
     }
 
     public void save() {
         String response;
         invoiceModel.setPerusahaan((Perusahaan) perusahaanService.get(pemilikId));
-        invoiceModel.setOrang((Orang) pembeliService.get(pembeliId));
-        response = invoicePenjualanService.save(invoiceModel).toString();
+        invoiceModel.setOrang((Orang) penjualService.get(penjualId));
+        response = invoicePembelianService.save(invoiceModel).toString();
 
         if (response != null) {
             Util.redirectToPage(baseModule + "detail.xhtml?id=" + response);
@@ -143,13 +143,13 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
     public void update() {
         String response;
         invoiceModel.setPerusahaan((Perusahaan) perusahaanService.get(pemilikId));
-        invoiceModel.setOrang((Orang) pembeliService.get(pembeliId));
+        invoiceModel.setOrang((Orang) penjualService.get(penjualId));
         ArrayList<ProdukInvoice> temp = invoiceModel.getProdukInvoices();
         produkInvoicesDeleted.stream().forEach((produkInvoice) -> {
             temp.add(produkInvoice);
         });
         invoiceModel.setProdukInvoices(temp);
-        response = invoicePenjualanService.update(invoiceModel).toString();
+        response = invoicePembelianService.update(invoiceModel).toString();
 
         if (response != null) {
             Util.redirectToPage(baseModule + "detail.xhtml?id=" + response);
@@ -175,7 +175,7 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
     }
 
     public void refreshList() {
-        invoiceModels = new InvoicePenjualanLazy(pemilikId);
+        invoiceModels = new InvoicePembelianLazy(pemilikId);
     }
 
     public void checkNo() {
@@ -183,7 +183,7 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
                 && pemilikId == pemilikIdBefore) {
             noValid = true;
         } else {
-            noValid = invoicePenjualanService.checkNo(invoiceModel.getNo(), pemilikId);
+            noValid = invoicePembelianService.checkNo(invoiceModel.getNo(), pemilikId);
         }
     }
 
@@ -308,7 +308,7 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
         return invoiceModels;
     }
 
-    public void setInvoiceModels(InvoicePenjualanLazy invoiceModels) {
+    public void setInvoiceModels(InvoicePembelianLazy invoiceModels) {
         this.invoiceModels = invoiceModels;
     }
 
@@ -320,12 +320,12 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
         this.perusahaanModels = perusahaanModels;
     }
 
-    public ArrayList<Orang> getPembeliModels() {
-        return pembeliModels;
+    public ArrayList<Orang> getPenjualModels() {
+        return penjualModels;
     }
 
-    public void setPembeliModels(ArrayList<Orang> pembeliModels) {
-        this.pembeliModels = pembeliModels;
+    public void setPenjualModels(ArrayList<Orang> penjualModels) {
+        this.penjualModels = penjualModels;
     }
 
     public ArrayList<Produk> getProdukModels() {
@@ -384,20 +384,20 @@ public class InvoicePenjualanBean implements BaseBeanInterface, Serializable {
         this.pemilikIdBefore = pemilikIdBefore;
     }
 
-    public long getPembeliId() {
-        return pembeliId;
+    public long getPenjualId() {
+        return penjualId;
     }
 
-    public void setPembeliId(long pembeliId) {
-        this.pembeliId = pembeliId;
+    public void setPenjualId(long penjualId) {
+        this.penjualId = penjualId;
     }
 
-    public long getPembeliIdBefore() {
-        return pembeliIdBefore;
+    public long getPenjualIdBefore() {
+        return penjualIdBefore;
     }
 
-    public void setPembeliIdBefore(long pembeliIdBefore) {
-        this.pembeliIdBefore = pembeliIdBefore;
+    public void setPenjualIdBefore(long penjualIdBefore) {
+        this.penjualIdBefore = penjualIdBefore;
     }
 
     public String getNoBefore() {
