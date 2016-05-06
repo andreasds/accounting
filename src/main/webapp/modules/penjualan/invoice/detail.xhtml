@@ -135,7 +135,7 @@
                                         </p:column>
 
                                         <p:column headerText="Harga">
-                                            #{produkInvoice.mataUang.kode}
+                                            #{invoiceModel.mataUang.kode}
                                             <h:outputText value="#{produkInvoice.harga}">
                                                 <f:convertNumber minFractionDigits="2"
                                                                  pattern="#,##0.00" />

@@ -83,7 +83,7 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
             mataUangModels = (ArrayList<MataUang>) mataUangService.listKode();
             noValid = false;
             rate = new BigDecimal(1.0);
-            hutangAwalModel.setRate(new BigDecimal(1.0));
+            invoiceModel.setRate(new BigDecimal(1.0));
         }
     }
 
@@ -114,8 +114,8 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
             perusahaanIdBefore = hutangAwalModel.getInvoice().getPerusahaan().getId();
             penjualId = hutangAwalModel.getInvoice().getOrang().getId();
             penjualIdBefore = hutangAwalModel.getInvoice().getOrang().getId();
-            mataUangId = hutangAwalModel.getMataUang().getId();
-            mataUangIdBefore = hutangAwalModel.getMataUang().getId();
+            mataUangId = hutangAwalModel.getInvoice().getMataUang().getId();
+            mataUangIdBefore = hutangAwalModel.getInvoice().getMataUang().getId();
             perusahaanModels = (ArrayList<Perusahaan>) perusahaanService.listNamaPemilik();
             penjualModels = (ArrayList<Orang>) penjualService.listNama();
             mataUangModels = (ArrayList<MataUang>) mataUangService.listKode();
@@ -140,9 +140,9 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
         String response;
         invoiceModel.setPerusahaan((Perusahaan) perusahaanService.get(perusahaanId));
         invoiceModel.setOrang((Orang) penjualService.get(penjualId));
+        invoiceModel.setMataUang((MataUang) mataUangService.get(mataUangId));
 
         hutangAwalModel.setInvoice(invoiceModel);
-        hutangAwalModel.setMataUang((MataUang) mataUangService.get(mataUangId));
         response = hutangAwalService.save(hutangAwalModel).toString();
 
         if (response != null) {
@@ -156,9 +156,9 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
         String response;
         invoiceModel.setPerusahaan((Perusahaan) perusahaanService.get(perusahaanId));
         invoiceModel.setOrang((Orang) penjualService.get(penjualId));
+        invoiceModel.setMataUang((MataUang) mataUangService.get(mataUangId));
 
         hutangAwalModel.setInvoice(invoiceModel);
-        hutangAwalModel.setMataUang((MataUang) mataUangService.get(mataUangId));
         response = hutangAwalService.update(hutangAwalModel).toString();
 
         if (response != null) {
@@ -205,7 +205,7 @@ public class HutangAwalBean implements BaseBeanInterface, Serializable {
 
     public void checkRates() {
         rate = exchangeRatesService.getRate(getKodeMataUang(mataUangId), invoiceModel.getTanggal());
-        hutangAwalModel.setRate(rate);
+        invoiceModel.setRate(rate);
     }
 
     public String getKodeMataUang(long mataUangId) {

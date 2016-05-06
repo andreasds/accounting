@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
     <div class="box-body">
         <div class="col-md-10">
             <div class="form-group">
@@ -94,10 +95,62 @@
                                 maxdate="#{invoicePenjualanBean.currentDate}"
                                 navigator="true"
                                 value="#{invoicePenjualanBean.invoiceModel.tanggal}">
-                        <!--<f:ajax event="dateSelect"
+                        <f:ajax event="dateSelect"
                                 render="invoice_mata_uang_rate invoice_nilai_tukar footer_button"
-                                listener="{invoicePenjualanBean.checkRates()}" />-->
+                                listener="#{invoicePenjualanBean.checkRates()}" />
                     </p:calendar>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="invoice_mata_uang"
+                                   styleClass="control-label"
+                                   value="Mata Uang *" />
+                </div>
+                <div class="col-md-9">
+                    <p:selectOneMenu id="invoice_mata_uang"
+                                     style="width: 100% !important;"
+                                     filter="true"
+                                     filterMatchMode="contains"
+                                     value="#{invoicePenjualanBean.mataUangId}">
+                        <f:ajax render="invoice_mata_uang_rate invoice_nilai_tukar tambah_button"
+                                listener="#{invoicePenjualanBean.checkRates()}" />
+                        <f:selectItem itemLabel="-- Pilih Mata Uang --"
+                                      itemValue="0" />
+                        <f:selectItems value="#{invoicePenjualanBean.mataUangModels}"
+                                       var="mataUang"
+                                       itemLabel="#{mataUang.nama} - #{mataUang.kode}"
+                                       itemValue="#{mataUang.id}" />
+                    </p:selectOneMenu>
+                    <h:panelGroup id="invoice_mata_uang_rate">
+                        <p:outputLabel styleClass="label label-success"
+                                       rendered="#{invoicePenjualanBean.rate ne 0}"
+                                       value="1 #{invoicePenjualanBean.getKodeMataUang(invoicePenjualanBean.mataUangId)} = #{invoicePenjualanBean.rate} IDR" />
+                        <p:outputLabel styleClass="label label-danger"
+                                       rendered="#{invoicePenjualanBean.rate eq 0}"
+                                       value="Data tidak ditemukan" />
+                    </h:panelGroup>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="invoice_nilai_tukar"
+                                   styleClass="control-label"
+                                   value="Nilai Tukar *" />
+                </div>
+                <div class="col-md-9">
+                    <pe:inputNumber id="invoice_nilai_tukar"
+                                    style="width: 100% !important;"
+                                    value="#{invoicePenjualanBean.invoiceModel.rate}"
+                                    decimalPlaces="4"
+                                    thousandSeparator="."
+                                    decimalSeparator=",">
+                        <f:ajax render="tambah_button" />
+                    </pe:inputNumber>
                 </div>
             </div>
 
@@ -135,7 +188,7 @@
                             </p:column>
 
                             <p:column headerText="Harga">
-                                #{produkInvoice.mataUang.kode}
+                                #{invoiceModel.mataUang.kode}
                                 <h:outputText value="#{produkInvoice.harga}">
                                     <f:convertNumber minFractionDigits="2"
                                                      pattern="#,##0.00" />

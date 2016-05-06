@@ -16,9 +16,7 @@ public class InvoiceAwal implements Serializable {
 
     private Long id = 0L;
     private BigDecimal jumlah = new BigDecimal(0.0);
-    private BigDecimal rate = new BigDecimal(0.0);
     private Invoice invoice = new Invoice();
-    private MataUang mataUang = new MataUang();
 
     private Perusahaan perusahaan = new Perusahaan();
 
@@ -38,28 +36,12 @@ public class InvoiceAwal implements Serializable {
         this.jumlah = jumlah;
     }
 
-    public BigDecimal getRate() {
-        return rate;
-    }
-
-    public void setRate(BigDecimal rate) {
-        this.rate = rate;
-    }
-
     public Invoice getInvoice() {
         return invoice;
     }
 
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
-    }
-
-    public MataUang getMataUang() {
-        return mataUang;
-    }
-
-    public void setMataUang(MataUang mataUang) {
-        this.mataUang = mataUang;
     }
 
     public Perusahaan getPerusahaan() {
@@ -71,6 +53,6 @@ public class InvoiceAwal implements Serializable {
     }
 
     public BigDecimal getTotal() {
-        return jumlah.multiply(rate);
+        return jumlah.multiply(invoice.getRate());
     }
 }

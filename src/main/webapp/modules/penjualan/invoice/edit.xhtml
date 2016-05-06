@@ -44,7 +44,9 @@
                                              icon="fa fa-save"
                                              rendered="#{invoicePenjualanBean.pemilikId ne 0 and
                                                          invoicePenjualanBean.pembeliId ne 0 and
-                                                         invoicePenjualanBean.noValid}"
+                                                         invoicePenjualanBean.noValid and
+                                                         invoicePenjualanBean.mataUangId ne 0 and
+                                                         invoicePenjualanBean.invoiceModel.rate ne 0}"
                                              actionListener="#{invoicePenjualanBean.update()}"
                                              value="Update" />
                             <p:commandButton styleClass="btn btn-sm btn-flat"

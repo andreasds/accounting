@@ -86,6 +86,10 @@ public class InvoicePembelianBean implements BaseBeanInterface, Serializable {
             penjualIdBefore = 0;
             noBefore = "";
             noValid = false;
+            mataUangId = ((MataUang) mataUangService.getIDR()).getId();
+            mataUangIdBefore = 0;
+            rate = new BigDecimal(1.0);
+            invoiceModel.setRate(new BigDecimal(1.0));
             produkInvoicesDeleted = new ArrayList<>();
             refreshProduk();
         }
@@ -112,6 +116,10 @@ public class InvoicePembelianBean implements BaseBeanInterface, Serializable {
             penjualIdBefore = invoiceModel.getOrang().getId();
             noBefore = invoiceModel.getNo();
             noValid = true;
+            mataUangId = invoiceModel.getMataUang().getId();
+            mataUangIdBefore = invoiceModel.getMataUang().getId();
+            rate = exchangeRatesService.getRate(getKodeMataUang(mataUangId), invoiceModel.getTanggal());
+            invoiceModel.setRate(new BigDecimal(1.0));
             produkInvoicesDeleted = new ArrayList<>();
             refreshProduk();
         }
@@ -131,6 +139,7 @@ public class InvoicePembelianBean implements BaseBeanInterface, Serializable {
         String response;
         invoiceModel.setPerusahaan((Perusahaan) perusahaanService.get(pemilikId));
         invoiceModel.setOrang((Orang) penjualService.get(penjualId));
+        invoiceModel.setMataUang((MataUang) mataUangService.get(mataUangId));
         response = invoicePembelianService.save(invoiceModel).toString();
 
         if (response != null) {
@@ -144,6 +153,7 @@ public class InvoicePembelianBean implements BaseBeanInterface, Serializable {
         String response;
         invoiceModel.setPerusahaan((Perusahaan) perusahaanService.get(pemilikId));
         invoiceModel.setOrang((Orang) penjualService.get(penjualId));
+        invoiceModel.setMataUang((MataUang) mataUangService.get(mataUangId));
         ArrayList<ProdukInvoice> temp = invoiceModel.getProdukInvoices();
         produkInvoicesDeleted.stream().forEach((produkInvoice) -> {
             temp.add(produkInvoice);
@@ -221,7 +231,6 @@ public class InvoicePembelianBean implements BaseBeanInterface, Serializable {
         }
         produkInvoiceModel.setId(produkInvoiceId);
         produkInvoiceModel.setProduk(getProduk());
-        produkInvoiceModel.setMataUang(getMataUang());
         temp.add(produkInvoiceModel);
         invoiceModel.setProdukInvoices(temp);
         refreshProduk();
@@ -234,8 +243,6 @@ public class InvoicePembelianBean implements BaseBeanInterface, Serializable {
         produkId = produkInvoiceModel.getProduk().getId();
         produkIdBefore = produkInvoiceModel.getProduk().getId();
         produkValid = true;
-        mataUangId = produkInvoiceModel.getMataUang().getId();
-        mataUangIdBefore = produkInvoiceModel.getMataUang().getId();
         rate = exchangeRatesService.getRate(getKodeMataUang(mataUangId), invoiceModel.getTanggal());
     }
 
@@ -256,16 +263,12 @@ public class InvoicePembelianBean implements BaseBeanInterface, Serializable {
         produkId = 0;
         produkIdBefore = 0;
         produkValid = false;
-        mataUangId = ((MataUang) mataUangService.getIDR()).getId();
-        mataUangIdBefore = 0;
-        rate = new BigDecimal(1.0);
-        produkInvoiceModel.setRate(new BigDecimal(1.0));
         produkInvoiceIndex = -1;
     }
 
     public void checkRates() {
         rate = exchangeRatesService.getRate(getKodeMataUang(mataUangId), invoiceModel.getTanggal());
-        produkInvoiceModel.setRate(rate);
+        invoiceModel.setRate(rate);
     }
 
     public String getKodeMataUang(long mataUangId) {

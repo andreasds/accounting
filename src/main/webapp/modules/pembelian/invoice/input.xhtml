@@ -43,7 +43,9 @@
                                              icon="fa fa-save"
                                              rendered="#{invoicePembelianBean.pemilikId ne 0 and
                                                          invoicePembelianBean.penjualId ne 0 and
-                                                         invoicePembelianBean.noValid}"
+                                                         invoicePembelianBean.noValid and
+                                                         invoicePenjualanBean.mataUangId ne 0 and
+                                                         invoicePenjualanBean.invoiceModel.rate ne 0}"
                                              actionListener="#{invoicePembelianBean.save()}"
                                              value="Simpan" />
                             <p:commandButton styleClass="btn btn-sm btn-flat"

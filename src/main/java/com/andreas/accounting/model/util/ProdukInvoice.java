@@ -17,7 +17,6 @@ public class ProdukInvoice implements Serializable {
     private BigDecimal harga = new BigDecimal(0.0);
     private BigDecimal rate = new BigDecimal(0.0);
     private Produk produk = new Produk();
-    private MataUang mataUang = new MataUang();
 
     private boolean removed = false;
 
@@ -59,14 +58,6 @@ public class ProdukInvoice implements Serializable {
 
     public void setProduk(Produk produk) {
         this.produk = produk;
-    }
-
-    public MataUang getMataUang() {
-        return mataUang;
-    }
-
-    public void setMataUang(MataUang mataUang) {
-        this.mataUang = mataUang;
     }
 
     public boolean getRemoved() {
