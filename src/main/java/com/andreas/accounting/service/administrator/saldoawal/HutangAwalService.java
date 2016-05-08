@@ -34,7 +34,7 @@ public class HutangAwalService implements BaseServiceInterface, Serializable {
     }
 
     public Object list(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-        String params = "?offset=" + first + "&max=" + pageSize + "&sort=" + sortField + "&order=" + (sortOrder == SortOrder.ASCENDING ? "asc" : "desc");
+        String params = "?offset=" + first + "&max=" + pageSize + "&sort=" + sortField + "&order=" + (sortOrder == SortOrder.DESCENDING ? "desc" : "asc");
         String response = grc.put(endpoint + "/list" + params, filters);
         Type type = new TypeToken<ArrayList<InvoiceAwal>>() {
         }.getType();

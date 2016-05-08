@@ -49,6 +49,13 @@ public class PenjualService implements BaseServiceInterface, Serializable {
         return gson.fromJson(response, type);
     }
 
+    public Object listNamaHutang(long penjualId, long pemilikId) {
+        String response = grc.get(endpoint + "/listNamaHutang?penjualId=" + penjualId + "&pemilikId=" + pemilikId);
+        Type type = new TypeToken<ArrayList<Orang>>() {
+        }.getType();
+        return gson.fromJson(response, type);
+    }
+
     @Override
     public Object save(Object obj) {
         String response = grc.add(endpoint + "/save", obj);

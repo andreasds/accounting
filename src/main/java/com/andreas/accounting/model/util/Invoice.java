@@ -24,6 +24,8 @@ public class Invoice implements Serializable {
     private MataUang mataUang = new MataUang();
     private ArrayList<ProdukInvoice> produkInvoices = new ArrayList<>();
 
+    private BigDecimal jumlah = new BigDecimal(0.0);
+
     public Long getId() {
         return id;
     }
@@ -86,6 +88,14 @@ public class Invoice implements Serializable {
 
     public void setProdukInvoices(ArrayList<ProdukInvoice> produkInvoices) {
         this.produkInvoices = produkInvoices;
+    }
+
+    public BigDecimal getJumlah() {
+        return jumlah;
+    }
+
+    public void setJumlah(BigDecimal jumlah) {
+        this.jumlah = jumlah;
     }
 
     public BigDecimal getTotal() {

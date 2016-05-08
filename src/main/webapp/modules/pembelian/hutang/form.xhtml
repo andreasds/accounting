@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <div class="box-body">
+        <div class="col-md-10">
+            <div class="form-group">
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="hutang_perusahaan"
+                                   styleClass="control-label"
+                                   value="Perusahaan Pemilik *" />
+                </div>
+                <div class="col-md-9">
+                    <p:selectOneMenu id="hutang_perusahaan"
+                                     style="width: 100% !important;"
+                                     filter="true"
+                                     filterMatchMode="contains"
+                                     value="#{hutangBean.pemilikId}">
+                        <f:ajax render="hutang_penjual hutang_mata_uang hutang_bayar list_invoice footer_button"
+                                listener="#{hutangBean.refreshListPenjual}" />
+                        <f:selectItem itemLabel="-- Pilih Perusahaan Pemilik --"
+                                      itemValue="0" />
+                        <f:selectItems value="#{hutangBean.perusahaanModels}"
+                                       var="perusahaan"
+                                       itemLabel="#{perusahaan.nama}"
+                                       itemValue="#{perusahaan.id}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="hutang_penjual"
+                                   styleClass="control-label"
+                                   value="Penjual *" />
+                </div>
+                <div class="col-md-9">
+                    <p:selectOneMenu id="hutang_penjual"
+                                     style="width: 100% !important;"
+                                     filter="true"
+                                     filterMatchMode="contains"
+                                     value="#{hutangBean.penjualId}">
+                        <f:ajax render="hutang_invoice hutang_mata_uang hutang_bayar list_invoice footer_button"
+                                listener="#{hutangBean.refreshListInvoice()}" />
+                        <f:selectItem itemLabel="-- Pilih Penjual --"
+                                      itemValue="0" />
+                        <f:selectItems value="#{hutangBean.penjualModels}"
+                                       var="penjual"
+                                       itemLabel="#{penjual.perusahaan.nama} - #{penjual.nama}"
+                                       itemValue="#{penjual.id}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="hutang_rekening"
+                                   styleClass="control-label"
+                                   value="Rekening *" />
+                </div>
+                <div class="col-md-9">
+                    <p:selectOneMenu id="hutang_rekening"
+                                     style="width: 100% !important;"
+                                     filter="true"
+                                     filterMatchMode="contains"
+                                     value="#{hutangBean.rekeningId}">
+                        <f:ajax render="footer_button" />
+                        <f:selectItem itemLabel="-- Pilih Rekening --"
+                                      itemValue="0" />
+                        <f:selectItems value="#{hutangBean.rekeningModels}"
+                                       var="rekening"
+                                       itemLabel="#{rekening.nama}"
+                                       itemValue="#{rekening.id}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="hutang_tanggal"
+                                   styleClass="control-label"
+                                   value="Tanggal *" />
+                </div>
+                <div class="col-md-9">
+                    <p:calendar id="hutang_tanggal"
+                                pattern="dd MMM yyyy"
+                                maxdate="#{hutangBean.currentDate}"
+                                navigator="true"
+                                value="#{hutangBean.pembayaranHutangModel.tanggal}">
+                        <f:ajax event="dateSelect"
+                                render="footer_button" />
+                    </p:calendar>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="hutang_deskripsi"
+                                   styleClass="control-label"
+                                   value="Catatan" />
+                </div>
+                <div class="col-md-9">
+                    <p:inputTextarea id="hutang_deskripsi"
+                                     styleClass="form-control"
+                                     maxlength="500"
+                                     value="#{hutangBean.pembayaranHutangModel.deskripsi}" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel styleClass="control-label"
+                                   value="Invoice" />
+                </div>
+                <div class="col-md-9">
+                    <h:panelGroup id="list_invoice">
+                        <p:dataTable var="invoice"
+                                     styleClass="table table-hover table-bordered"
+                                     value="#{hutangBean.pembayaranHutangModel.pembayarans}"
+                                     reflow="true"
+                                     rowIndexVar="index">
+                            <p:column headerText="No"
+                                      style="width: 40px; text-align: center;">
+                                <h:outputText value="#{index + 1}" />
+                            </p:column>
+
+                            <p:column headerText="No Invoice">
+                                #{invoice.invoice.no}
+                            </p:column>
+
+                            <p:column headerText="Total">
+                                #{invoice.mataUang.kode}
+                                <h:outputText value="#{invoice.jumlah}">
+                                    <f:convertNumber minFractionDigits="2"
+                                                     pattern="#,##0.00" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Jumlah Bayar">
+                                #{invoice.mataUang.kode}
+                                <h:outputText value="#{invoice.bayar}">
+                                    <f:convertNumber minFractionDigits="2"
+                                                     pattern="#,##0.00" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Pilihan"
+                                      style="width: 80px; text-align: center;">
+                                <div class="btn-group">
+                                    <p:commandButton styleClass="btn btn-sm"
+                                                     icon="fa fa-pencil"
+                                                     update="form-invoice"
+                                                     oncomplete="PF('form_invoice').show();"
+                                                     actionListener="#{hutangBean.editInvoice(index)}" />
+                                    <p:commandButton styleClass="btn btn-sm"
+                                                     icon="fa fa-trash"
+                                                     update="main-form:list_invoice main-form:hutang_mata_uang main-form:hutang_bayar"
+                                                     actionListener="#{hutangBean.deleteInvoice(index)}">
+                                    </p:commandButton>
+                                </div>
+                            </p:column>
+                        </p:dataTable>
+                        <p:commandButton styleClass="btn btn-primary btn-sm btn-flat"
+                                         update="form-invoice"
+                                         actionListener="#{hutangBean.refreshInvoice}"
+                                         oncomplete="PF('form_invoice').show();"
+                                         value="Tambah Invoice" />
+                    </h:panelGroup>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"
+                     style="text-align: right;">
+                    <p:outputLabel for="hutang_bayar"
+                                   styleClass="control-label"
+                                   value="Total Bayar" />
+                </div>
+                <div class="col-md-9">
+                    <p:outputLabel id="hutang_mata_uang"
+                                   styleClass="control-label"
+                                   value="Rp&nbsp;" />
+                    <p:outputLabel id="hutang_bayar"
+                                   styleClass="control-label"
+                                   value="#{hutangBean.totalBayar}">
+                        <f:convertNumber minFractionDigits="2"
+                                         pattern="#,##0.00" />
+                    </p:outputLabel>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>

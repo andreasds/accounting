@@ -177,7 +177,8 @@ public class InvoicePembelianBean implements BaseBeanInterface, Serializable {
     }
 
     public void delete(long id) {
-
+        invoicePembelianService.delete(id);
+        list();
     }
 
     public void list() {

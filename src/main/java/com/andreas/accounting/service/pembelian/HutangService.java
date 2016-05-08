@@ -1,6 +1,7 @@
-package com.andreas.accounting.service.administrator.saldoawal;
+package com.andreas.accounting.service.pembelian;
 
-import com.andreas.accounting.model.administrator.saldoawal.InvoiceAwal;
+import com.andreas.accounting.model.util.HutangPiutang;
+import com.andreas.accounting.model.util.Pembayaran;
 import com.andreas.accounting.util.BaseServiceInterface;
 import com.andreas.accounting.util.GrailsRestClient;
 import com.google.gson.Gson;
@@ -17,18 +18,18 @@ import org.primefaces.model.SortOrder;
  *
  * @author Andreas Dharmawan <andreas.ds90@gmail.com>
  */
-public class PiutangAwalService implements BaseServiceInterface, Serializable {
+public class HutangService implements BaseServiceInterface, Serializable {
 
-    private static final long serialVersionUID = -5613172880644833060L;
+    private static final long serialVersionUID = -8844545179689959291L;
 
     private final GrailsRestClient grc = new GrailsRestClient();
     private final Gson gson = new Gson();
-    private final String endpoint = "piutangAwal";
+    private final String endpoint = "hutang";
 
     @Override
     public Object listAll() {
         String response = grc.get(endpoint);
-        Type type = new TypeToken<ArrayList<InvoiceAwal>>() {
+        Type type = new TypeToken<ArrayList<HutangPiutang>>() {
         }.getType();
         return gson.fromJson(response, type);
     }
@@ -36,33 +37,40 @@ public class PiutangAwalService implements BaseServiceInterface, Serializable {
     public Object list(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
         String params = "?offset=" + first + "&max=" + pageSize + "&sort=" + sortField + "&order=" + (sortOrder == SortOrder.DESCENDING ? "desc" : "asc");
         String response = grc.put(endpoint + "/list" + params, filters);
-        Type type = new TypeToken<ArrayList<InvoiceAwal>>() {
+        Type type = new TypeToken<ArrayList<HutangPiutang>>() {
+        }.getType();
+        return gson.fromJson(response, type);
+    }
+
+    public Object listBayar(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+        String params = "?offset=" + first + "&max=" + pageSize + "&sort=" + sortField + "&order=" + (sortOrder == SortOrder.ASCENDING ? "asc" : "desc");
+        String response = grc.put(endpoint + "/listBayar" + params, filters);
+        Type type = new TypeToken<ArrayList<Pembayaran>>() {
         }.getType();
         return gson.fromJson(response, type);
     }
 
     @Override
     public Object save(Object obj) {
-        InvoiceAwal invoice = (InvoiceAwal) obj;
-        String response = grc.add(endpoint + "/save?id=" + invoice.getId(), obj);
+        String response = grc.add(endpoint + "/save", obj);
         JsonObject jsonObject = gson.fromJson(response, JsonObject.class);
         if (jsonObject.get("message").toString().equalsIgnoreCase("failed")) {
             return jsonObject.get("error");
         } else {
-            return jsonObject.get("id");
+            return jsonObject.get("message");
         }
     }
 
     @Override
     public Object get(long id) {
         String response = grc.get(endpoint + "/get?id=" + id);
-        return gson.fromJson(response, InvoiceAwal.class);
+        return gson.fromJson(response, Pembayaran.class);
     }
 
     @Override
     public Object update(Object obj) {
-        InvoiceAwal invoice = (InvoiceAwal) obj;
-        String response = grc.put(endpoint + "/update?id=" + invoice.getId(), obj);
+        Pembayaran pembayaran = (Pembayaran) obj;
+        String response = grc.put(endpoint + "/update?id=" + pembayaran.getId(), obj);
         JsonObject jsonObject = gson.fromJson(response, JsonObject.class);
         if (jsonObject.get("message").toString().equalsIgnoreCase("failed")) {
             return jsonObject.get("error");
@@ -82,18 +90,18 @@ public class PiutangAwalService implements BaseServiceInterface, Serializable {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public boolean checkNo(String no, long perusahaanId) {
-        String response = grc.get(endpoint + "/checkNo?no=" + no + "&perusahaanId=" + perusahaanId);
-        return Integer.parseInt(response) == 0;
-    }
-
-    public BigDecimal getTotal(long perusahaanId, long pemilikId) {
-        String response = grc.get(endpoint + "/getTotal?perusahaanId=" + perusahaanId + "&pemilikId=" + pemilikId);
+    public BigDecimal getTotal(long penjualId, long pemilikId) {
+        String response = grc.get(endpoint + "/getTotal?penjualId=" + penjualId + "&pemilikId=" + pemilikId);
         return new BigDecimal(response);
     }
 
     public int count(Map<String, Object> filters) {
         String response = grc.put(endpoint + "/count", filters);
+        return Integer.parseInt(response);
+    }
+
+    public int countBayar(Map<String, Object> filters) {
+        String response = grc.put(endpoint + "/countBayar", filters);
         return Integer.parseInt(response);
     }
 }

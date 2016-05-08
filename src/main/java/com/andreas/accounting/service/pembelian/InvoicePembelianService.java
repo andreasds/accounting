@@ -40,6 +40,13 @@ public class InvoicePembelianService implements BaseServiceInterface, Serializab
         return gson.fromJson(response, type);
     }
 
+    public Object listHutang(long pembayaranId, long penjualId, long pemilikId) {
+        String response = grc.get(endpoint + "/listHutang?pembayaranId=" + pembayaranId + "&penjualId=" + penjualId + "&pemilikId=" + pemilikId);
+        Type type = new TypeToken<ArrayList<Invoice>>() {
+        }.getType();
+        return gson.fromJson(response, type);
+    }
+
     @Override
     public Object save(Object obj) {
         String response = grc.add(endpoint + "/save", obj);

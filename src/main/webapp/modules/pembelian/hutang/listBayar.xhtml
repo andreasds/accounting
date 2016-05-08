@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:event listener="#{hutangBean.viewBayar()}" type="preRenderView" />
+    </f:metadata>
+    <ui:composition template="/templates/default/main.xhtml">
+        <ui:define name="headerContent">
+            <h1>
+                List #{hutangBean.pageName}
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#">
+                        <i class="fa fa-dashboard" /> Home
+                    </a>
+                </li>
+                <ui:repeat var="breadcrumb" value="#{menuBean.breadcrumbs}">
+                    <li>#{breadcrumb}</li>
+                </ui:repeat>
+            </ol>
+        </ui:define>
+
+        <ui:define name="content">
+            <div class="box">
+                <div class="box-header">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="btn-group">
+                                <ui:include src="create-button.xhtml" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="box-body">
+                    <div class="col-md-12">
+                        <h:form id="filter_form"
+                                role="form"
+                                styleClass="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-md-3"
+                                     style="text-align: right;">
+                                    <p:outputLabel for="hutang_perusahaan"
+                                                   styleClass="control-label"
+                                                   value="Perusahaan Pemilik" />
+                                </div>
+                                <div class="col-md-5">
+                                    <p:selectOneMenu id="hutang_perusahaan"
+                                                     style="width: 100% !important;"
+                                                     filter="true"
+                                                     filterMatchMode="contains"
+                                                     value="#{hutangBean.pemilikId}">
+                                        <f:ajax render="list_bayar"
+                                                listener="#{hutangBean.refreshListBayar()}" />
+                                        <f:selectItem itemLabel="-- Pilih Perusahaan Pemilik --"
+                                                      itemValue="0" />
+                                        <f:selectItems value="#{hutangBean.perusahaanModels}"
+                                                       var="perusahaan"
+                                                       itemLabel="#{perusahaan.nama}"
+                                                       itemValue="#{perusahaan.id}" />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="box-body">
+                    <h:form id="list_bayar"
+                            role="form"
+                            styleClass="form-horizontal">
+                        <h:panelGroup id="bayar_list">
+                            <p:dataTable var="pembayaran"
+                                         widgetVar="bayarTable"
+                                         styleClass="table table-hover table-bordered"
+                                         value="#{hutangBean.pembayaranModels}"
+                                         reflow="true"
+                                         rows="10"
+                                         rowIndexVar="index"
+                                         lazy="true"
+                                         filterEvent="blur"
+                                         paginator="true"
+                                         paginatorPosition="bottom"
+                                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+                                <p:column headerText="No"
+                                          style="width: 40px; text-align: center;">
+                                    <h:outputText value="#{index + 1}" />
+                                </p:column>
+
+                                <p:column headerText="No Invoice"
+                                          sortBy="#{pembayaran.invoice.no}"
+                                          filterBy="#{pembayaran.invoice.no}">
+                                    #{pembayaran.invoice.no}
+                                </p:column>
+
+                                <p:column headerText="Tanggal"
+                                          sortBy="#{pembayaran.tanggal}"
+                                          filterBy="#{pembayaran.tanggal}"
+                                          filterMatchMode="exact">
+                                    <f:facet name="filter">
+                                        <p:calendar id="hutang_tanggal"
+                                                    pattern="dd MMM yyyy"
+                                                    maxdate="#{hutangBean.currentDate}"
+                                                    navigator="true">
+                                            <p:ajax event="dateSelect" oncomplete="PF('bayarTable').filter()" />
+                                            <p:ajax event="change" oncomplete="PF('bayarTable').filter()" />
+                                        </p:calendar>
+                                    </f:facet>
+                                    <h:outputText value="#{pembayaran.tanggal}">
+                                        <f:convertDateTime type="date"
+                                                           timeZone="Asia/Jakarta"
+                                                           pattern="dd MMM yyyy" />
+                                    </h:outputText>
+                                </p:column>
+
+                                <p:column headerText="Jumlah Bayar"
+                                          sortBy="#{pembayaran.jumlah}"
+                                          filterBy="#{pembayaran.jumlah}">
+                                    #{pembayaran.mataUang.kode}
+                                    <h:outputText value="#{pembayaran.jumlah}">
+                                        <f:convertNumber minFractionDigits="2"
+                                                         pattern="#,##0.00" />
+                                    </h:outputText>
+                                </p:column>
+
+                                <p:column headerText="Catatan"
+                                          sortBy="#{pembayaran.deskripsi}"
+                                          filterBy="#{pembayaran.deskripsi}">
+                                    #{pembayaran.deskripsi}
+                                </p:column>
+
+                                <p:column headerText="Pilihan"
+                                          style="width: 120px; text-align: center;">
+                                    <div class="btn-group">
+                                        <p:commandButton styleClass="btn btn-sm"
+                                                         icon="fa fa-info"
+                                                         actionListener="#{hutangBean.detail(pembayaran.id)}" />
+                                        <p:commandButton styleClass="btn btn-sm"
+                                                         icon="fa fa-pencil"
+                                                         actionListener="#{hutangBean.edit(pembayaran.id)}" />
+                                        <p:commandButton styleClass="btn btn-sm"
+                                                         icon="fa fa-trash"
+                                                         actionListener="#{hutangBean.delete(pembayaran.id)}" />
+                                    </div>
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGroup>
+                    </h:form>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
